@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>HIT FOR HIT — Battle Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14100D;
+  --ink2:#0D0A08;
+  --panel:#211A16;
+  --panel2:#2B221C;
+  --line:#3A2E26;
+  --rust:#B0472A;
+  --ember:#D97324;
+  --amber:#E8A324;
+  --gold:#F4C430;
+  --chalk:#F4EEE3;
+  --chalk-dim:#C9BFB2;
+  --live:#E2402E;
+  --standby:#4C8C4A;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(circle at 15% 0%, #241a13 0%, transparent 45%),
+    radial-gradient(circle at 100% 10%, #1c130d 0%, transparent 40%),
+    var(--ink);
+  color:var(--chalk);
+  font-family:var(--font-body);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--gold);color:var(--ink);}
+button{font-family:var(--font-body);cursor:pointer;}
+input,select,textarea{font-family:var(--font-body);}
+a{color:var(--amber);}
+
+/* ---------- scanline texture ---------- */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 2px);
+  mix-blend-mode:overlay;
+}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:16px;right:16px;z-index:60;
+}
+nav a{
+  display:inline-block;
+  padding:14px 26px;
+  font-family:var(--font-display);
+  font-size:20px;
+  letter-spacing:2px;
+  color:var(--ink);
+  background:linear-gradient(135deg, var(--ember), var(--gold));
+  border-radius:12px;
+  text-decoration:none;
+  box-shadow:0 6px 20px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.15) inset;
+  transition:transform .15s ease, filter .15s ease;
+}
+nav a:hover{
+  filter:brightness(1.08);
+  transform:translateY(-1px);
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+  background:linear-gradient(180deg, rgba(20,16,13,.97), rgba(20,16,13,.9));
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(6px);
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(135deg, var(--rust), var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:20px;color:var(--ink);
+  box-shadow:0 0 0 1px rgba(255,255,255,.15) inset;
+}
+.brand-text h1{
+  font-family:var(--font-display);font-size:22px;letter-spacing:1px;margin:0;line-height:1;
+}
+.brand-text span{
+  display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--chalk-dim);text-transform:uppercase;margin-top:2px;
+}
+.role-chip{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1px;
+  padding:6px 12px;border-radius:20px;border:1px solid var(--line);
+  color:var(--chalk-dim);display:flex;align-items:center;gap:8px;
+}
+.role-chip b{color:var(--gold);font-weight:600;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--standby);box-shadow:0 0 6px var(--standby);}
+.switch-role{
+  background:none;border:1px solid var(--line);color:var(--chalk-dim);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:1px;
+  padding:6px 10px;border-radius:20px;margin-left:8px;
+}
+.switch-role:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ---------- tabs ---------- */
+.tabs{
+  display:flex;gap:4px;overflow-x:auto;padding:10px 20px 0;
+  border-bottom:1px solid var(--line);
+  background:rgba(13,10,8,.4);
+}
+.tab-btn{
+  background:none;border:none;color:var(--chalk-dim);
+  font-family:var(--font-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  padding:12px 16px;border-bottom:2px solid transparent;white-space:nowrap;
+}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-btn:hover:not(.active){color:var(--chalk);}
+
+.view{display:none;max-width:1100px;margin:0 auto;padding:24px 20px 80px;}
+.view.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+.section-title{
+  font-family:var(--font-display);font-size:28px;letter-spacing:1px;margin:0 0 4px;
+}
+.section-sub{
+  font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);letter-spacing:1px;margin:0 0 22px;text-transform:uppercase;
+}
+
+/* ---------- login ---------- */
+.login-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  position:relative;
+  background-image:
+    linear-gradient(180deg, rgba(13,10,8,.55), rgba(13,10,8,.85)),
+    url('H4Hpromo.PNG');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.login-card{
+  width:100%;max-width:480px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:36px 30px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.login-mark{
+  width:64px;height:64px;border-radius:14px;margin:0 auto 18px;
+  background:linear-gradient(135deg, var(--rust), var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:32px;color:var(--ink);
+}
+.login-card h1{font-family:var(--font-display);font-size:36px;text-align:center;letter-spacing:1px;margin:0;}
+.login-card p.sub{text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);letter-spacing:2px;text-transform:uppercase;margin:6px 0 30px;}
+.role-options{display:flex;flex-direction:column;gap:10px;}
+.role-option{
+  display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;
+  border:1px solid var(--line);background:var(--panel2);text-align:left;color:var(--chalk);
+}
+.role-option:hover{border-color:var(--amber);}
+.role-option .ic{font-size:22px;}
+.role-option .label{font-weight:700;font-size:14px;}
+.role-option .desc{font-family:var(--font-mono);font-size:10.5px;color:var(--chalk-dim);margin-top:2px;}
+.artist-picker{display:none;margin-top:14px;flex-direction:column;gap:10px;}
+.artist-picker.show{display:flex;}
+select, .ff-input{
+  width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
+  background:var(--ink2);color:var(--chalk);font-size:14px;
+}
+.btn{
+  border:none;border-radius:10px;padding:12px 18px;font-weight:700;font-size:13px;letter-spacing:.5px;
+}
+.btn-primary{background:linear-gradient(135deg, var(--ember), var(--gold));color:var(--ink);}
+.btn-primary:hover{filter:brightness(1.08);}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--chalk);}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+.btn-danger{background:transparent;border:1px solid var(--live);color:var(--live);}
+.btn-danger:hover{background:rgba(226,64,46,.12);}
+.btn-block{width:100%;}
+.btn-sm{padding:8px 12px;font-size:11px;border-radius:8px;}
+
+/* ---------- crown banner ---------- */
+.crown-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px;}
+@media(max-width:640px){.crown-row{grid-template-columns:1fr;}}
+.crown-card{
+  border-radius:16px;padding:20px;border:1px solid var(--line);
+  background:linear-gradient(160deg, var(--panel), var(--panel2));
+  position:relative;overflow:hidden;
+}
+.crown-card.crowned{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold), 0 0 30px rgba(244,196,48,.25);}
+.crown-card .cat{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--chalk-dim);text-transform:uppercase;}
+.crown-card .name{font-family:var(--font-display);font-size:30px;letter-spacing:1px;margin-top:4px;}
+.crown-card .name.tbd{color:var(--chalk-dim);}
+.crown-card .icon{position:absolute;right:14px;top:14px;font-size:26px;opacity:.85;}
+
+/* ---------- battle cards ---------- */
+.gender-block{margin-bottom:34px;}
+.gender-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.gender-head h3{font-family:var(--font-display);font-size:20px;letter-spacing:1px;margin:0;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
+.bcard{
+  border-radius:14px;padding:16px;border:1px solid var(--line);background:var(--panel);
+  position:relative;overflow:hidden;transition:transform .15s ease;
+}
+.bcard::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:var(--stage-color, var(--rust));
+}
+.bcard.eliminated{opacity:.4;filter:grayscale(.6);}
+.bcard.crowned{box-shadow:0 0 0 1px var(--gold), 0 0 24px rgba(244,196,48,.3);}
+.bcard.selected{outline:2px solid var(--amber);outline-offset:2px;}
+.bcard .av{
+  width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:18px;color:var(--ink);
+  background:var(--stage-color, var(--rust));margin-bottom:10px;
+}
+.bcard .nm{font-weight:700;font-size:15px;margin-bottom:2px;}
+.bcard .rd{font-family:var(--font-mono);font-size:10px;color:var(--chalk-dim);letter-spacing:1px;text-transform:uppercase;}
+.bcard .status-tag{
+  display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:20px;border:1px solid var(--line);color:var(--chalk-dim);
+}
+.empty-note{font-family:var(--font-mono);font-size:12px;color:var(--chalk-dim);padding:20px;border:1px dashed var(--line);border-radius:12px;text-align:center;}
+
+/* matchup builder */
+.matchup-bar{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px;
+}
+.mm-slot{
+  flex:1;min-width:140px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);
+}
+.mm-slot.filled{border-style:solid;border-color:var(--amber);color:var(--chalk);}
+.mm-vs{font-family:var(--font-display);font-size:20px;color:var(--chalk-dim);}
+
+/* ---------- walkie ---------- */
+.wt-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+.wt-row{
+  display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;flex-wrap:wrap;
+}
+.wt-row .av-sm{
+  width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:16px;color:var(--ink);background:var(--stage-color, var(--rust));flex-shrink:0;
+}
+.wt-info{flex:1;min-width:120px;}
+.wt-info .nm{font-weight:700;font-size:14px;}
+.wt-info .st{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--chalk-dim);}
+.wt-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.led{width:9px;height:9px;border-radius:50%;background:#5a4a3d;}
+.led.ringing{background:var(--amber);box-shadow:0 0 8px var(--amber);animation:pulse .8s infinite;}
+.led.connected{background:var(--standby);box-shadow:0 0 8px var(--standby);}
+.led.live{background:var(--live);box-shadow:0 0 10px var(--live);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.ptt-btn{
+  width:100%;padding:26px 18px;border-radius:16px;border:2px solid var(--line);background:var(--panel2);
+  color:var(--chalk);font-family:var(--font-display);font-size:22px;letter-spacing:2px;user-select:none;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.ptt-btn small{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--chalk-dim);}
+.ptt-btn.transmitting{background:linear-gradient(160deg, var(--live), #a52d20);border-color:var(--live);color:#fff;}
+.ptt-btn:active{transform:scale(.98);}
+
+.artist-standby{
+  text-align:center;padding:50px 20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;
+}
+.standby-ring{
+  width:120px;height:120px;border-radius:50%;margin:0 auto 20px;
+  border:2px solid var(--standby);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--standby);
+  box-shadow:0 0 30px rgba(76,140,74,.25);
+}
+.standby-ring.calling{border-color:var(--live);color:var(--live);animation:ringpulse 1s infinite;box-shadow:0 0 40px rgba(226,64,46,.4);}
+@keyframes ringpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.artist-standby h2{font-family:var(--font-display);font-size:26px;letter-spacing:1px;margin:0 0 6px;}
+.artist-standby p{font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);}
+.incoming-actions{display:flex;gap:12px;justify-content:center;margin-top:18px;}
+.buzz-toast{
+  position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:200;
+  background:var(--live);color:#fff;padding:12px 22px;border-radius:30px;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:1px;box-shadow:0 10px 30px rgba(226,64,46,.4);
+  display:none;
+}
+.buzz-toast.show{display:block;animation:toastpop .3s ease;}
+@keyframes toastpop{from{opacity:0;transform:translate(-50%,-10px);}to{opacity:1;transform:translate(-50%,0);}}
+
+/* ---------- forms ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px;}
+.card h3{font-family:var(--font-display);font-size:19px;letter-spacing:1px;margin:0 0 14px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:560px){.grid2{grid-template-columns:1fr;}}
+.field label{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--chalk-dim);text-transform:uppercase;margin-bottom:6px;}
+.field{margin-bottom:12px;}
+.admin-list-row{
+  display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);
+}
+.admin-list-row:last-child{border-bottom:none;}
+.admin-list-row .meta{flex:1;}
+.admin-list-row .meta b{font-size:14px;}
+.admin-list-row .meta span{display:block;font-family:var(--font-mono);font-size:10px;color:var(--chalk-dim);}
+
+.email-box{
+  border:1px dashed var(--amber);border-radius:12px;padding:16px;background:rgba(232,163,36,.06);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px;
+}
+.email-box .lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--chalk-dim);text-transform:uppercase;}
+.email-box .addr{font-family:var(--font-mono);font-size:15px;color:var(--gold);font-weight:600;}
+.tag-placeholder{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;background:var(--live);color:#fff;padding:2px 7px;border-radius:6px;vertical-align:middle;margin-left:8px;}
+
+.track-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.track-row:last-child{border-bottom:none;}
+.track-row .meta{flex:1;min-width:180px;}
+.track-row .meta b{font-size:13px;}
+.track-row .meta span{display:block;font-family:var(--font-mono);font-size:10px;color:var(--chalk-dim);word-break:break-all;}
+
+/* promo */
+.promo-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
+.promo-card pre{white-space:pre-wrap;font-family:var(--font-body);font-size:13.5px;line-height:1.5;margin:0 0 12px;color:var(--chalk);}
+.copy-btn{background:var(--panel2);border:1px solid var(--line);color:var(--chalk);padding:7px 14px;border-radius:8px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:1px;}
+.copy-btn:hover{border-color:var(--amber);color:var(--amber);}
+.copy-btn.copied{border-color:var(--standby);color:var(--standby);}
+
+/* hero slideshow */
+.hero-stage{
+  position:relative;width:100%;aspect-ratio:16/7;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(135deg, #1c130d, #241a13);margin-bottom:14px;
+}
+.hero-slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  opacity:0;transition:opacity .6s ease;padding:20px;
+}
+.hero-slide.active{opacity:1;}
+.hero-slide video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.hero-slide .overlay-txt{position:relative;z-index:2;background:rgba(13,10,8,.55);padding:14px 22px;border-radius:12px;}
+.hero-slide .overlay-txt h4{font-family:var(--font-display);font-size:26px;letter-spacing:1px;margin:0 0 4px;}
+.hero-slide .overlay-txt p{font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);margin:0;}
+.hero-dots{display:flex;justify-content:center;gap:6px;margin-bottom:20px;}
+.hero-dots span{width:7px;height:7px;border-radius:50%;background:var(--line);}
+.hero-dots span.active{background:var(--gold);}
+
+.helptext{font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);line-height:1.6;}
+audio{display:none;}
+
+/* playlist */
+.player-bar{
+  background:linear-gradient(160deg, var(--panel), var(--panel2));border:1px solid var(--line);border-radius:16px;
+  padding:18px 20px;margin-bottom:20px;
+}
+.player-now{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.player-now .disc{
+  width:52px;height:52px;border-radius:50%;background:conic-gradient(var(--gold),var(--rust),var(--gold));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.player-now .disc::after{content:"";width:16px;height:16px;border-radius:50%;background:var(--ink);}
+.player-now .disc.spin{animation:spin 3s linear infinite;}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+.player-now .meta{flex:1;min-width:0;}
+.player-now .meta .t{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.player-now .meta .a{font-family:var(--font-mono);font-size:10.5px;color:var(--chalk-dim);}
+.player-progress{width:100%;height:5px;border-radius:4px;background:var(--line);overflow:hidden;margin-bottom:14px;cursor:pointer;}
+.player-progress .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--ember),var(--gold));}
+.player-controls{display:flex;align-items:center;justify-content:center;gap:14px;}
+.pctrl-btn{
+  background:var(--panel2);border:1px solid var(--line);color:var(--chalk);border-radius:50%;
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.pctrl-btn.play{width:54px;height:54px;background:linear-gradient(135deg,var(--ember),var(--gold));color:var(--ink);border:none;font-size:18px;}
+.pctrl-btn:hover{border-color:var(--amber);}
+.player-time{font-family:var(--font-mono);font-size:10px;color:var(--chalk-dim);text-align:center;margin-top:8px;}
+
+.queue-row{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);margin-bottom:8px;background:var(--panel);
+}
+.queue-row.playing{border-color:var(--gold);background:rgba(244,196,48,.07);}
+.queue-num{font-family:var(--font-mono);font-size:12px;color:var(--chalk-dim);width:20px;flex-shrink:0;}
+.queue-meta{flex:1;min-width:0;}
+.queue-meta b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.queue-meta span{font-family:var(--font-mono);font-size:10px;color:var(--chalk-dim);}
+.queue-actions{display:flex;gap:6px;flex-shrink:0;}
+.icon-btn{background:none;border:1px solid var(--line);color:var(--chalk-dim);border-radius:7px;width:28px;height:28px;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.icon-btn:hover{border-color:var(--amber);color:var(--amber);}
+
+/* countdown + volume */
+.player-bar{position:relative;}
+.countdown-overlay{
+  position:absolute;inset:0;background:rgba(13,10,8,.94);border-radius:16px;
+  display:none;align-items:center;justify-content:center;flex-direction:column;z-index:5;
+}
+.countdown-overlay.show{display:flex;}
+.countdown-overlay .num{font-family:var(--font-display);font-size:72px;color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(244,196,48,.5);}
+.countdown-overlay .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--chalk-dim);text-transform:uppercase;margin-top:8px;text-align:center;padding:0 20px;}
+.volume-row{display:flex;align-items:center;gap:12px;margin-top:2px;}
+.volume-row button{
+  background:var(--panel2);border:1px solid var(--line);color:var(--chalk);border-radius:9px;
+  width:38px;height:38px;font-size:16px;flex-shrink:0;
+}
+.volume-row button:hover{border-color:var(--amber);}
+.volume-row input[type=range]{
+  flex:1;-webkit-appearance:none;height:5px;border-radius:4px;background:var(--line);outline:none;
+}
+.volume-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;
+}
+.volume-row input[type=range]::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;
+}
+
+/* fan voting */
+:root{ --teamA:#D9432E; --teamB:#3E7CB1; }
+.fan-wrap{
+  min-height:100vh;padding:60px 20px 40px;position:relative;
+  display:flex;align-items:flex-start;justify-content:center;
+  background:radial-gradient(circle at 50% 0%, #241a13 0%, var(--ink) 55%);
+}
+.fan-switch{position:fixed;top:16px;right:16px;}
+.fan-inner{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;}
+.fan-title{font-family:var(--font-display);font-size:34px;letter-spacing:1px;margin:0;}
+.fan-waiting{padding:30px 10px;}
+.fan-matchup{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.team-btn{
+  flex:1;border-radius:16px;padding:22px 14px;border:2px solid var(--line);background:var(--panel);
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--chalk);
+  transition:transform .1s ease;
+}
+.team-btn:active{transform:scale(.97);}
+.team-btn.team-a{border-color:var(--teamA);}
+.team-btn.team-b{border-color:var(--teamB);}
+.team-btn.voted{box-shadow:0 0 0 2px var(--gold), 0 0 24px rgba(244,196,48,.3);}
+.team-btn .team-tag{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:2px;padding:3px 10px;border-radius:20px;
+}
+.team-a .team-tag{background:rgba(217,67,46,.18);color:var(--teamA);}
+.team-b .team-tag{background:rgba(62,124,177,.18);color:var(--teamB);}
+.team-btn .team-name{font-family:var(--font-display);font-size:22px;letter-spacing:.5px;}
+.team-btn .team-pct{font-family:var(--font-mono);font-size:24px;font-weight:700;}
+.team-a .team-pct{color:var(--teamA);}
+.team-b .team-pct{color:var(--teamB);}
+.fan-vs{font-family:var(--font-display);font-size:18px;color:var(--chalk-dim);flex-shrink:0;}
+.fan-bar{width:100%;height:14px;border-radius:8px;overflow:hidden;background:var(--teamB);display:flex;}
+.fan-bar-fill{height:100%;background:var(--teamA);transition:width .4s ease;}
+.fan-count{font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);text-align:center;margin-top:10px;letter-spacing:1px;text-transform:uppercase;}
+
+/* host live vote tally */
+.vote-tally{
+  margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--panel2);
+}
+.vote-tally .vt-row{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;margin-bottom:6px;}
+.vote-tally .vt-bar{flex:1;height:10px;border-radius:6px;background:var(--line);overflow:hidden;}
+.vote-tally .vt-fill{height:100%;background:var(--teamA);}
+.vote-tally .vt-fill.b{background:var(--teamB);}
+.vote-tally .vt-label{width:120px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.vote-tally .vt-pct{width:44px;flex-shrink:0;text-align:right;}
+
+/* shuffle play */
+.shuffle-wrap{text-align:center;padding:10px 0 4px;}
+.shuffle-btn{
+  width:150px;height:150px;border-radius:50%;border:2px solid var(--line);
+  background:radial-gradient(circle at 35% 30%, var(--panel2), var(--ink2));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  margin:0 auto;box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.shuffle-btn .ic{font-size:38px;}
+.shuffle-btn .lbl{font-family:var(--font-display);font-size:18px;letter-spacing:1px;color:var(--chalk);}
+.shuffle-btn.on{
+  border-color:var(--gold);
+  background:radial-gradient(circle at 35% 30%, var(--ember), var(--rust));
+  box-shadow:0 0 40px rgba(244,196,48,.35);
+}
+.shuffle-btn.on .lbl{color:var(--ink);}
+.shuffle-hint{font-family:var(--font-mono);font-size:10.5px;color:var(--chalk-dim);letter-spacing:1px;margin-top:14px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<nav>
+   <a href="../INFO">INFO</a>
+</nav>
+  
+
+<!-- ================= LOGIN ================= -->
+<div class="login-wrap" id="loginView">
+  <div class="login-card">
+    <div class="login-mark">HH</div>
+    <h1>HIT FOR HIT</h1>
+    <p class="sub">Battle Control · Choose Your Device Role</p>
+    <div class="role-options">
+      <button class="role-option" onclick="selectRoleHost()">
+        <span class="ic">🎙️</span>
+        <span><span class="label">Host / Admin</span><span class="desc">Run the bracket, call artists, manage everything</span></span>
+      </button>
+      <button class="role-option" onclick="showArtistPicker()">
+        <span class="ic">🎤</span>
+        <span><span class="label">I'm an Artist</span><span class="desc">Check in on your walkie channel</span></span>
+      </button>
+      <button class="role-option" onclick="selectRoleFan()">
+        <span class="ic">🗳️</span>
+        <span><span class="label">I'm Here to Vote</span><span class="desc">No sign-in — vote live on the current battle</span></span>
+      </button>
+    </div>
+    <div class="artist-picker" id="artistPicker">
+      <div class="field">
+        <label>Select your name</label>
+        <select id="artistSelect"><option value="">— choose artist —</option></select>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="confirmArtistRole()">Enter as Artist</button>
+      <p class="helptext" style="margin-top:8px;">Not on the list yet? Ask the host to add you in the Admin tab first.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="appShell" style="display:none;">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">HH</div>
+      <div class="brand-text">
+        <h1>HIT FOR HIT</h1>
+        <span>Battle Control</span>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <div class="role-chip"><span class="dot" id="connDot"></span> <span id="roleChipText">—</span></div>
+      <button class="switch-role" onclick="logout()">SWITCH</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabBar">
+    <button class="tab-btn active" data-tab="bracket">Bracket</button>
+    <button class="tab-btn" data-tab="walkie">Walkie</button>
+    <button class="tab-btn admin-only" data-tab="admin" style="display:none;">Admin</button>
+    <button class="tab-btn" data-tab="playlist">Playlist</button>
+    <button class="tab-btn" data-tab="drops">Music &amp; Drops</button>
+    <button class="tab-btn" data-tab="promo">Promo Kit</button>
+    <button class="tab-btn" data-tab="hero">Hero Reel</button>
+  </div>
+
+  <!-- ---- BRACKET ---- -->
+  <div class="view active" id="view-bracket">
+    <div class="section-title">Road to the Crown</div>
+    <p class="section-sub">10 vs 10 · Male &amp; Female Divisions</p>
+
+    <div class="crown-row">
+      <div class="crown-card" id="crownMaleCard">
+        <div class="icon">👑</div>
+        <div class="cat">Male Champion</div>
+        <div class="name tbd" id="crownMaleName">TBD</div>
+      </div>
+      <div class="crown-card" id="crownFemaleCard">
+        <div class="icon">👑</div>
+        <div class="cat">Female Champion</div>
+        <div class="name tbd" id="crownFemaleName">TBD</div>
+      </div>
+    </div>
+
+    <div class="gender-block">
+      <div class="gender-head"><h3>Male Division</h3></div>
+      <div class="card-grid" id="grid-male"></div>
+      <div id="matchup-male"></div>
+    </div>
+
+    <div class="gender-block">
+      <div class="gender-head"><h3>Female Division</h3></div>
+      <div class="card-grid" id="grid-female"></div>
+      <div id="matchup-female"></div>
+    </div>
+  </div>
+
+  <!-- ---- WALKIE ---- -->
+  <div class="view" id="view-walkie">
+    <div id="walkie-host-panel" style="display:none;">
+      <div class="section-title">Channel Control</div>
+      <p class="section-sub">Call an artist to open a live audio line + vibrating alert</p>
+      <div style="margin-bottom:16px;">
+        <button class="btn btn-ghost btn-sm" onclick="buzzAll()">📳 Buzz All Artists</button>
+      </div>
+      <div class="wt-grid" id="hostWtList"></div>
+      <audio id="hostRemoteAudio" autoplay playsinline></audio>
+    </div>
+
+    <div id="walkie-artist-panel" style="display:none;">
+      <div class="section-title">Your Channel</div>
+      <p class="section-sub" id="artistChannelLabel">—</p>
+      <div class="artist-standby" id="artistStandbyBox">
+        <div class="standby-ring" id="standbyRing">STANDBY</div>
+        <h2 id="artistStandbyState">On Standby</h2>
+        <p>Keep this tab open. You'll be alerted the moment the host calls you.</p>
+        <div id="incomingActions" class="incoming-actions" style="display:none;">
+          <button class="btn btn-primary" onclick="artistAcceptCall()">✅ Accept</button>
+          <button class="btn btn-danger" onclick="artistDeclineCall()">✖ Decline</button>
+        </div>
+      </div>
+      <div id="artistPttWrap" style="display:none;margin-top:16px;">
+        <button class="ptt-btn" id="artistPttBtn">PUSH TO TALK<small>Hold to transmit</small></button>
+        <button class="btn btn-ghost btn-block" style="margin-top:10px;" onclick="artistHangup()">End Call</button>
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-ghost btn-block" onclick="artistSignalHost()">🙋 Signal the Host</button>
+      </div>
+      <audio id="artistRemoteAudio" autoplay playsinline></audio>
+    </div>
+  </div>
+
+  <!-- ---- ADMIN ---- -->
+  <div class="view" id="view-admin">
+    <div class="section-title">Admin Panel</div>
+    <p class="section-sub">Add artists, manage the roster, reset divisions</p>
+
+    <div class="card">
+      <h3>Add Artist</h3>
+      <div class="grid2">
+        <div class="field"><label>Artist Name</label><input class="ff-input" id="newArtistName" placeholder="e.g. Lyrikill"></div>
+        <div class="field"><label>Division</label>
+          <select class="ff-input" id="newArtistGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="addArtist()">+ Add Artist</button>
+    </div>
+
+    <div class="card">
+      <h3>Host Requests <span class="tag-placeholder" id="reqCount" style="display:none;">NEW</span></h3>
+      <div id="hostRequestList" class="helptext">No requests yet.</div>
+    </div>
+
+    <div class="card">
+      <h3>Roster (<span id="rosterCount">0</span>)</h3>
+      <div id="adminRoster"></div>
+    </div>
+
+    <div class="card">
+      <h3>Division Reset</h3>
+      <p class="helptext">Resets round progress, statuses and crown for a division. This does not delete artists.</p>
+      <div style="display:flex;gap:10px;margin-top:10px;">
+        <button class="btn btn-danger btn-sm" onclick="resetDivision('male')">Reset Male Bracket</button>
+        <button class="btn btn-danger btn-sm" onclick="resetDivision('female')">Reset Female Bracket</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---- PLAYLIST ---- -->
+  <div class="view" id="view-playlist">
+    <div class="section-title">Battle Playlist</div>
+    <p class="section-sub" id="playlistSubtitle">Shuffle play — everyone hears the same track at the same time</p>
+
+    <!-- HOST: shuffle play control, drives the broadcast -->
+    <div id="djHostBar" style="display:none;">
+      <div class="player-bar">
+        <div class="countdown-overlay" id="djCountdownHost"></div>
+        <div class="player-now">
+          <div class="disc" id="playerDisc"></div>
+          <div class="meta">
+            <div class="t" id="playerNowTitle">Nothing queued yet</div>
+            <div class="a" id="playerNowArtist">Add tracks below, then hit shuffle play</div>
+          </div>
+          <span class="status-tag" id="broadcastTag">OFF AIR</span>
+        </div>
+        <div class="player-progress" id="playerProgressBar" onclick="djSeek(event)"><div class="fill" id="playerProgressFill"></div></div>
+        <div class="player-time" id="playerTime">0:00 / 0:00</div>
+        <div class="shuffle-wrap">
+          <button class="shuffle-btn" id="shuffleBtn" onclick="djToggleShuffle()">
+            <span class="ic">🔀</span>
+            <span class="lbl" id="shuffleBtnLabel">SHUFFLE PLAY</span>
+          </button>
+          <div class="shuffle-hint">Random order · auto-advances · everyone stays in sync</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTIST: read-only synced listener view -->
+    <div id="djArtistBar" style="display:none;">
+      <div class="player-bar">
+        <div class="countdown-overlay" id="djCountdownArtist"></div>
+        <div class="player-now">
+          <div class="disc" id="playerDiscArtist"></div>
+          <div class="meta">
+            <div class="t" id="playerNowTitleArtist">Waiting for the host to start the set</div>
+            <div class="a" id="playerNowArtistArtist">Tap Join Broadcast to sync in</div>
+          </div>
+          <span class="status-tag" id="broadcastTagArtist">OFF AIR</span>
+        </div>
+        <div class="player-progress"><div class="fill" id="playerProgressFillArtist"></div></div>
+        <div class="player-time" id="playerTimeArtist">0:00 / 0:00</div>
+      </div>
+      <button class="btn btn-primary btn-block" id="joinBroadcastBtn" onclick="joinBroadcast()">🔊 Join Broadcast</button>
+      <div class="volume-row" style="margin-top:14px;">
+        <button id="artistMuteBtn" onclick="toggleArtistMute()">🔊</button>
+        <input type="range" id="artistVolumeSlider" min="0" max="100" value="100" oninput="setArtistVolume(this.value)">
+      </div>
+      <p class="helptext" style="margin:10px 0 16px;">Once joined, your audio auto-syncs to the host — the volume slider only controls your own phone.</p>
+    </div>
+    <audio id="playlistAudio"></audio>
+
+    <div class="card">
+      <h3>Add Track</h3>
+      <div class="grid2">
+        <div class="field"><label>Song Title</label><input class="ff-input" id="plTitle" placeholder="e.g. Round 1 Battle Cut"></div>
+        <div class="field"><label>Artist Name</label><input class="ff-input" id="plArtist" placeholder="Artist name"></div>
+      </div>
+      <div class="field"><label>MP3 URL (direct link)</label><input class="ff-input" id="plUrl" placeholder="https://.../track.mp3"></div>
+      <button class="btn btn-primary" onclick="addPlaylistTrack()">+ Add to Playlist</button>
+      <p class="helptext" style="margin-top:10px;">Needs a direct .mp3 link (a Google Drive "share" link usually won't play directly — use a direct file host). <span id="plCountLabel">0 tracks loaded</span>.</p>
+    </div>
+  </div>
+
+  <!-- ---- DROPS ---- -->
+  <div class="view" id="view-drops">
+    <div class="section-title">Music &amp; Drops</div>
+    <p class="section-sub">Send us your battle track + intro drop</p>
+
+    <div class="email-box">
+      <div>
+        <div class="lbl">Email your audio files to</div>
+        <div class="addr">dropbox@hitforhitbattle.com <span class="tag-placeholder">PLACEHOLDER — EDIT ME</span></div>
+      </div>
+      <a class="btn btn-ghost btn-sm" href="mailto:dropbox@hitforhitbattle.com?subject=Hit%20for%20Hit%20-%20Track%20Submission">Open Email</a>
+    </div>
+
+    <div class="card">
+      <h3>Log a Submission</h3>
+      <p class="helptext" style="margin-bottom:12px;">This logs what you sent so the host can track it — paste a Drive/Dropbox/WeTransfer link if you have one, or just note that you emailed it.</p>
+      <div class="grid2">
+        <div class="field"><label>Your Name</label><input class="ff-input" id="dropArtist" placeholder="Artist name"></div>
+        <div class="field"><label>Track / Drop Title</label><input class="ff-input" id="dropTitle" placeholder="e.g. Round 1 Battle Cut"></div>
+      </div>
+      <div class="field"><label>Link (optional)</label><input class="ff-input" id="dropLink" placeholder="https://drive.google.com/..."></div>
+      <div class="field"><label>Note</label><input class="ff-input" id="dropNote" placeholder="e.g. Sent via email 6:40pm"></div>
+      <button class="btn btn-primary" onclick="submitDrop()">Log Submission</button>
+    </div>
+
+    <div class="card">
+      <h3>Submitted (<span id="dropCount">0</span>)</h3>
+      <div id="dropList" class="helptext">Nothing logged yet.</div>
+    </div>
+  </div>
+
+  <!-- ---- PROMO ---- -->
+  <div class="view" id="view-promo">
+    <div class="section-title">Promo Kit</div>
+    <p class="section-sub">Copy-ready text for artists &amp; admins to post</p>
+    <div id="promoList"></div>
+    <div class="card">
+      <h3>Add Custom Promo Text</h3>
+      <textarea class="ff-input" id="customPromoText" rows="3" placeholder="Write your own promo blurb..."></textarea>
+      <button class="btn btn-primary" style="margin-top:10px;" onclick="addPromo()">+ Add to Kit</button>
+    </div>
+  </div>
+
+  <!-- ---- HERO ---- -->
+  <div class="view" id="view-hero">
+    <div class="section-title">Hero Reel</div>
+    <p class="section-sub">Slideshow that plays your hero videos in order</p>
+    <div class="hero-stage" id="heroStage"></div>
+    <div class="hero-dots" id="heroDots"></div>
+
+    <div class="card">
+      <h3>Edit Slides</h3>
+      <p class="helptext" style="margin-bottom:12px;">Paste a direct video URL (.mp4) for each slot. Empty slots show a placeholder.</p>
+      <div id="heroEditList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="buzz-toast" id="buzzToast">📳 Alert received</div>
+
+<!-- ================= FAN VOTE (no login) ================= -->
+<div class="fan-wrap" id="fanShell" style="display:none;">
+  <button class="switch-role fan-switch" onclick="logout()">SWITCH</button>
+  <div class="fan-inner">
+    <div class="login-mark" style="margin-bottom:10px;">HH</div>
+    <h1 class="fan-title">HIT FOR HIT</h1>
+    <p class="sub" style="margin-bottom:26px;">Live Fan Vote</p>
+
+    <div id="fanWaiting" class="fan-waiting">
+      <div class="standby-ring">WAITING</div>
+      <h2 style="font-family:var(--font-display);font-size:24px;letter-spacing:1px;margin:16px 0 6px;">Voting isn't open yet</h2>
+      <p class="helptext">Hang tight — this page updates automatically the moment the host opens voting on the next battle.</p>
+    </div>
+
+    <div id="fanVoting" style="display:none;width:100%;max-width:480px;">
+      <div class="fan-matchup">
+        <button class="team-btn team-a" id="fanBtnA" onclick="castVote('a')">
+          <span class="team-tag">TEAM RED</span>
+          <span class="team-name" id="fanNameA">—</span>
+          <span class="team-pct" id="fanPctA">0%</span>
+        </button>
+        <div class="fan-vs">VS</div>
+        <button class="team-btn team-b" id="fanBtnB" onclick="castVote('b')">
+          <span class="team-tag">TEAM BLUE</span>
+          <span class="team-name" id="fanNameB">—</span>
+          <span class="team-pct" id="fanPctB">0%</span>
+        </button>
+      </div>
+      <div class="fan-bar"><div class="fan-bar-fill" id="fanBarFill" style="width:50%;"></div></div>
+      <p class="fan-count" id="fanVoteCount">0 votes so far</p>
+      <p class="helptext" id="fanVotedNote" style="display:none;text-align:center;margin-top:10px;">✅ Your vote is in — watch the bar move live.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== STORAGE HELPERS ===================== */
+async function sset(key, val, shared=true){
+  try{ return await window.storage.set(key, JSON.stringify(val), shared); }
+  catch(e){ console.error('storage set failed', key, e); return null; }
+}
+async function sget(key, shared=true){
+  try{
+    const r = await window.storage.get(key, shared);
+    return r ? JSON.parse(r.value) : null;
+  }catch(e){ return null; }
+}
+
+/* ===================== STATE ===================== */
+let ROLE = null; // { type:'host' } or { type:'artist', id, name }
+let ARTISTS = [];
+let PROMO = [];
+let HERO = [];
+let DROPS = [];
+let HOST_REQUESTS = [];
+let PLAYLIST = [];
+let plCurrentIdx = -1;
+let plIsPlaying = false;
+let selectedMatchup = { male: [], female: [] };
+let activeCallArtistId = null; // host side: who we're talking to
+let pc = null; // RTCPeerConnection
+let localStream = null;
+let heroIdx = 0;
+let VOTE_SESSION = null; // host-side cache of the shared 'vote_session' key
+let fanPollTimer = null;
+let votedSessionId = null; // resets on page reload — a refresh allows re-voting
+
+const MAX_ROUND = 3; // rounds 0..3, round>=3 with 1 left = crowned
+const STAGE_COLORS = ['#B0472A','#D97324','#E8A324','#F4C430'];
+
+/* ===================== INIT ===================== */
+async function boot(){
+  ARTISTS = (await sget('artists')) || [];
+  PROMO = (await sget('promo')) || defaultPromo();
+  if(!(await sget('promo'))) await sset('promo', PROMO);
+  HERO = (await sget('hero-videos')) || defaultHero();
+  if(!(await sget('hero-videos'))) await sset('hero-videos', HERO);
+  DROPS = (await sget('drops')) || [];
+  HOST_REQUESTS = (await sget('host-requests')) || [];
+  PLAYLIST = (await sget('playlist')) || [];
+  populateArtistSelect();
+  renderPlaylistQueue();
+  setupPlaylistAudioEvents();
+}
+function defaultPromo(){
+  return [
+    "🎤 HIT FOR HIT is coming for the crown. 10 men. 10 women. One bar at a time — who survives the exchange? Pull up.",
+    "Every round the card changes color. Rust means you're still fighting for it. Gold means you're one bar from the crown. Watch the colors move.",
+    "This isn't a lineup, it's a gauntlet. HIT FOR HIT — the battle for the crown starts soon. Tag who you're riding with.",
+    "Male crown. Female crown. Same fire. HIT FOR HIT is a battle event built on bars, not hype. Be there.",
+    "You don't get handed the crown at HIT FOR HIT — you hit for it, round after round, until only one is left standing.",
+    "Behind the scenes: every artist is on a live channel with the host tonight. This is real-time battle control. HIT FOR HIT."
+  ];
+}
+function defaultHero(){
+  return [
+    {src:'', label:'Opening Hype Reel'},
+    {src:'', label:'Artist Introductions'},
+    {src:'', label:"Last Year's Crowning Moment"},
+    {src:'', label:'Venue / Doors Info'}
+  ];
+}
+
+/* ===================== LOGIN ===================== */
+function showArtistPicker(){
+  document.getElementById('artistPicker').classList.add('show');
+}
+async function selectRoleHost(){
+  ROLE = {type:'host'};
+  enterApp();
+}
+function populateArtistSelect(){
+  const sel = document.getElementById('artistSelect');
+  sel.innerHTML = '<option value="">— choose artist —</option>' +
+    ARTISTS.map(a=>`<option value="${a.id}">${a.name} (${a.gender==='male'?'M':'F'})</option>`).join('');
+}
+async function confirmArtistRole(){
+  const id = document.getElementById('artistSelect').value;
+  if(!id){ alert('Pick your name from the list.'); return; }
+  const a = ARTISTS.find(x=>x.id===id);
+  if(!a) return;
+  ROLE = {type:'artist', id:a.id, name:a.name};
+  enterApp();
+}
+function selectRoleFan(){
+  ROLE = {type:'fan'};
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('fanShell').style.display='flex';
+  refreshFanVote();
+  startFanListener();
+}
+function logout(){
+  ROLE = null;
+  teardownCall();
+  const audio = document.getElementById('playlistAudio');
+  if(audio){ audio.pause(); audio.removeAttribute('src'); audio.load(); }
+  plIsPlaying = false; plCurrentIdx = -1; djJoined = false; djShuffleOn = false;
+  stopHeartbeat();
+  if(djSyncTimer){ clearInterval(djSyncTimer); djSyncTimer=null; }
+  if(fanPollTimer){ clearInterval(fanPollTimer); fanPollTimer=null; }
+  votedSessionId = null;
+  document.getElementById('appShell').style.display='none';
+  document.getElementById('fanShell').style.display='none';
+  document.getElementById('loginView').style.display='flex';
+  document.getElementById('artistPicker').classList.remove('show');
+}
+function enterApp(){
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('appShell').style.display='block';
+  document.getElementById('connDot').style.background = ROLE.type==='host' ? 'var(--gold)' : 'var(--standby)';
+  document.getElementById('roleChipText').innerHTML = ROLE.type==='host' ? '<b>HOST / ADMIN</b>' : `<b>${ROLE.name}</b>`;
+  document.querySelectorAll('.admin-only').forEach(el=> el.style.display = ROLE.type==='host' ? '' : 'none');
+  document.getElementById('walkie-host-panel').style.display = ROLE.type==='host' ? '' : 'none';
+  document.getElementById('walkie-artist-panel').style.display = ROLE.type==='artist' ? '' : 'none';
+  document.getElementById('djHostBar').style.display = ROLE.type==='host' ? '' : 'none';
+  document.getElementById('djArtistBar').style.display = ROLE.type==='artist' ? '' : 'none';
+  document.getElementById('playlistSubtitle').textContent = ROLE.type==='host'
+    ? 'Shuffle play — hit the button, tracks play in random order for everyone'
+    : 'Shuffle play — join the broadcast to hear what the host is playing, live';
+  if(ROLE.type==='artist'){
+    document.getElementById('artistChannelLabel').textContent = 'Channel: ' + ROLE.name.toUpperCase();
+  }
+  refreshAll();
+  startPolling();
+  if(ROLE.type==='artist') { startArtistListener(); startDjSyncLoop(); }
+  bindPtt();
+}
+
+/* ===================== TABS ===================== */
+document.getElementById('tabBar').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.tab-btn');
+  if(!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+btn.dataset.tab).classList.add('active');
+});
+
+/* ===================== POLLING / REFRESH ===================== */
+function startPolling(){
+  refreshAll();
+  setInterval(refreshAll, 3000);
+}
+async function refreshAll(){
+  ARTISTS = (await sget('artists')) || [];
+  PROMO = (await sget('promo')) || [];
+  HERO = (await sget('hero-videos')) || [];
+  DROPS = (await sget('drops')) || [];
+  HOST_REQUESTS = (await sget('host-requests')) || [];
+  const freshPlaylist = (await sget('playlist')) || [];
+  if(JSON.stringify(freshPlaylist) !== JSON.stringify(PLAYLIST)){
+    const currentTrackId = plCurrentIdx>-1 && PLAYLIST[plCurrentIdx] ? PLAYLIST[plCurrentIdx].id : null;
+    PLAYLIST = freshPlaylist;
+    plCurrentIdx = currentTrackId ? PLAYLIST.findIndex(t=>t.id===currentTrackId) : -1;
+    renderPlaylistQueue();
+  }
+  if(ROLE && ROLE.type==='host'){ VOTE_SESSION = await sget('vote_session'); }
+  renderBracket();
+  if(ROLE && ROLE.type==='host'){ renderHostWalkie(); renderAdmin(); }
+  renderDrops();
+  renderPromo();
+  renderHero();
+}
+
+/* ===================== BRACKET ===================== */
+function stageColor(round, status){
+  if(status==='crowned') return STAGE_COLORS[3];
+  const idx = Math.min(round, STAGE_COLORS.length-1);
+  return STAGE_COLORS[idx];
+}
+function renderBracket(){
+  ['male','female'].forEach(g=>{
+    const list = ARTISTS.filter(a=>a.gender===g);
+    const grid = document.getElementById('grid-'+g);
+    if(!list.length){ grid.innerHTML = '<div class="empty-note">No artists added yet for this division.</div>'; }
+    else{
+      grid.innerHTML = list.map(a=>{
+        const color = stageColor(a.round||0, a.status);
+        const isSelected = selectedMatchup[g].includes(a.id);
+        const canSelect = ROLE && ROLE.type==='host' && a.status==='active';
+        return `<div class="bcard ${a.status==='eliminated'?'eliminated':''} ${a.status==='crowned'?'crowned':''} ${isSelected?'selected':''}"
+                    style="--stage-color:${color}" ${canSelect?`onclick="toggleMatchupPick('${g}','${a.id}')"`:''}>
+          <div class="av">${initials(a.name)}</div>
+          <div class="nm">${escapeHtml(a.name)}</div>
+          <div class="rd">${a.status==='crowned' ? '👑 CROWNED' : 'Round '+ (a.round||0)}</div>
+          <div class="status-tag">${a.status==='eliminated'?'Eliminated':(a.status==='crowned'?'Champion':'Active')}</div>
+        </div>`;
+      }).join('');
+    }
+    renderMatchupBar(g);
+    // crown display
+    const champ = list.find(a=>a.status==='crowned');
+    const nameEl = document.getElementById('crown'+(g==='male'?'Male':'Female')+'Name');
+    const cardEl = document.getElementById('crown'+(g==='male'?'Male':'Female')+'Card');
+    if(champ){ nameEl.textContent = champ.name; nameEl.classList.remove('tbd'); cardEl.classList.add('crowned'); }
+    else{ nameEl.textContent = 'TBD'; nameEl.classList.add('tbd'); cardEl.classList.remove('crowned'); }
+  });
+}
+function initials(name){
+  return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+}
+function escapeHtml(s){
+  const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+function toggleMatchupPick(g,id){
+  if(!ROLE || ROLE.type!=='host') return;
+  const arr = selectedMatchup[g];
+  const i = arr.indexOf(id);
+  if(i>-1){ arr.splice(i,1); }
+  else{
+    if(arr.length>=2) arr.shift();
+    arr.push(id);
+  }
+  renderBracket();
+}
+function renderMatchupBar(g){
+  const el = document.getElementById('matchup-'+g);
+  if(!ROLE || ROLE.type!=='host'){ el.innerHTML=''; return; }
+  const [id1,id2] = selectedMatchup[g];
+  const a1 = ARTISTS.find(a=>a.id===id1);
+  const a2 = ARTISTS.find(a=>a.id===id2);
+  const sessionMatches = VOTE_SESSION && VOTE_SESSION.active && a1 && a2 &&
+    VOTE_SESSION.aId===a1.id && VOTE_SESSION.bId===a2.id;
+  el.innerHTML = `
+    <div class="matchup-bar">
+      <div class="mm-slot ${a1?'filled':''}">${a1?a1.name:'Tap an active artist card to pick fighter 1'}</div>
+      <div class="mm-vs">VS</div>
+      <div class="mm-slot ${a2?'filled':''}">${a2?a2.name:'Tap another to pick fighter 2'}</div>
+      ${a1 && a2 ? `
+        <button class="btn btn-primary btn-sm" onclick="declareWinner('${g}','${a1.id}','${a2.id}')">🏆 ${escapeHtml(a1.name)} Wins</button>
+        <button class="btn btn-primary btn-sm" onclick="declareWinner('${g}','${a2.id}','${a1.id}')">🏆 ${escapeHtml(a2.name)} Wins</button>
+        ${sessionMatches
+          ? `<button class="btn btn-danger btn-sm" onclick="closeFanVote()">✖ Close Fan Vote</button>`
+          : `<button class="btn btn-ghost btn-sm" onclick="openFanVote('${g}','${a1.id}','${a2.id}')">🗳️ Open Fan Vote</button>`}
+      ` : ''}
+    </div>
+    ${sessionMatches ? renderVoteTally(VOTE_SESSION) : ''}`;
+}
+function renderVoteTally(vs){
+  const total = (vs.aVotes||0) + (vs.bVotes||0);
+  const pctA = total ? Math.round((vs.aVotes/total)*100) : 50;
+  const pctB = 100 - pctA;
+  return `
+    <div class="vote-tally">
+      <div class="vt-row">
+        <div class="vt-label">${escapeHtml(vs.aName)}</div>
+        <div class="vt-bar"><div class="vt-fill" style="width:${pctA}%"></div></div>
+        <div class="vt-pct">${pctA}%</div>
+      </div>
+      <div class="vt-row">
+        <div class="vt-label">${escapeHtml(vs.bName)}</div>
+        <div class="vt-bar"><div class="vt-fill b" style="width:${pctB}%"></div></div>
+        <div class="vt-pct">${pctB}%</div>
+      </div>
+      <div class="helptext" style="margin-top:2px;">${total} live vote${total===1?'':'s'} · fans vote at this page's "I'm Here to Vote" option — you still pick the official winner above.</div>
+    </div>`;
+}
+async function openFanVote(g, aId, bId){
+  const a = ARTISTS.find(x=>x.id===aId);
+  const b = ARTISTS.find(x=>x.id===bId);
+  if(!a || !b) return;
+  VOTE_SESSION = {
+    id: 'v_'+Math.random().toString(36).slice(2,9),
+    gender: g, aId, aName:a.name, bId, bName:b.name,
+    aVotes: 0, bVotes: 0,
+    active: true
+  };
+  await sset('vote_session', VOTE_SESSION);
+  renderBracket();
+}
+async function closeFanVote(){
+  VOTE_SESSION = (await sget('vote_session')) || VOTE_SESSION;
+  if(VOTE_SESSION){ VOTE_SESSION.active = false; await sset('vote_session', VOTE_SESSION); }
+  renderBracket();
+}
+async function declareWinner(g, winnerId, loserId){
+  ARTISTS = (await sget('artists')) || ARTISTS;
+  const w = ARTISTS.find(a=>a.id===winnerId);
+  const l = ARTISTS.find(a=>a.id===loserId);
+  if(!w||!l) return;
+  w.round = Math.min((w.round||0)+1, MAX_ROUND);
+  l.status = 'eliminated';
+  const stillActive = ARTISTS.filter(a=>a.gender===g && a.status==='active');
+  if(stillActive.length===1 && stillActive[0].id===w.id){
+    w.status = 'crowned';
+  }
+  await sset('artists', ARTISTS);
+  const vs = (await sget('vote_session'));
+  if(vs && vs.active && (vs.aId===winnerId || vs.aId===loserId)){
+    vs.active = false;
+    await sset('vote_session', vs);
+    VOTE_SESSION = vs;
+  }
+  selectedMatchup[g] = [];
+  renderBracket();
+}
+async function resetDivision(g){
+  if(!confirm('Reset the '+g+' bracket? Rounds, statuses and crown will clear.')) return;
+  ARTISTS = (await sget('artists')) || ARTISTS;
+  ARTISTS.forEach(a=>{ if(a.gender===g){ a.round=0; a.status='active'; } });
+  await sset('artists', ARTISTS);
+  renderBracket(); renderAdmin();
+}
+
+/* ===================== ADMIN ===================== */
+async function addArtist(){
+  const name = document.getElementById('newArtistName').value.trim();
+  const gender = document.getElementById('newArtistGender').value;
+  if(!name){ alert('Enter an artist name.'); return; }
+  ARTISTS = (await sget('artists')) || ARTISTS;
+  ARTISTS.push({ id:'a_'+Math.random().toString(36).slice(2,9), name, gender, round:0, status:'active' });
+  await sset('artists', ARTISTS);
+  document.getElementById('newArtistName').value='';
+  populateArtistSelect();
+  renderBracket(); renderAdmin(); renderHostWalkie();
+}
+async function removeArtist(id){
+  if(!confirm('Remove this artist from the roster?')) return;
+  ARTISTS = (await sget('artists')) || ARTISTS;
+  ARTISTS = ARTISTS.filter(a=>a.id!==id);
+  await sset('artists', ARTISTS);
+  populateArtistSelect();
+  renderBracket(); renderAdmin(); renderHostWalkie();
+}
+function renderAdmin(){
+  document.getElementById('rosterCount').textContent = ARTISTS.length;
+  const el = document.getElementById('adminRoster');
+  if(!ARTISTS.length){ el.innerHTML = '<div class="helptext">No artists yet — add your first one above.</div>'; }
+  else{
+    el.innerHTML = ARTISTS.map(a=>`
+      <div class="admin-list-row">
+        <div class="meta"><b>${escapeHtml(a.name)}</b><span>${a.gender==='male'?'Male':'Female'} · Round ${a.round||0} · ${a.status}</span></div>
+        <button class="btn btn-ghost btn-sm" onclick="removeArtist('${a.id}')">Remove</button>
+      </div>`).join('');
+  }
+  const reqEl = document.getElementById('hostRequestList');
+  const reqTag = document.getElementById('reqCount');
+  if(!HOST_REQUESTS.length){ reqEl.innerHTML='No requests yet.'; reqTag.style.display='none'; }
+  else{
+    reqTag.style.display='inline-block';
+    reqEl.innerHTML = HOST_REQUESTS.slice().reverse().map(r=>`<div>🙋 <b>${escapeHtml(r.name)}</b> flagged you at ${new Date(r.ts).toLocaleTimeString()}</div>`).join('');
+  }
+}
+
+/* ===================== WALKIE — HOST SIDE ===================== */
+function renderHostWalkie(){
+  const el = document.getElementById('hostWtList');
+  if(!ARTISTS.length){ el.innerHTML = '<div class="empty-note">Add artists in the Admin tab to start calling them.</div>'; return; }
+  el.innerHTML = ARTISTS.map(a=>{
+    const color = stageColor(a.round||0, a.status);
+    const isActiveCall = activeCallArtistId === a.id;
+    return `<div class="wt-row" style="--stage-color:${color}">
+      <div class="av-sm">${initials(a.name)}</div>
+      <div class="wt-info">
+        <div class="nm">${escapeHtml(a.name)}</div>
+        <div class="st"><span class="led ${isActiveCall?'connected':''}" id="led-${a.id}"></span> <span id="st-${a.id}">idle</span></div>
+      </div>
+      <div class="wt-actions">
+        <button class="btn btn-ghost btn-sm" onclick="buzzArtist('${a.id}')">📳 Buzz</button>
+        <button class="btn btn-primary btn-sm" onclick="hostCall('${a.id}')">🎙️ Call</button>
+      </div>
+    </div>`;
+  }).join('');
+  if(activeCallArtistId){
+    const a = ARTISTS.find(x=>x.id===activeCallArtistId);
+    if(a){
+      const wrapId = 'ptt-wrap-'+a.id;
+      if(!document.getElementById(wrapId)){
+        const row = document.createElement('div');
+        row.className='wt-row';
+        row.id = wrapId;
+        row.innerHTML = `<div style="flex:1;">
+          <button class="ptt-btn" id="hostPttBtn">PUSH TO TALK<small>Hold to talk to ${escapeHtml(a.name)}</small></button>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="hostHangup()">End Call</button>`;
+        el.appendChild(row);
+        bindHostPtt();
+      }
+    }
+  }
+}
+async function buzzArtist(id){
+  await sset('wt_buzz_'+id, {ts:Date.now()}, true);
+}
+async function buzzAll(){
+  for(const a of ARTISTS){ await buzzArtist(a.id); }
+  alert('Buzzed all artists 📳');
+}
+async function hostCall(id){
+  if(activeCallArtistId){ await hostHangup(); }
+  activeCallArtistId = id;
+  await sset('wt_state_'+id, {state:'ringing', ts:Date.now()}, true);
+  await sset('wt_buzz_'+id, {ts:Date.now()}, true);
+  const stEl = document.getElementById('st-'+id);
+  if(stEl) stEl.textContent = 'ringing…';
+  const led = document.getElementById('led-'+id);
+  if(led) led.classList.add('ringing');
+  renderHostWalkie();
+  setupHostPeer(id);
+  pollForAnswer(id);
+}
+async function setupHostPeer(id){
+  try{
+    localStream = await navigator.mediaDevices.getUserMedia({audio:true});
+  }catch(e){
+    alert('Microphone access is needed for the walkie to work.');
+    return;
+  }
+  pc = new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
+  localStream.getTracks().forEach(t=>{ t.enabled = false; pc.addTrack(t, localStream); });
+  pc.ontrack = (e)=>{ document.getElementById('hostRemoteAudio').srcObject = e.streams[0]; };
+  pc.onicecandidate = async (e)=>{
+    if(e.candidate){
+      const arr = (await sget('wt_ice_host_'+id)) || [];
+      arr.push(e.candidate);
+      await sset('wt_ice_host_'+id, arr);
+    }
+  };
+  const offer = await pc.createOffer({offerToReceiveAudio:true});
+  await pc.setLocalDescription(offer);
+  await sset('wt_offer_'+id, {sdp:offer, ts:Date.now()});
+  await sset('wt_ice_host_'+id, []);
+  await sset('wt_ice_artist_'+id, []);
+}
+let hostPollTimer = null;
+function pollForAnswer(id){
+  let answered = false, iceApplied = 0;
+  hostPollTimer = setInterval(async ()=>{
+    if(activeCallArtistId !== id){ clearInterval(hostPollTimer); return; }
+    if(!answered){
+      const ans = await sget('wt_answer_'+id);
+      if(ans && ans.sdp){
+        try{
+          await pc.setRemoteDescription(new RTCSessionDescription(ans.sdp));
+          answered = true;
+          await sset('wt_state_'+id, {state:'connected', ts:Date.now()}, true);
+          const stEl = document.getElementById('st-'+id); if(stEl) stEl.textContent='connected';
+          const led = document.getElementById('led-'+id); if(led){ led.classList.remove('ringing'); led.classList.add('connected'); }
+        }catch(err){ console.error(err); }
+      }
+    } else {
+      const iceArr = (await sget('wt_ice_artist_'+id)) || [];
+      for(let i=iceApplied;i<iceArr.length;i++){
+        try{ await pc.addIceCandidate(new RTCIceCandidate(iceArr[i])); }catch(e){}
+      }
+      iceApplied = iceArr.length;
+    }
+    const st = await sget('wt_state_'+id);
+    if(st && st.state==='ended'){ hostHangup(); }
+  }, 1200);
+}
+function bindHostPtt(){
+  const btn = document.getElementById('hostPttBtn');
+  if(!btn) return;
+  const start = ()=>{ if(localStream){ localStream.getTracks().forEach(t=>t.enabled=true); btn.classList.add('transmitting'); } };
+  const stop = ()=>{ if(localStream){ localStream.getTracks().forEach(t=>t.enabled=false); btn.classList.remove('transmitting'); } };
+  btn.addEventListener('mousedown', start); btn.addEventListener('touchstart', (e)=>{e.preventDefault();start();});
+  btn.addEventListener('mouseup', stop); btn.addEventListener('mouseleave', stop);
+  btn.addEventListener('touchend', (e)=>{e.preventDefault();stop();});
+}
+async function hostHangup(){
+  const id = activeCallArtistId;
+  if(id) await sset('wt_state_'+id, {state:'ended', ts:Date.now()}, true);
+  teardownCall();
+  activeCallArtistId = null;
+  if(hostPollTimer) clearInterval(hostPollTimer);
+  renderHostWalkie();
+}
+
+/* ===================== WALKIE — ARTIST SIDE ===================== */
+let artistPollTimer = null;
+let lastBuzzTs = 0;
+let incomingId = null;
+function startArtistListener(){
+  artistPollTimer = setInterval(async ()=>{
+    if(!ROLE || ROLE.type!=='artist') return;
+    const state = await sget('wt_state_'+ROLE.id);
+    const buzz = await sget('wt_buzz_'+ROLE.id);
+    if(buzz && buzz.ts !== lastBuzzTs){
+      lastBuzzTs = buzz.ts;
+      fireBuzzFeedback();
+    }
+    if(state && state.state==='ringing' && incomingId !== state.ts){
+      incomingId = state.ts;
+      showIncomingCall();
+    }
+    if(state && state.state==='ended'){
+      resetArtistUi();
+    }
+  }, 1200);
+}
+function fireBuzzFeedback(){
+  if(navigator.vibrate) navigator.vibrate([200,100,200,100,200]);
+  playBeep();
+  const t = document.getElementById('buzzToast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+function playBeep(){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type='square'; o.frequency.value=880;
+    o.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.15, ctx.currentTime);
+    o.start(); o.stop(ctx.currentTime+0.35);
+  }catch(e){}
+}
+function showIncomingCall(){
+  document.getElementById('standbyRing').classList.add('calling');
+  document.getElementById('standbyRing').textContent = 'INCOMING';
+  document.getElementById('artistStandbyState').textContent = 'Host is calling you';
+  document.getElementById('incomingActions').style.display='flex';
+  if(navigator.vibrate) navigator.vibrate([300,150,300,150,300,150,300]);
+  playBeep();
+}
+async function artistAcceptCall(){
+  document.getElementById('incomingActions').style.display='none';
+  document.getElementById('artistStandbyState').textContent = 'Connecting…';
+  try{
+    localStream = await navigator.mediaDevices.getUserMedia({audio:true});
+  }catch(e){
+    alert('Microphone access is needed to answer.');
+    return;
+  }
+  const offerData = await sget('wt_offer_'+ROLE.id);
+  if(!offerData){ alert('Call ended before you could connect.'); resetArtistUi(); return; }
+  pc = new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
+  localStream.getTracks().forEach(t=>{ t.enabled=false; pc.addTrack(t, localStream); });
+  pc.ontrack = (e)=>{ document.getElementById('artistRemoteAudio').srcObject = e.streams[0]; };
+  pc.onicecandidate = async (e)=>{
+    if(e.candidate){
+      const arr = (await sget('wt_ice_artist_'+ROLE.id)) || [];
+      arr.push(e.candidate);
+      await sset('wt_ice_artist_'+ROLE.id, arr);
+    }
+  };
+  await pc.setRemoteDescription(new RTCSessionDescription(offerData.sdp));
+  const answer = await pc.createAnswer();
+  await pc.setLocalDescription(answer);
+  await sset('wt_answer_'+ROLE.id, {sdp:answer, ts:Date.now()});
+
+  let iceApplied = 0;
+  const iceTimer = setInterval(async ()=>{
+    const iceArr = (await sget('wt_ice_host_'+ROLE.id)) || [];
+    for(let i=iceApplied;i<iceArr.length;i++){
+      try{ await pc.addIceCandidate(new RTCIceCandidate(iceArr[i])); }catch(e){}
+    }
+    iceApplied = iceArr.length;
+    const st = await sget('wt_state_'+ROLE.id);
+    if(!st || st.state==='ended'){ clearInterval(iceTimer); }
+  }, 1200);
+
+  document.getElementById('standbyRing').classList.remove('calling');
+  document.getElementById('standbyRing').textContent = 'LIVE';
+  document.getElementById('artistStandbyState').textContent = 'Connected to Host';
+  document.getElementById('artistPttWrap').style.display='block';
+  bindPtt();
+}
+async function artistDeclineCall(){
+  await sset('wt_state_'+ROLE.id, {state:'ended', ts:Date.now()}, true);
+  resetArtistUi();
+}
+async function artistHangup(){
+  await sset('wt_state_'+ROLE.id, {state:'ended', ts:Date.now()}, true);
+  teardownCall();
+  resetArtistUi();
+}
+function resetArtistUi(){
+  teardownCall();
+  document.getElementById('standbyRing').classList.remove('calling');
+  document.getElementById('standbyRing').textContent = 'STANDBY';
+  document.getElementById('artistStandbyState').textContent = 'On Standby';
+  document.getElementById('incomingActions').style.display='none';
+  document.getElementById('artistPttWrap').style.display='none';
+  incomingId = null;
+}
+function bindPtt(){
+  const btn = document.getElementById('artistPttBtn');
+  if(!btn || btn.dataset.bound) { if(btn) btn.dataset.bound='1'; }
+  if(!btn) return;
+  if(btn.dataset.bound2) return;
+  btn.dataset.bound2='1';
+  const start = ()=>{ if(localStream){ localStream.getTracks().forEach(t=>t.enabled=true); btn.classList.add('transmitting'); } };
+  const stop = ()=>{ if(localStream){ localStream.getTracks().forEach(t=>t.enabled=false); btn.classList.remove('transmitting'); } };
+  btn.addEventListener('mousedown', start); btn.addEventListener('touchstart', (e)=>{e.preventDefault();start();});
+  btn.addEventListener('mouseup', stop); btn.addEventListener('mouseleave', stop);
+  btn.addEventListener('touchend', (e)=>{e.preventDefault();stop();});
+}
+async function artistSignalHost(){
+  HOST_REQUESTS = (await sget('host-requests')) || [];
+  HOST_REQUESTS.push({name:ROLE.name, id:ROLE.id, ts:Date.now()});
+  await sset('host-requests', HOST_REQUESTS.slice(-20));
+  alert('Host has been notified 🙋');
+}
+function teardownCall(){
+  if(pc){ try{ pc.close(); }catch(e){} pc=null; }
+  if(localStream){ localStream.getTracks().forEach(t=>t.stop()); localStream=null; }
+}
+
+/* ===================== FAN VOTE (no login, no backend beyond shared storage) ===================== */
+function startFanListener(){
+  refreshFanVote();
+  fanPollTimer = setInterval(refreshFanVote, 1500);
+}
+async function refreshFanVote(){
+  if(!ROLE || ROLE.type!=='fan') return;
+  const vs = await sget('vote_session');
+  const waiting = document.getElementById('fanWaiting');
+  const voting = document.getElementById('fanVoting');
+  if(!vs || !vs.active){
+    waiting.style.display='block';
+    voting.style.display='none';
+    return;
+  }
+  waiting.style.display='none';
+  voting.style.display='block';
+  document.getElementById('fanNameA').textContent = vs.aName;
+  document.getElementById('fanNameB').textContent = vs.bName;
+  const total = (vs.aVotes||0) + (vs.bVotes||0);
+  const pctA = total ? Math.round((vs.aVotes/total)*100) : 50;
+  const pctB = 100 - pctA;
+  document.getElementById('fanPctA').textContent = pctA+'%';
+  document.getElementById('fanPctB').textContent = pctB+'%';
+  document.getElementById('fanBarFill').style.width = pctA+'%';
+  document.getElementById('fanVoteCount').textContent = total + (total===1 ? ' vote so far' : ' votes so far');
+  const hasVoted = votedSessionId === vs.id;
+  document.getElementById('fanBtnA').classList.toggle('voted', hasVoted);
+  document.getElementById('fanBtnB').classList.toggle('voted', hasVoted);
+  document.getElementById('fanVotedNote').style.display = hasVoted ? 'block' : 'none';
+  document.getElementById('fanBtnA').disabled = hasVoted;
+  document.getElementById('fanBtnB').disabled = hasVoted;
+}
+async function castVote(side){
+  if(!ROLE || ROLE.type!=='fan') return;
+  const vs = await sget('vote_session');
+  if(!vs || !vs.active) return;
+  if(votedSessionId === vs.id) return; // one vote per session per page-load
+  if(side==='a') vs.aVotes = (vs.aVotes||0) + 1; else vs.bVotes = (vs.bVotes||0) + 1;
+  await sset('vote_session', vs);
+  votedSessionId = vs.id;
+  refreshFanVote();
+}
+
+/* ===================== PLAYLIST — SHUFFLE PLAY ===================== */
+// dj_state (shared) = { trackId, phase:'idle'|'countdown'|'live'|'paused', position, anchorTs, countdownTargetTs, shuffleOn }
+let djJoined = false;
+let djSyncTimer = null;
+let djHeartbeatTimer = null;
+let djShuffleOn = false;
+let djShuffleOrder = []; // shuffled array of track ids
+let djShufflePos = -1;   // index into djShuffleOrder
+
+function setupPlaylistAudioEvents(){
+  const audio = document.getElementById('playlistAudio');
+  audio.addEventListener('timeupdate', ()=>{
+    if(!audio.duration) return;
+    const pct = (audio.currentTime/audio.duration*100)+'%';
+    if(ROLE && ROLE.type==='host'){
+      document.getElementById('playerProgressFill').style.width = pct;
+      document.getElementById('playerTime').textContent = fmtTime(audio.currentTime)+' / '+fmtTime(audio.duration);
+    } else {
+      document.getElementById('playerProgressFillArtist').style.width = pct;
+      document.getElementById('playerTimeArtist').textContent = fmtTime(audio.currentTime)+' / '+fmtTime(audio.duration);
+    }
+  });
+  audio.addEventListener('ended', ()=>{ if(ROLE && ROLE.type==='host' && djShuffleOn) djShuffleNext(); });
+}
+function fmtTime(s){
+  if(!s || isNaN(s)) return '0:00';
+  const m = Math.floor(s/60), sec = Math.floor(s%60);
+  return m+':'+String(sec).padStart(2,'0');
+}
+async function addPlaylistTrack(){
+  const title = document.getElementById('plTitle').value.trim();
+  const artist = document.getElementById('plArtist').value.trim();
+  const url = document.getElementById('plUrl').value.trim();
+  if(!title || !url){ alert('Enter a song title and an MP3 URL.'); return; }
+  PLAYLIST = (await sget('playlist')) || [];
+  PLAYLIST.push({ id:'t_'+Math.random().toString(36).slice(2,9), title, artist, url });
+  await sset('playlist', PLAYLIST);
+  document.getElementById('plTitle').value='';
+  document.getElementById('plArtist').value='';
+  document.getElementById('plUrl').value='';
+  renderPlaylistQueue();
+}
+function renderPlaylistQueue(){
+  const lbl = document.getElementById('plCountLabel');
+  if(lbl) lbl.textContent = PLAYLIST.length + (PLAYLIST.length===1 ? ' track loaded' : ' tracks loaded');
+  updateNowPlayingLabel();
+}
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function updateNowPlayingLabel(){
+  const isHost = ROLE && ROLE.type==='host';
+  const disc = document.getElementById(isHost ? 'playerDisc' : 'playerDiscArtist');
+  const titleEl = document.getElementById(isHost ? 'playerNowTitle' : 'playerNowTitleArtist');
+  const artistEl = document.getElementById(isHost ? 'playerNowArtist' : 'playerNowArtistArtist');
+  const tagEl = document.getElementById(isHost ? 'broadcastTag' : 'broadcastTagArtist');
+  if(plCurrentIdx>-1 && PLAYLIST[plCurrentIdx]){
+    titleEl.textContent = PLAYLIST[plCurrentIdx].title;
+    artistEl.textContent = PLAYLIST[plCurrentIdx].artist || 'Unknown artist';
+    disc.classList.toggle('spin', plIsPlaying);
+    if(tagEl){ tagEl.textContent = plIsPlaying ? '🔴 ON AIR' : 'PAUSED'; }
+  } else {
+    titleEl.textContent = isHost ? (PLAYLIST.length ? 'Ready to shuffle' : 'Nothing queued yet') : 'Waiting for the host to start the set';
+    artistEl.textContent = isHost ? 'Tap shuffle play below to go live' : (djJoined ? 'Synced — waiting for host' : 'Tap Join Broadcast to sync in');
+    disc.classList.remove('spin');
+    if(tagEl) tagEl.textContent = 'OFF AIR';
+  }
+  if(isHost){
+    const btn = document.getElementById('shuffleBtn');
+    const btnLbl = document.getElementById('shuffleBtnLabel');
+    if(btn){
+      btn.classList.toggle('on', djShuffleOn);
+      btnLbl.textContent = djShuffleOn ? 'STOP' : 'SHUFFLE PLAY';
+    }
+  }
+}
+
+/* ---- HOST: drives the shared dj_state ---- */
+const COUNTDOWN_MS = 3000;
+let djHandledCountdownTs = null;
+
+async function pushDjState(overrides){
+  const audio = document.getElementById('playlistAudio');
+  const state = Object.assign({
+    trackId: plCurrentIdx>-1 && PLAYLIST[plCurrentIdx] ? PLAYLIST[plCurrentIdx].id : null,
+    phase: plIsPlaying ? 'live' : 'paused',
+    position: audio.currentTime || 0,
+    anchorTs: Date.now(),
+    countdownTargetTs: null,
+    shuffleOn: djShuffleOn
+  }, overrides || {});
+  await sset('dj_state', state);
+}
+function runCountdownDisplay(overlayId, targetTs, label){
+  const el = document.getElementById(overlayId);
+  if(!el) return;
+  el.classList.add('show');
+  const render = ()=>{
+    const remaining = Math.ceil((targetTs - Date.now())/1000);
+    if(remaining<=0){ el.classList.remove('show'); return false; }
+    el.innerHTML = `<div class="num">${remaining}</div><div class="lbl">${escapeHtml(label||'Starting')}</div>`;
+    return true;
+  };
+  if(!render()) return;
+  const iv = setInterval(()=>{ if(!render()){ clearInterval(iv); } }, 200);
+}
+function djStartCountdown(id, startPosition){
+  const i = PLAYLIST.findIndex(t=>t.id===id);
+  if(i<0) return;
+  plCurrentIdx = i;
+  const track = PLAYLIST[i];
+  const targetTs = Date.now() + COUNTDOWN_MS;
+  const audio = document.getElementById('playlistAudio');
+  audio.src = track.url;
+  audio.currentTime = startPosition || 0;
+  plIsPlaying = false;
+  pushDjState({trackId:id, phase:'countdown', position:startPosition||0, countdownTargetTs:targetTs});
+  runCountdownDisplay('djCountdownHost', targetTs, 'Going live: '+track.title);
+  renderPlaylistQueue();
+  setTimeout(()=>{
+    audio.play().then(()=>{
+      plIsPlaying = true; renderPlaylistQueue();
+      pushDjState({trackId:id, phase:'live', position:startPosition||0, anchorTs:targetTs, countdownTargetTs:null});
+      startHeartbeat();
+    }).catch(()=>{
+      plIsPlaying = false; renderPlaylistQueue();
+      alert('Could not play that link — make sure it is a direct .mp3 URL.');
+      djShuffleOn = false; updateNowPlayingLabel();
+    });
+  }, Math.max(0, targetTs - Date.now()));
+}
+function djToggleShuffle(){
+  if(djShuffleOn){
+    djStopShuffle();
+  } else {
+    if(!PLAYLIST.length){ alert('Add at least one track first.'); return; }
+    djShuffleOn = true;
+    djShuffleOrder = shuffleArray(PLAYLIST.map(t=>t.id));
+    djShufflePos = 0;
+    djStartCountdown(djShuffleOrder[0], 0);
+    updateNowPlayingLabel();
+  }
+}
+function djShuffleNext(){
+  if(!djShuffleOn) return;
+  djShufflePos++;
+  if(djShufflePos >= djShuffleOrder.length){
+    // reshuffle and keep going so it's a continuous random rotation
+    djShuffleOrder = shuffleArray(PLAYLIST.map(t=>t.id));
+    djShufflePos = 0;
+  }
+  djStartCountdown(djShuffleOrder[djShufflePos], 0);
+}
+async function djStopShuffle(){
+  djShuffleOn = false;
+  const audio = document.getElementById('playlistAudio');
+  audio.pause(); audio.removeAttribute('src'); audio.load();
+  plIsPlaying = false; plCurrentIdx = -1;
+  stopHeartbeat();
+  await pushDjState({trackId:null, phase:'idle', position:0, countdownTargetTs:null, shuffleOn:false});
+  renderPlaylistQueue();
+}
+function djSeek(e){
+  const audio = document.getElementById('playlistAudio');
+  if(!audio.duration) return;
+  const bar = document.getElementById('playerProgressBar');
+  const rect = bar.getBoundingClientRect();
+  const pct = (e.clientX-rect.left)/rect.width;
+  audio.currentTime = pct*audio.duration;
+  pushDjState({position:audio.currentTime, anchorTs:Date.now(), phase: plIsPlaying?'live':'paused'});
+}
+function startHeartbeat(){
+  stopHeartbeat();
+  // periodically re-broadcast the true position so late-joiners and drift get corrected
+  djHeartbeatTimer = setInterval(()=>{
+    if(!plIsPlaying) return;
+    pushDjState({});
+  }, 4000);
+}
+function stopHeartbeat(){
+  if(djHeartbeatTimer){ clearInterval(djHeartbeatTimer); djHeartbeatTimer=null; }
+}
+
+/* ---- ARTIST: syncs to the shared dj_state + volume ---- */
+function setArtistVolume(v){
+  const audio = document.getElementById('playlistAudio');
+  audio.volume = v/100;
+  audio.muted = false;
+  document.getElementById('artistMuteBtn').textContent = (v==0) ? '🔇' : '🔊';
+}
+function toggleArtistMute(){
+  const audio = document.getElementById('playlistAudio');
+  audio.muted = !audio.muted;
+  document.getElementById('artistMuteBtn').textContent = audio.muted ? '🔇' : '🔊';
+}
+async function joinBroadcast(){
+  const audio = document.getElementById('playlistAudio');
+  djJoined = true;
+  document.getElementById('joinBroadcastBtn').textContent = '✅ Synced In';
+  document.getElementById('joinBroadcastBtn').disabled = true;
+  audio.volume = (document.getElementById('artistVolumeSlider').value||100)/100;
+  // user-gesture unlock: play (even silently) so future programmatic play() calls are allowed
+  const state = await sget('dj_state');
+  if(state && state.trackId && state.phase==='live'){
+    const track = PLAYLIST.find(t=>t.id===state.trackId);
+    if(track){
+      audio.src = track.url;
+      const expected = state.position + (Date.now()-state.anchorTs)/1000;
+      audio.currentTime = Math.max(0, expected);
+      await audio.play().catch(()=>{});
+    }
+  } else if(state && state.trackId && state.phase==='countdown'){
+    const track = PLAYLIST.find(t=>t.id===state.trackId);
+    if(track){
+      audio.src = track.url;
+      audio.currentTime = state.position || 0;
+      audio.muted = true;
+      await audio.play().then(()=>{ audio.pause(); audio.muted=false; }).catch(()=>{ audio.muted=false; });
+      djHandledCountdownTs = state.countdownTargetTs;
+      runCountdownDisplay('djCountdownArtist', state.countdownTargetTs, 'Get ready: '+track.title);
+      setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+    }
+  } else {
+    // nothing live yet — quick muted unlock so playback isn't blocked later
+    audio.muted = true;
+    audio.play().then(()=>{ audio.pause(); audio.muted=false; }).catch(()=>{ audio.muted=false; });
+  }
+  updateNowPlayingLabel();
+}
+function startDjSyncLoop(){
+  djSyncTimer = setInterval(async ()=>{
+    const state = await sget('dj_state');
+    if(!state){ return; }
+    const audio = document.getElementById('playlistAudio');
+
+    if(!state.trackId || state.phase==='idle'){
+      if(plCurrentIdx!==-1){ plCurrentIdx=-1; plIsPlaying=false; renderPlaylistQueue(); }
+      return;
+    }
+    const idx = PLAYLIST.findIndex(t=>t.id===state.trackId);
+    if(idx===-1) return;
+
+    if(state.phase==='countdown'){
+      if(djHandledCountdownTs !== state.countdownTargetTs){
+        djHandledCountdownTs = state.countdownTargetTs;
+        plCurrentIdx = idx; plIsPlaying = false; renderPlaylistQueue();
+        if(djJoined){
+          audio.src = PLAYLIST[idx].url;
+          audio.currentTime = state.position || 0;
+          runCountdownDisplay('djCountdownArtist', state.countdownTargetTs, 'Get ready: '+PLAYLIST[idx].title);
+          setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+        }
+      }
+      return;
+    }
+
+    const changedTrack = plCurrentIdx===-1 || (PLAYLIST[plCurrentIdx] && PLAYLIST[plCurrentIdx].id !== state.trackId);
+    const expected = state.phase==='live' ? state.position + (Date.now()-state.anchorTs)/1000 : state.position;
+
+    if(changedTrack && djJoined){
+      plCurrentIdx = idx;
+      audio.src = PLAYLIST[idx].url;
+      audio.currentTime = Math.max(0, expected);
+      if(state.phase==='live') audio.play().catch(()=>{});
+      plIsPlaying = state.phase==='live';
+      renderPlaylistQueue();
+      return;
+    }
+    plCurrentIdx = idx;
+    if(djJoined){
+      if(state.phase==='live' && audio.paused){ audio.play().catch(()=>{}); }
+      if(state.phase==='paused' && !audio.paused){ audio.pause(); }
+      if(Math.abs(audio.currentTime - expected) > 1.2){ audio.currentTime = Math.max(0, expected); }
+    }
+    const nowPlaying = state.phase==='live';
+    if(plIsPlaying !== nowPlaying){ plIsPlaying = nowPlaying; renderPlaylistQueue(); }
+  }, 1500);
+}
+
+/* ===================== DROPS ===================== */
+async function submitDrop(){
+  const artist = document.getElementById('dropArtist').value.trim();
+  const title = document.getElementById('dropTitle').value.trim();
+  const link = document.getElementById('dropLink').value.trim();
+  const note = document.getElementById('dropNote').value.trim();
+  if(!artist || !title){ alert('Enter your name and a track title.'); return; }
+  DROPS = (await sget('drops')) || [];
+  DROPS.push({artist,title,link,note,ts:Date.now()});
+  await sset('drops', DROPS);
+  document.getElementById('dropArtist').value='';
+  document.getElementById('dropTitle').value='';
+  document.getElementById('dropLink').value='';
+  document.getElementById('dropNote').value='';
+  renderDrops();
+}
+function renderDrops(){
+  document.getElementById('dropCount').textContent = DROPS.length;
+  const el = document.getElementById('dropList');
+  if(!DROPS.length){ el.innerHTML='Nothing logged yet.'; return; }
+  el.innerHTML = DROPS.slice().reverse().map(d=>`
+    <div class="track-row">
+      <div class="meta"><b>${escapeHtml(d.title)}</b><span>${escapeHtml(d.artist)} · ${new Date(d.ts).toLocaleString()}${d.note? ' · '+escapeHtml(d.note):''}</span>
+      ${d.link? `<span>${escapeHtml(d.link)}</span>`:''}</div>
+    </div>`).join('');
+}
+
+/* ===================== PROMO ===================== */
+function renderPromo(){
+  const el = document.getElementById('promoList');
+  el.innerHTML = PROMO.map((p,i)=>`
+    <div class="promo-card">
+      <pre>${escapeHtml(p)}</pre>
+      <button class="copy-btn" onclick="copyPromo(${i}, this)">Copy Text</button>
+    </div>`).join('');
+}
+function copyPromo(i, btn){
+  navigator.clipboard.writeText(PROMO[i]).then(()=>{
+    btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+    setTimeout(()=>{ btn.textContent='Copy Text'; btn.classList.remove('copied'); }, 1600);
+  });
+}
+async function addPromo(){
+  const txt = document.getElementById('customPromoText').value.trim();
+  if(!txt) return;
+  PROMO = (await sget('promo')) || [];
+  PROMO.push(txt);
+  await sset('promo', PROMO);
+  document.getElementById('customPromoText').value='';
+  renderPromo();
+}
+
+/* ===================== HERO REEL ===================== */
+function renderHero(){
+  const stage = document.getElementById('heroStage');
+  const dots = document.getElementById('heroDots');
+  if(heroIdx >= HERO.length) heroIdx = 0;
+  stage.innerHTML = HERO.map((h,i)=>`
+    <div class="hero-slide ${i===heroIdx?'active':''}">
+      ${h.src ? `<video src="${escapeAttr(h.src)}" autoplay muted loop playsinline></video>` : ''}
+      <div class="overlay-txt">
+        <h4>${escapeHtml(h.label||'Untitled Slide')}</h4>
+        <p>${h.src ? 'Slide '+(i+1)+' of '+HERO.length : 'PLACEHOLDER — add a video URL in Admin edit below'}</p>
+      </div>
+    </div>`).join('');
+  dots.innerHTML = HERO.map((h,i)=>`<span class="${i===heroIdx?'active':''}"></span>`).join('');
+
+  const editEl = document.getElementById('heroEditList');
+  editEl.innerHTML = HERO.map((h,i)=>`
+    <div class="field">
+      <label>Slide ${i+1} Title</label>
+      <input class="ff-input" value="${escapeAttr(h.label)}" onchange="updateHeroField(${i},'label',this.value)" style="margin-bottom:8px;">
+      <label>Slide ${i+1} Video URL</label>
+      <input class="ff-input" value="${escapeAttr(h.src)}" placeholder="https://.../video.mp4" onchange="updateHeroField(${i},'src',this.value)">
+    </div>`).join('');
+}
+function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+async function updateHeroField(i, field, val){
+  HERO = (await sget('hero-videos')) || HERO;
+  HERO[i][field] = val;
+  await sset('hero-videos', HERO);
+  renderHero();
+}
+setInterval(()=>{
+  if(!HERO.length) return;
+  heroIdx = (heroIdx+1) % HERO.length;
+  renderHero();
+}, 6000);
+
+/* ===================== BOOT ===================== */
+boot();
+</script>
+</body>
+</html>
