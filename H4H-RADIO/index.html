@@ -208,6 +208,52 @@ a{color:var(--amber);}
   font-size:9.5px; color:var(--chalk-dim); letter-spacing:.5px;
 }
 audio{ display:none; }
+
+ .h4h-portal{
+max-width:640px;
+margin:40px auto;
+padding:20px;
+}
+
+.portal-card{
+background:linear-gradient(160deg,var(--panel),var(--panel2));
+border:1px solid var(--line);
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.portal-card input{
+width:100%;
+padding:14px;
+background:#0d0a08;
+border:1px solid var(--line);
+color:white;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+.portal-card button{
+background:linear-gradient(135deg,var(--ember),var(--gold));
+border:0;
+padding:12px 22px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.artist-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+border-bottom:1px solid var(--line);
+}
+
+.ready{
+color:var(--gold);
+font-weight:bold;
+} 
 </style>
 </head>
 <body>
@@ -280,6 +326,62 @@ audio{ display:none; }
       IG @hitforhitbattles
     </a>
   </div>
+ <!-- ================= H4H ARTIST CHECK-IN ================= -->
+
+<section class="h4h-portal">
+
+<h2>ARTIST CHECK-IN</h2>
+
+<div class="portal-card">
+
+<h3>Check In For Battle</h3>
+
+<input id="checkArtistName" placeholder="Artist Name">
+
+<button onclick="artistCheckIn()">
+CHECK IN
+</button>
+
+<p id="checkMessage"></p>
+
+</div>
+
+
+<div class="portal-card">
+
+<h3>LIVE ARTIST QUEUE</h3>
+
+<div id="artistQueue">
+No artists checked in.
+</div>
+
+</div>
+
+
+<div class="portal-card voting">
+
+<h3>VOTE FOR THE CROWN</h3>
+
+<div class="battle-choice">
+
+<button onclick="vote('artistA')">
+🔥 ARTIST A
+<span id="artistACount">0</span>
+</button>
+
+
+<button onclick="vote('artistB')">
+👑 ARTIST B
+<span id="artistBCount">0</span>
+</button>
+
+</div>
+
+<p id="voteMessage"></p>
+
+</div>
+
+</section> 
 </footer>
 
 <script>
@@ -538,6 +640,111 @@ document.getElementById('radioAudio').addEventListener('ended', ()=>{
 
 renderTrackList();
 syncLoop();
+
+/* ================= H4H ARTIST CHECK-IN ================= */
+
+let artistQueue =
+JSON.parse(localStorage.getItem("h4h_artist_queue"))
+|| [];
+
+
+function artistCheckIn(){
+
+let name =
+document.getElementById("checkArtistName")
+.value.trim();
+
+
+if(!name){
+return;
+}
+
+
+artistQueue.push({
+
+name:name,
+
+time:new Date().toLocaleTimeString(),
+
+ready:false
+
+});
+
+
+localStorage.setItem(
+"h4h_artist_queue",
+JSON.stringify(artistQueue)
+);
+
+
+document.getElementById("checkArtistName").value="";
+
+
+document.getElementById("checkMessage").innerHTML=
+name+" is checked in 🔥";
+
+
+renderArtistQueue();
+
+}
+
+
+
+function buzzArtist(index){
+
+artistQueue[index].ready=true;
+
+
+localStorage.setItem(
+"h4h_artist_queue",
+JSON.stringify(artistQueue)
+);
+
+
+renderArtistQueue();
+
+}
+
+
+
+function renderArtistQueue(){
+
+let box=document.getElementById("artistQueue");
+
+
+if(!artistQueue.length){
+
+box.innerHTML="No artists checked in.";
+
+return;
+
+}
+
+
+box.innerHTML=
+artistQueue.map((artist,index)=>`
+
+<div class="artist-row">
+
+<div>
+<b>${artist.name}</b><br>
+<small>${artist.time}</small>
+</div>
+
+
+<button onclick="buzzArtist(${index})">
+${artist.ready ? "🔥 BUZZED" : "BUZZ"}
+</button>
+
+
+</div>
+
+`).join("");
+
+}
+
+
+renderArtistQueue();  
 </script>
 </body>
 </html>
