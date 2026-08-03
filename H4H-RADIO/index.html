@@ -149,58 +149,56 @@ a{color:var(--amber);}
 
 .tune-wrap{ text-align:center; padding:6px 0 2px; }
 .tune-btn{
-  width:104px; height:104px; border-radius:50%; border:2px solid var(--line);
-  background:radial-gradient(circle at 35% 30%, var(--panel2), var(--ink2));
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  margin:0 auto; box-shadow:0 8px 20px rgba(0,0,0,.4);
+  width:220px;
+  height:58px;
+  border-radius:40px;
+  border:2px solid var(--line);
+  background:linear-gradient(145deg, var(--panel2), var(--ink2));
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:0 auto;
+  box-shadow:0 8px 20px rgba(0,0,0,.4);
+  cursor:pointer;
+  transition:.3s ease;
 }
-.tune-btn .ic{ font-size:26px; }
-.tune-btn .lbl{ font-family:var(--font-display); font-size:13px; letter-spacing:.5px; color:var(--chalk); }
+
+.tune-btn .ic{
+  display:none;
+}
+
+.tune-btn .lbl{
+  font-family:var(--font-display);
+  font-size:15px;
+  letter-spacing:1px;
+  color:var(--chalk);
+  font-weight:bold;
+}
+
+.tune-btn:before{
+  content:"";
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#777;
+  box-shadow:none;
+}
+
 .tune-btn.on{
   border-color:var(--gold);
-  background:radial-gradient(circle at 35% 30%, var(--ember), var(--rust));
+  background:linear-gradient(145deg, var(--ember), var(--rust));
   box-shadow:0 0 30px rgba(244,196,48,.35);
 }
-.tune-btn.on .lbl{ color:var(--ink); }
-.tune-hint{
-  font-family:var(--font-mono); font-size:9.5px; color:var(--chalk-dim);
-  letter-spacing:.5px; margin-top:12px; text-transform:uppercase;
-}
-.countdown-overlay{
-  position:absolute; inset:0; background:rgba(13,10,8,.94); border-radius:16px;
-  display:none; align-items:center; justify-content:center; flex-direction:column; z-index:5;
-}
-.countdown-overlay.show{ display:flex; }
-.countdown-overlay .num{ font-family:var(--font-display); font-size:56px; color:var(--gold); line-height:1; text-shadow:0 0 24px rgba(244,196,48,.5); }
-.countdown-overlay .lbl{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:1px; color:var(--chalk-dim); text-transform:uppercase; margin-top:6px; text-align:center; padding:0 16px; }
 
-.rotation{ margin-top:26px; }
-.rotation h4{
-  font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.5px; text-transform:uppercase;
-  color:var(--chalk-dim); margin:0 0 10px;
+.tune-btn.on:before{
+  background:#ff1a1a;
+  box-shadow:0 0 12px #ff1a1a;
 }
-.track-row{
-  display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px;
-  border:1px solid var(--line); margin-bottom:6px; background:var(--panel);
-}
-.track-row.playing{ border-color:var(--gold); background:rgba(244,196,48,.07); }
-.track-num{ font-family:var(--font-mono); font-size:11px; color:var(--chalk-dim); width:18px; flex-shrink:0; }
-.track-name{ font-size:12.5px; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-.volume-row{ display:flex; align-items:center; gap:10px; margin-top:18px; }
-.volume-row button{
-  background:var(--panel2); border:1px solid var(--line); color:var(--chalk); border-radius:8px;
-  width:34px; height:34px; font-size:14px; flex-shrink:0;
-}
-.volume-row button:hover{ border-color:var(--amber); }
-.volume-row input[type=range]{
-  flex:1; -webkit-appearance:none; height:4px; border-radius:4px; background:var(--line); outline:none;
-}
-.volume-row input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--gold); cursor:pointer;
-}
-.volume-row input[type=range]::-moz-range-thumb{
-  width:14px; height:14px; border-radius:50%; background:var(--gold); border:none; cursor:pointer;
+.tune-btn.on .lbl{
+  color:var(--ink);
 }
 
 .footer{
@@ -284,26 +282,40 @@ font-weight:bold;
 
   <div class="player-bar">
     <div class="countdown-overlay" id="countdownOverlay"></div>
+
     <div class="player-now">
       <div class="disc" id="disc"></div>
+
       <div class="now-meta">
-        <div class="now-title" id="nowTitle">Nothing on air yet</div>
+        <div class="now-title" id="nowTitle">Stream Starting</div>
         <div class="now-sub" id="nowSub">PLAY</div>
       </div>
+
       <span class="onair-tag" id="onairTag">OFF AIR</span>
     </div>
 
     <div class="tune-wrap">
       <button class="tune-btn" id="tuneBtn" onclick="tuneToggle()">
-        <span class="ic">📻</span>
+        <span class="broadcast-dot"></span>
         <span class="lbl" id="tuneLabel">TUNE IN</span>
       </button>
-      <div class="tune-hint" id="tuneHint">Official Hit 4 Hit Radio</div>
+
+      <div class="tune-hint" id="tuneHint">
+        Official Hit 4 Hit Radio
+      </div>
     </div>
 
     <div class="volume-row">
-      <button id="muteBtn" onclick="toggleMute()">🔊</button>
-      <input type="range" id="volumeSlider" min="0" max="100" value="100" oninput="setVolume(this.value)">
+      <button id="muteBtn" onclick="toggleMute()">MUTE</button>
+
+      <input 
+        type="range" 
+        id="volumeSlider" 
+        min="0" 
+        max="100" 
+        value="100" 
+        oninput="setVolume(this.value)"
+      >
     </div>
   </div>
 
@@ -354,13 +366,13 @@ No artists checked in.
 <div class="battle-choice">
 
 <button onclick="vote('artistA')">
-🔥 ARTIST A
+ ARTIST A
 <span id="artistACount">0</span>
 </button>
 
 
 <button onclick="vote('artistB')">
-👑 ARTIST B
+ ARTIST B
 <span id="artistBCount">0</span>
 </button>
 
@@ -398,7 +410,7 @@ allowfullscreen>
 
 <div class="portal-card">
 
-<h2>🎬 H4H BATTLE VIDEOS</h2>
+<h2> H4H BATTLE VIDEOS</h2>
 
 <div class="youtube-box">
 
@@ -420,7 +432,7 @@ allowfullscreen>
 
 <div class="portal-card">
 
-<h2>🏆 TRACK VOTING</h2>
+<h2> TRACK VOTING</h2>
 
 <div id="trackVoting">
 
@@ -432,7 +444,7 @@ allowfullscreen>
 
 <div class="portal-card">
 
-<h2>🔥 H4H TOP 10 MIXTAPE</h2>
+<h2> H4H TOP 10 MIXTAPE</h2>
 
 <div id="leaderboard">
 
