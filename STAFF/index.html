@@ -161,56 +161,6 @@ a{color:var(--amber);}
   font-family:var(--font-mono);font-size:11.5px;color:var(--chalk-dim);letter-spacing:.5px;margin:0 0 14px;text-transform:uppercase;
 }
 
-/* ---------- login ---------- */
-.login-wrap{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
-  position:relative;
-  background-image:
-    linear-gradient(180deg, rgba(13,10,8,.55), rgba(13,10,8,.85)),
-    url('H4Hpromo.PNG');
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-}
-.login-card{
-  width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;
-  box-shadow:0 16px 40px rgba(0,0,0,.5);
-}
-.login-mark{
-  width:46px;height:46px;border-radius:11px;margin:0 auto 12px;
-  background:linear-gradient(135deg, var(--rust), var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-display);font-size:22px;color:var(--ink);
-}
-.login-card h1{font-family:var(--font-display);font-size:26px;text-align:center;letter-spacing:1px;margin:0;}
-.login-card p.sub{text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);letter-spacing:1.5px;text-transform:uppercase;margin:4px 0 18px;}
-.role-options{display:flex;flex-direction:column;gap:8px;}
-.role-option{
-  display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;
-  border:1px solid var(--line);background:var(--panel2);text-align:left;color:var(--chalk);
-}
-.role-option:hover{border-color:var(--amber);}
-.role-option .ic{font-size:18px;}
-.role-option .label{font-weight:700;font-size:14.5px;}
-.role-option .desc{font-family:var(--font-mono);font-size:11px;color:var(--chalk-dim);margin-top:2px;line-height:1.4;}
-.artist-picker{display:none;margin-top:10px;flex-direction:column;gap:8px;}
-.artist-picker.show{display:flex;}
-select, .ff-input{
-  width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line);
-  background:var(--ink2);color:var(--chalk);font-size:13px;
-}
-.btn{
-  border:none;border-radius:9px;padding:10px 15px;font-weight:700;font-size:12px;letter-spacing:.3px;
-}
-.btn-primary{background:linear-gradient(135deg, var(--ember), var(--gold));color:var(--ink);}
-.btn-primary:hover{filter:brightness(1.08);}
-.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--chalk);}
-.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
-.btn-danger{background:transparent;border:1px solid var(--live);color:var(--live);}
-.btn-danger:hover{background:rgba(226,64,46,.12);}
-.btn-block{width:100%;}
-.btn-sm{padding:7px 11px;font-size:10.5px;border-radius:7px;}
-
 /* ---------- crown banner ---------- */
 .crown-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
 @media(max-width:640px){.crown-row{grid-template-columns:1fr;}}
@@ -507,64 +457,15 @@ audio{display:none;}
 <div class="menu-wrap" id="menuWrap">
   <button class="menu-toggle" onclick="toggleMenu(event)"><span class="bars">☰</span> Menu</button>
   <div class="menu-dropdown" id="menuDropdown">
-    <a class="menu-item" href="INFO/">ℹ️ Info</a>
+    <a class="menu-item" href="INFO/">INFO</a>
+<a class="menu-item" href="H4H-RADIO/">H4H-RADIO</a>
+<a class="menu-item" href="PROMO/">PROMO</a>
+<a class="menu-item" href="STAFF/">STAFF</a>
     <button class="menu-item" id="menuSwitchBtn" onclick="closeMenuAnd(logout)" style="display:none;">🔁 Switch Role</button>
   </div>
 </div>
 
 
-<!-- ================= LOGIN ================= -->
-<div class="login-wrap" id="loginView">
-  <div class="login-card">
-    <div class="login-mark">HH</div>
-    <h1>HIT FOR HIT</h1>
-    <p class="sub">Battle Control · Choose Your Device Role</p>
-    <div class="role-options">
-      <button class="role-option" onclick="selectRoleHost()">
-        <span class="ic">🎙️</span>
-        <span><span class="label">Host / Admin</span><span class="desc">Run the bracket, call artists, manage everything</span></span>
-      </button>
-      <button class="role-option" onclick="showArtistPicker()">
-        <span class="ic">🎤</span>
-        <span><span class="label">I'm an Artist</span><span class="desc">Check in on your walkie channel</span></span>
-      </button>
-      <button class="role-option" onclick="selectRoleFan()">
-        <span class="ic">🗳️</span>
-        <span><span class="label">I'm Here to Vote</span><span class="desc">No sign-in — vote live on the current battle</span></span>
-      </button>
-    </div>
-    <div class="artist-picker" id="artistPicker">
-      <div class="field">
-        <label>Select your name</label>
-        <select id="artistSelect"><option value="">— choose artist —</option></select>
-      </div>
-      <button class="btn btn-primary btn-block" onclick="confirmArtistRole()">Enter as Artist</button>
-      <p class="helptext" style="margin-top:8px;">Not on the list yet? Ask the host to add you in the Admin tab first.</p>
-    </div>
-  </div>
-
-  <div class="login-card" style="margin-top:16px;">
-    <h1 style="font-size:26px;">📻 Radio Station</h1>
-    <p class="sub" style="margin-bottom:18px;">Background music — auto-rotates through the tracks below, on loop</p>
-
-    <div class="field">
-      <label>Add a track (file name, sitting in the repo root next to this page)</label>
-      <div style="display:flex;gap:8px;">
-        <input class="ff-input" id="radioTrackInput" placeholder="e.g. track1.mp3">
-        <button class="btn btn-ghost btn-sm" onclick="radioAddTrack()">+ Add</button>
-      </div>
-    </div>
-    <div id="radioTrackList" style="margin-bottom:16px;"></div>
-
-    <div class="shuffle-wrap">
-      <button class="shuffle-btn" id="radioTuneBtn" onclick="radioToggle()">
-        <span class="ic">📻</span>
-        <span class="lbl" id="radioTuneLabel">TUNE IN</span>
-      </button>
-      <div class="shuffle-hint" id="radioNowPlaying">Nothing queued yet</div>
-    </div>
-  </div>
-</div>
 
 <!-- ================= APP ================= -->
 <div id="appShell" style="display:none;">
@@ -809,7 +710,7 @@ audio{display:none;}
     <p class="section-sub">Copy-ready text for artists &amp; admins to post</p>
     <div id="promoList"></div>
     <div class="card">
-      <h3>Add Custom Promo Text</h3>
+      <h3>HIT FOR HIT™ is a next-generation music battle platform where artists compete, fans vote, and culture connects. Built to showcase talent, create opportunities, and spotlight the next wave of artists, H4H brings the energy of competition and entertainment together on one stage.</h3>
       <textarea class="ff-input" id="customPromoText" rows="3" placeholder="Write your own promo blurb..."></textarea>
       <button class="btn btn-primary" style="margin-top:10px;" onclick="addPromo()">+ Add to Kit</button>
     </div>
@@ -967,74 +868,7 @@ function defaultHero(){
   ];
 }
 
-/* ===================== LOGIN ===================== */
-function showArtistPicker(){
-  document.getElementById('artistPicker').classList.add('show');
-}
-async function selectRoleHost(){
-  ROLE = {type:'host'};
-  enterApp();
-}
-function populateArtistSelect(){
-  const sel = document.getElementById('artistSelect');
-  sel.innerHTML = '<option value="">— choose artist —</option>' +
-    ARTISTS.map(a=>`<option value="${a.id}">${a.name} (${a.gender==='male'?'M':'F'})</option>`).join('');
-}
-async function confirmArtistRole(){
-  const id = document.getElementById('artistSelect').value;
-  if(!id){ alert('Pick your name from the list.'); return; }
-  const a = ARTISTS.find(x=>x.id===id);
-  if(!a) return;
-  ROLE = {type:'artist', id:a.id, name:a.name};
-  enterApp();
-}
-function selectRoleFan(){
-  ROLE = {type:'fan'};
-  updateMenuForRole();
-  document.getElementById('loginView').style.display='none';
-  document.getElementById('fanShell').style.display='flex';
-  refreshFanVote();
-  startFanListener();
-}
-function logout(){
-  ROLE = null;
-  updateMenuForRole();
-  teardownCall();
-  const audio = document.getElementById('playlistAudio');
-  if(audio){ audio.pause(); audio.removeAttribute('src'); audio.load(); }
-  plIsPlaying = false; plCurrentIdx = -1; djJoined = false; djShuffleOn = false;
-  stopHeartbeat();
-  if(djSyncTimer){ clearInterval(djSyncTimer); djSyncTimer=null; }
-  if(fanPollTimer){ clearInterval(fanPollTimer); fanPollTimer=null; }
-  votedSessionId = null;
-  document.getElementById('appShell').style.display='none';
-  document.getElementById('fanShell').style.display='none';
-  document.getElementById('loginView').style.display='flex';
-  document.getElementById('artistPicker').classList.remove('show');
-}
-function enterApp(){
-  updateMenuForRole();
-  document.getElementById('loginView').style.display='none';
-  document.getElementById('appShell').style.display='block';
-  document.getElementById('connDot').style.background = ROLE.type==='host' ? 'var(--gold)' : 'var(--standby)';
-  document.getElementById('roleChipText').innerHTML = ROLE.type==='host' ? '<b>HOST / ADMIN</b>' : `<b>${ROLE.name}</b>`;
-  document.querySelectorAll('.admin-only').forEach(el=> el.style.display = ROLE.type==='host' ? '' : 'none');
-  document.getElementById('walkie-host-panel').style.display = ROLE.type==='host' ? '' : 'none';
-  document.getElementById('walkie-artist-panel').style.display = ROLE.type==='artist' ? '' : 'none';
-  document.getElementById('djHostBar').style.display = ROLE.type==='host' ? '' : 'none';
-  document.getElementById('djArtistBar').style.display = ROLE.type==='artist' ? '' : 'none';
-  document.getElementById('djQueueCard').style.display = ROLE.type==='host' ? '' : 'none';
-  document.getElementById('playlistSubtitle').textContent = ROLE.type==='host'
-    ? 'Shuffle play, or pick any track from the queue below'
-    : 'Shuffle play — join the broadcast to hear what the host is playing, live';
-  if(ROLE.type==='artist'){
-    document.getElementById('artistChannelLabel').textContent = 'Channel: ' + ROLE.name.toUpperCase();
-  }
-  refreshAll();
-  startPolling();
-  if(ROLE.type==='artist') { startArtistListener(); startDjSyncLoop(); }
-  bindPtt();
-}
+/
 
 /* ===================== TABS ===================== */
 document.getElementById('tabBar').addEventListener('click', (e)=>{
