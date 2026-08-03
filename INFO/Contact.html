@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HIT4HIT Contact</title>
+
+<style>
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#090909;
+    color:white;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+}
+
+.container{
+    width:90%;
+    max-width:650px;
+    padding:40px 0;
+}
+
+h1{
+    text-align:center;
+    font-size:45px;
+    color:#FFD700;
+    letter-spacing:3px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#ccc;
+    font-size:18px;
+}
+
+
+.card{
+    margin:25px 0;
+    padding:25px;
+    background:#151515;
+    border:1px solid #333;
+    border-radius:15px;
+}
+
+
+.card h2{
+    text-align:center;
+    color:#FFD700;
+}
+
+
+p{
+    color:#ccc;
+    line-height:1.6;
+}
+
+
+.btn{
+    display:block;
+    width:250px;
+    margin:15px auto;
+    padding:15px;
+    border-radius:10px;
+    background:#FFD700;
+    color:#000;
+    text-decoration:none;
+    text-align:center;
+    font-weight:bold;
+}
+
+
+.btn:hover{
+    background:white;
+}
+
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    color:#FFD700;
+    font-weight:bold;
+}
+
+
+input,
+textarea{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #333;
+    background:#090909;
+    color:white;
+    font-size:15px;
+}
+
+
+textarea{
+    height:130px;
+    resize:vertical;
+}
+
+
+button{
+    display:block;
+    width:250px;
+    margin:25px auto 0;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#FFD700;
+    color:black;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+}
+
+
+button:hover{
+    background:white;
+}
+
+
+.email{
+    text-align:center;
+    color:#FFD700;
+    font-size:18px;
+}
+
+
+footer{
+    text-align:center;
+    color:#888;
+    padding:30px 0;
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>HIT4HIT</h1>
+
+<p class="subtitle">
+Contact and Booking Center<br>
+Road To The Crown
+</p>
+
+
+
+<div class="card">
+
+<h2>Email HIT4HIT</h2>
+
+<p>
+For booking, artist submissions, sponsorships, partnerships, and general inquiries.
+</p>
+
+
+<a class="btn" href="mailto:H4Hbooking@radiomeltdown.online?subject=HIT4HIT Inquiry">
+Email Us
+</a>
+
+
+<p class="email">
+H4Hbooking@radiomeltdown.online
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>Send A Message</h2>
+
+
+<form action="https://formspree.io/f/mwvggybg" method="POST">
+
+
+<label for="name">
+Name
+</label>
+
+<input 
+type="text"
+id="name"
+name="name"
+required>
+
+
+
+<label for="email">
+Email
+</label>
+
+<input
+type="email"
+id="email"
+name="email"
+required>
+
+
+
+<label for="subject">
+Subject
+</label>
+
+<input
+type="text"
+id="subject"
+name="subject"
+placeholder="Artist Submission, Booking, Sponsorship">
+
+
+
+<label for="message">
+Message
+</label>
+
+<textarea
+id="message"
+name="message"
+required></textarea>
+
+
+
+<input 
+type="hidden"
+name="_subject"
+value="New HIT4HIT Contact Request">
+
+
+
+<button type="submit">
+Send Message
+</button>
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<a class="btn" href="../">
+Back To Artist Packet
+</a>
+
+
+</div>
+
+
+
+
+<footer>
+
+HIT4HIT<br>
+Road To The Crown<br>
+Powered by Saneca TV
+
+</footer>
+
+
+</div>
+
+
+</body>
+
+</html>
