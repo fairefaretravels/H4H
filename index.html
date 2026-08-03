@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HIT FOR HIT RADIO</title>
+
+<link rel="icon" type="image/png" href="H4Hpromo.PNG">
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+}
+
+.container{
+    width:100%;
+    max-width:800px;
+    text-align:center;
+    padding:20px;
+}
+
+video{
+    width:100%;
+    max-width:700px;
+    border-radius:15px;
+    display:block;
+    margin:0 auto 25px;
+}
+
+img{
+    width:100%;
+    max-width:700px;
+    border-radius:15px;
+    display:block;
+    margin:0 auto 25px;
+}
+
+.play-btn{
+    background:#fff;
+    color:#000;
+    border:0;
+    padding:12px 30px;
+    font-size:20px;
+    font-weight:bold;
+    border-radius:30px;
+    cursor:pointer;
+    margin-bottom:25px;
+}
+
+.enter-btn{
+    display:inline-block;
+    padding:18px 60px;
+    background:red;
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:50px;
+    box-shadow:0 0 20px red;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- VIDEO FIRST -->
+<video id="introVideo" autoplay muted loop playsinline preload="metadata">
+    <source src="logo2.mp4" type="video/mp4">
+</video>
+
+<button class="play-btn" onclick="playVideo()">▶ PLAY VIDEO</button>
+
+<!-- PROMO IMAGE BELOW -->
+<img src="H4Hpromo.PNG" alt="HIT FOR HIT Promo">
+
+<a class="enter-btn" href="H4H-RADIO/">
+ENTER
+</a>
+
+</div>
+
+
+<script>
+function playVideo(){
+    const video = document.getElementById("introVideo");
+    video.muted = true;
+    video.play();
+}
+</script>
+
+</body>
+</html>
