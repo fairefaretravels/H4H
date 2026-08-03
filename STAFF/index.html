@@ -505,16 +505,25 @@ audio{display:none;}
 <body>
 <div class="grain"></div>
 <div class="menu-wrap" id="menuWrap">
-  <button class="menu-toggle" onclick="toggleMenu(event)"><span class="bars">☰</span> Menu</button>
-  <div class="menu-dropdown" id="menuDropdown">
-    <a class="menu-item" href="INFO/">INFO</a>
-<a class="menu-item" href="H4H-RADIO/">H4H-RADIO</a>
-<a class="menu-item" href="PROMO/">PROMO</a>
-<a class="menu-item" href="STAFF/">STAFF</a>
-    <button class="menu-item" id="menuSwitchBtn" onclick="closeMenuAnd(logout)" style="display:none;">🔁 Switch Role</button>
-  </div>
-</div>
+  <button class="menu-toggle" onclick="toggleMenu(event)">
+  <span class="bars">☰</span> Menu
+</button>
 
+<div class="menu-dropdown" id="menuDropdown">
+
+<a class="menu-item" href="/INFO/">INFO</a>
+
+<a class="menu-item" href="/H4H-RADIO/">H4H-RADIO</a>
+
+<a class="menu-item" href="/PROMO/">PROMO</a>
+
+<a class="menu-item" href="/STAFF/">STAFF</a>
+
+<button class="menu-item" id="menuSwitchBtn" onclick="closeMenuAnd(logout)" style="display:none;">
+Switch Role
+</button>
+
+</div>
 
 <!-- ================= LOGIN ================= -->
 <div class="login-wrap" id="loginView">
