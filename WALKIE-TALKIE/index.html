@@ -232,6 +232,34 @@ console.log("Transmission ended");
 
 </script>
 
+<script type="module">
 
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getMessaging, getToken } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
+  authDomain: "h4h-walkie.firebaseapp.com",
+  projectId: "h4h-walkie",
+  storageBucket: "h4h-walkie.firebasestorage.app",
+  messagingSenderId: "253773392789",
+  appId: "1:253773392789:web:27b1141ffa1f1b7815a49c",
+  measurementId: "G-HHNFJF23JW"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const messaging = getMessaging(app);
+
+
+console.log("🔥 H4H Walkie Firebase Connected");
+
+
+</script>
 </body>
 </html>
