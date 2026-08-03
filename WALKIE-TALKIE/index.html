@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>H4H Walkie Talkie Control</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#050505;
+    color:white;
+    font-family:Arial, sans-serif;
+}
+
+header{
+    background:#111;
+    padding:20px;
+    text-align:center;
+    border-bottom:2px solid #ff0000;
+}
+
+h1{
+    color:#ffcc00;
+}
+
+.container{
+    padding:20px;
+}
+
+button{
+    width:100%;
+    padding:18px;
+    margin:10px 0;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.buzz{
+    background:#ff0033;
+    color:white;
+}
+
+.call{
+    background:#008cff;
+    color:white;
+}
+
+.staff{
+    background:#222;
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
+}
+
+.online{
+    color:#00ff66;
+}
+
+.offline{
+    color:#999;
+}
+
+.ptt{
+    background:#00cc66;
+    color:white;
+    height:100px;
+    font-size:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+🎙️ H4H WALKIE TALKIE
+</h1>
+
+<p>
+HIT FOR HIT BATTLES™ STAFF CONTROL
+</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+<button class="buzz" onclick="buzzAll()">
+🚨 BUZZ ALL ARTISTS + STAFF
+</button>
+
+
+<h2>Artists</h2>
+
+
+<div class="staff">
+
+<b>Mack In The Dark</b>
+
+<p class="online">
+● READY
+</p>
+
+
+<button class="call" onclick="callArtist('mack')">
+🎙️ CALL ARTIST
+</button>
+
+
+</div>
+
+
+
+<div class="staff">
+
+<b>Artist Two</b>
+
+<p class="offline">
+● OFFLINE
+</p>
+
+
+<button class="call" onclick="callArtist('artist2')">
+🎙️ CALL ARTIST
+</button>
+
+
+</div>
+
+
+
+
+<h2>Active Call</h2>
+
+
+<div id="callStatus">
+
+No active call
+
+</div>
+
+
+
+<button 
+class="ptt"
+onmousedown="startTalking()"
+onmouseup="stopTalking()">
+
+🎤 HOLD TO TALK
+
+</button>
+
+
+</div>
+
+
+
+<script>
+
+
+function buzzAll(){
+
+alert(
+"🚨 Buzz sent to all artists and staff"
+);
+
+
+/*
+
+CONNECTED LATER:
+
+send push notification
+
+{
+type:"buzz",
+sound:"beep",
+vibrate:true
+}
+
+*/
+
+
+}
+
+
+
+function callArtist(id){
+
+document.getElementById("callStatus").innerHTML =
+"Calling "+id+"...";
+
+
+/*
+
+CONNECTED LATER:
+
+Start WebRTC session
+
+*/
+
+}
+
+
+
+function startTalking(){
+
+console.log("Microphone transmitting");
+
+}
+
+
+function stopTalking(){
+
+console.log("Transmission ended");
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
