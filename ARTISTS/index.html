@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>H4H Artist Receiver</title>
+
+<style>
+
+body{
+background:#050505;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:40px;
+}
+
+.box{
+background:#111;
+padding:25px;
+border-radius:15px;
+}
+
+button{
+padding:15px;
+width:100%;
+font-size:18px;
+background:#ffcc00;
+border:0;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+<h1>🎙️ HIT FOR HIT</h1>
+
+<h2>Artist Receiver</h2>
+
+<p id="status">
+Connecting...
+</p>
+
+
+<button onclick="enableAlerts()">
+ENABLE STAFF ALERTS
+</button>
+
+
+</div>
+
+
+
+<script type="module">
+
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import { 
+getMessaging,
+getToken
+} from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
+
+authDomain: "h4h-walkie.firebaseapp.com",
+
+projectId: "h4h-walkie",
+
+storageBucket: "h4h-walkie.firebasestorage.app",
+
+messagingSenderId: "253773392789",
+
+appId: "1:253773392789:web:27b1141ffa1f1b7815a49c",
+
+measurementId: "G-HHNFJF23JW"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const messaging = getMessaging(app);
+
+
+
+window.enableAlerts = async function(){
+
+
+const permission = await Notification.requestPermission();
+
+
+if(permission === "granted"){
+
+
+const token = await getToken(
+messaging,
+{
+vapidKey:
+"BEPHgzQlLpNtMHm5HHB3PHFNGXNBjKZWmgcyN1HITPQan2v5ZCpwOHhiQ9CS-XI9_JUqggQFKhDO0F7URi6p_YI"
+}
+);
+
+
+console.log("DEVICE TOKEN:",token);
+
+
+document.getElementById("status").innerHTML =
+"✅ CONNECTED TO H4H STAFF";
+
+
+}
+
+else{
+
+document.getElementById("status").innerHTML =
+"❌ Notifications blocked";
+
+}
+
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
