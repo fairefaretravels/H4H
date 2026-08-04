@@ -239,26 +239,28 @@ a{color:var(--amber);}
 </div>
 
 <script>
-/* ===================== MENU DROPDOWN (no storage dependency, stays a plain script) ===================== */
 function toggleMenu(e){
   if(e) e.stopPropagation();
   document.getElementById('menuDropdown').classList.toggle('show');
 }
-function closeMenu(){ document.getElementById('menuDropdown').classList.remove('show'); }
+
+function closeMenu(){
+  document.getElementById('menuDropdown').classList.remove('show');
+}
+
 document.addEventListener('click', (e)=>{
   const wrap = document.getElementById('menuWrap');
   if(wrap && !wrap.contains(e.target)) closeMenu();
 });
 </script>
 
-<!-- ================= RADIO + BATTLE CONTROL — one Firebase-backed module =====================
-     Both features now share the same Firebase project (the one Battle Control already used).
-     window.storage does not exist outside Claude's own artifact preview, so the radio's shared
-     state has to live somewhere that works on the real deployed site — Firebase already does. ==== -->
+
 <script type="module">
+
 import {initializeApp}
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
 getDatabase,
 ref,
@@ -269,6 +271,7 @@ onValue
 }
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 const firebaseConfig={
 apiKey:"AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
 authDomain:"h4h-walkie.firebaseapp.com",
@@ -277,6 +280,7 @@ storageBucket:"h4h-walkie.firebasestorage.app",
 messagingSenderId:"253773392789",
 appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
 };
+
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
 
