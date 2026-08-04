@@ -586,7 +586,10 @@ async function sget(key){
    STAFF/ folder to resolve track names/urls. This page is a pure listener: it never becomes the
    driver (no auto-advance-on-end logic here), it just tunes in and stays synced. Only "now
    playing" is shown — no track list/queue. */
-const STAFF_PLAYLIST = 'playlist.php';
+const GITHUB_OWNER = 'fairefaretravels';
+const GITHUB_REPO = 'H4H';
+const GITHUB_BRANCH = 'main';
+const STAFF_PATH = 'STAFF';
 const AUDIO_EXT = ['mp3','wav','m4a','ogg','aac','flac'];
 const STORAGE_KEY = 'radio_state'; // matches the STAFF page's broadcast channel
 
@@ -597,28 +600,21 @@ let syncTimer = null;
 let handledCountdownTs = null;
 
 async function fetchStaffAudioFiles(){
-
   try{
-
-    const res = await fetch('../STAFF/playlist.php?nocache=' + Date.now());
-
-    if(!res.ok){
-      throw new Error('Playlist failed');
-    }
-
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if(!res.ok) throw new Error('GitHub API error '+res.status);
     const data = await res.json();
-
-    return data.map(track => ({
-      name: track.name,
-      url: '../STAFF/' + track.url
-    }));
-
+    return data
+      .filter(f => f.type === 'file' && AUDIO_EXT.includes((f.name.split('.').pop()||'').toLowerCase()))
+      .sort((a,b)=>a.name.localeCompare(b.name))
+      .map(f => ({ name: f.name, url: f.download_url }));
   }catch(e){
-
-    console.error("STAFF loading error:", e);
-    return null;
-
+    console.error('Could not load STAFF folder from GitHub', e);
+    return null; // null = fetch failed, distinct from "folder is empty"
   }
+}
 
 }
 
