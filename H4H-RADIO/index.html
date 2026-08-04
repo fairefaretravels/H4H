@@ -508,7 +508,7 @@ footer{
 .footer-contact a:hover{
     color:#ff0000;
 }
-</footer>
+</style>
 
 <script>
 /* ===================== HERO PHOTO ROTATION (no storage dependency — stays plain) ===================== */
@@ -656,20 +656,32 @@ function updateUi(track, isLive){
 }
 
 async function tuneToggle(){
-  if(playing){ stopLocal(); return; }
+  if(playing){
+    stopLocal();
+    return;
+  }
+
   const state = await sget(STORAGE_KEY);
+
   if(state && state.phase && state.phase !== 'idle' && state.track){
-    joinListener(state);
+
+    const audio = document.getElementById('radioAudio');
+
+    audio.src = state.track.url;
+    audio.load();
+
+    try{
+      await audio.play();
+      playing = true;
+      updateUi(state.track, true);
+    } catch(err){
+      console.error("Audio play failed:", err);
+      alert("Tap play again to start audio.");
+    }
+
   } else {
     alert('Nothing is on air right now — check back once staff starts the broadcast.');
   }
-}
-function stopLocal(){
-  playing = false;
-  const audio = document.getElementById('radioAudio');
-  audio.pause(); audio.removeAttribute('src'); audio.load();
-  currentTrack = null;
-  updateUi(null, false);
 }
 
 /* ---- listener: joins the STAFF-driven broadcast and syncs to it ---- */
