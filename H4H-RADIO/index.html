@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="H4Hpromo.PNG">
+<meta property="og:title" content="H4H Radiomeltdown">
+<meta property="og:description" content="Music, radio, culture and entertainment.">
+<meta property="og:image" content="https://radiomeltdown.online/H4Hpromo.PNG">
+<meta property="og:url" content="https://radiomeltdown.online">
+<meta name="description" content="Hit4Hit Battles™ RADIO LIVE — streaming radio, music, and entertainment.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Hit4Hit Battles™ RADIO LIVE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000000;
+  --ink2:#000000;
+  --panel:#0D0D0D;
+  --panel2:#161616;
+  --line:#2B2B2B;
+  --rust:#8A6D1A;
+  --ember:#C9A227;
+  --amber:#D4AF37;
+  --gold:#F0C93D;
+  --chalk:#FFFFFF;
+  --chalk-dim:#A8A8A8;
+  --live:#F0C93D;
+  --standby:#555555;
+  --font-display:'Bebas Neue', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(circle at 15% 0%, #141414 0%, transparent 45%),
+    radial-gradient(circle at 100% 10%, #101010 0%, transparent 40%),
+    var(--ink);
+  color:var(--chalk);
+  font-family:var(--font-body);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--gold);color:var(--ink);}
+button{font-family:var(--font-body);cursor:pointer;}
+a{color:var(--amber);}
+
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 2px);
+  mix-blend-mode:overlay;
+}
+
+/* ---------- top nav ---------- */
+.topnav{
+  position:fixed;top:14px;right:14px;left:14px;z-index:80;
+  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;
+}
+.topnav a{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:11px 18px;
+  font-family:var(--font-display);
+  font-size:15px;letter-spacing:1.5px;
+  color:var(--ink);
+  background:linear-gradient(135deg, var(--ember), var(--gold));
+  border-radius:10px;
+  text-decoration:none;
+  box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.15) inset;
+  transition:transform .15s ease, filter .15s ease;
+}
+.topnav a:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+.topnav a.ghost{
+  background:rgba(0,0,0,.55); color:var(--chalk);
+  border:1px solid var(--line); box-shadow:none; backdrop-filter:blur(6px);
+}
+.topnav a.ghost:hover{ border-color:var(--amber); color:var(--amber); }
+
+/* ---------- hero photo carousel ---------- */
+.hero{
+  position:relative; width:100%; min-height:100svh;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+  overflow:hidden; padding:0 0 40px;
+}
+.hero-slide{
+  position:absolute; inset:0; opacity:0;
+  background-size:cover; background-position:center;
+  filter:grayscale(1) contrast(1.05);
+  transform:scale(1.06);
+  transition:opacity 1.4s ease, transform 7s ease-out;
+}
+.hero-slide.active{ opacity:1; transform:scale(1); }
+.hero-scrim{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.94) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.55), transparent 40%, transparent 60%, rgba(0,0,0,.55));
+  z-index:1;
+}
+.hero-content{ position:relative; z-index:2; text-align:center; padding:0 20px; }
+.hero-eyebrow{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--gold); margin:0 0 10px;
+}
+.hero-title{
+  font-family:var(--font-display); font-size:min(18vw, 108px); line-height:.9;
+  letter-spacing:2px; margin:0; color:var(--chalk);
+  text-shadow:0 8px 40px rgba(0,0,0,.5);
+}
+.hero-sub{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:1px; color:var(--chalk-dim);
+  margin:14px 0 0; text-transform:uppercase;
+}
+.hero-dots{ position:relative; z-index:2; display:flex; gap:6px; margin-top:22px; }
+.hero-dots span{ width:22px; height:3px; border-radius:3px; background:rgba(255,255,255,.25); transition:background .3s; }
+.hero-dots span.active{ background:var(--gold); }
+
+/* ---------- station section ---------- */
+.station{ max-width:640px; margin:0 auto; padding:48px 18px 70px; }
+.station-eyebrow{
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--chalk-dim); text-align:center; margin:0 0 4px;
+}
+.station-title{
+  font-family:var(--font-display); font-size:34px; letter-spacing:1px; text-align:center; margin:0 0 26px;
+}
+.player-bar{
+  position:relative;
+  background:linear-gradient(160deg, var(--panel), var(--panel2));
+  border:1px solid var(--line); border-radius:16px; padding:20px;
+}
+.player-now{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.disc{
+  width:52px; height:52px; border-radius:50%;
+  background:conic-gradient(var(--gold),#000,var(--gold));
+  border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.disc::after{ content:""; width:16px; height:16px; border-radius:50%; background:var(--ink); border:1px solid var(--gold); }
+.disc.spin{ animation:spin 3.2s linear infinite; }
+@keyframes spin{ from{transform:rotate(0);} to{transform:rotate(360deg);} }
+.now-meta{ flex:1; min-width:0; }
+.now-title{ font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--chalk); }
+.now-sub{ font-family:var(--font-mono); font-size:10px; color:var(--chalk-dim); margin-top:2px; }
+.onair-tag{
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.5px; text-transform:uppercase;
+  padding:4px 9px; border-radius:20px; border:1px solid var(--line); color:var(--chalk-dim); flex-shrink:0;
+  text-align:right;
+}
+.onair-tag.live{ color:var(--live); border-color:var(--live); }
+
+.tune-wrap{ text-align:center; padding:6px 0 2px; }
+.tune-btn{
+  width:104px; height:104px; border-radius:50%; border:2px solid var(--line);
+  background:radial-gradient(circle at 35% 30%, var(--panel2), var(--ink2));
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  margin:0 auto; box-shadow:0 8px 20px rgba(0,0,0,.4);
+}
+.tune-btn .lbl{ font-family:var(--font-display); font-size:15px; letter-spacing:1px; color:var(--chalk); }
+.tune-btn.on{
+  border-color:var(--gold);
+  background:radial-gradient(circle at 35% 30%, var(--gold), var(--amber));
+  box-shadow:0 0 30px rgba(240,201,61,.35);
+}
+.tune-btn.on .lbl{ color:var(--ink); }
+.tune-hint{
+  font-family:var(--font-mono); font-size:9.5px; color:var(--chalk-dim);
+  letter-spacing:.5px; margin-top:12px; text-transform:uppercase;
+}
+.countdown-overlay{
+  position:absolute; inset:0; background:rgba(0,0,0,.94); border-radius:16px;
+  display:none; align-items:center; justify-content:center; flex-direction:column; z-index:5;
+}
+.countdown-overlay.show{ display:flex; }
+.countdown-overlay .num{ font-family:var(--font-display); font-size:56px; color:var(--gold); line-height:1; text-shadow:0 0 24px rgba(240,201,61,.5); }
+.countdown-overlay .lbl{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:1px; color:var(--chalk-dim); text-transform:uppercase; margin-top:6px; text-align:center; padding:0 16px; }
+
+.volume-row{ display:flex; align-items:center; gap:10px; margin-top:18px; }
+.volume-row button{
+  background:var(--panel2); border:1px solid var(--line); color:var(--chalk); border-radius:8px;
+  padding:0 12px; height:34px; font-size:10px; font-family:var(--font-mono); letter-spacing:1px; flex-shrink:0;
+}
+.volume-row button:hover{ border-color:var(--amber); color:var(--gold); }
+.volume-row input[type=range]{
+  flex:1; -webkit-appearance:none; height:4px; border-radius:4px; background:var(--line); outline:none;
+}
+.volume-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--gold); cursor:pointer;
+}
+.volume-row input[type=range]::-moz-range-thumb{
+  width:14px; height:14px; border-radius:50%; background:var(--gold); border:none; cursor:pointer;
+}
+
+.footer{
+  text-align:center; padding:0 18px 40px; font-family:var(--font-mono);
+  font-size:9.5px; color:var(--chalk-dim); letter-spacing:.5px;
+}
+audio{ display:none; }
+
+.h4h-portal{
+max-width:640px;
+margin:40px auto;
+padding:20px;
+}
+
+.portal-card{
+background:linear-gradient(160deg,var(--panel),var(--panel2));
+border:1px solid var(--line);
+border-radius:16px;
+padding:25px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.portal-card h2, .portal-card h3{
+font-family:var(--font-display);
+letter-spacing:1px;
+color:var(--chalk);
+margin-top:0;
+}
+
+.portal-card input{
+width:100%;
+padding:14px;
+background:#000000;
+border:1px solid var(--line);
+color:var(--chalk);
+border-radius:8px;
+margin-bottom:10px;
+}
+
+.portal-card button{
+background:linear-gradient(135deg,var(--amber),var(--gold));
+border:0;
+color:var(--ink);
+padding:12px 22px;
+border-radius:10px;
+font-weight:bold;
+font-family:var(--font-display);
+letter-spacing:1px;
+}
+
+.battle-choice{
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+margin:14px 0;
+}
+
+.artist-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+border-bottom:1px solid var(--line);
+color:var(--chalk);
+text-align:left;
+}
+
+.track-row{
+  display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px;
+  border:1px solid var(--line); margin-bottom:6px; background:var(--panel);
+  color:var(--chalk); text-align:left;
+}
+
+#checkMessage, #voteMessage{
+color:var(--gold);
+font-family:var(--font-mono);
+font-size:11.5px;
+letter-spacing:.5px;
+}
+
+#artistQueue, #trackVoting, #leaderboard{
+color:var(--chalk-dim);
+}
+
+.ready{
+color:var(--gold);
+font-weight:bold;
+}
+
+ .hero{
+  min-height:80vh;
+  background-image:url("H4Hpromo.PNG");
+  background-size:cover;
+  background-position:center;
+  position:relative;
+} 
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="topnav">
+  <a class="ghost" href="/FLOW-CHART/">BATTLEGROUND</a>
+  <a href="/PROMO/">ARTISTS</a>
+  <a href="/INFO/">INFO</a>
+  <a href="/ARTISTS/">GROUP-WALKIE</a>
+</nav>
+
+<!-- ================= HERO PHOTO CAROUSEL ================= -->
+<section class="hero" id="hero">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">There can be only one KING and QUEEN</p>
+    <h1 class="hero-title">HIT FOR HIT</h1>
+    <p class="hero-sub">The song-for-song battle for the crown</p>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</section>
+
+<!-- ================= STATION ================= -->
+<section class="station">
+  <p class="station-eyebrow">LIVE</p>
+  <h2 class="station-title">Hit 5 Hit Radio</h2>
+
+  <div class="player-bar">
+    <div class="countdown-overlay" id="countdownOverlay"></div>
+    <div class="player-now">
+      <div class="disc" id="disc"></div>
+      <div class="now-meta">
+        <div class="now-title" id="nowTitle">Nothing on air yet</div>
+        <div class="now-sub" id="nowSub">PLAY</div>
+      </div>
+      <span class="onair-tag" id="onairTag">STREAM STARTING SOON</span>
+    </div>
+
+    <div class="tune-wrap">
+      <button class="tune-btn" id="tuneBtn" onclick="tuneToggle()">
+        <span class="lbl" id="tuneLabel">TUNE IN</span>
+      </button>
+      <div class="tune-hint" id="tuneHint">Official Hit 4 Hit Radio</div>
+    </div>
+
+    <div class="volume-row">
+      <button id="muteBtn" onclick="toggleMute()">MUTE</button>
+      <input type="range" id="volumeSlider" min="0" max="100" value="100" oninput="setVolume(this.value)">
+    </div>
+  </div>
+</section>
+
+<audio id="radioAudio"></audio>
+
+ <!-- ================= H4H ARTIST CHECK-IN ================= -->
+
+<section class="h4h-portal">
+
+<h2>ARTIST CHECK-IN</h2>
+
+<div class="portal-card">
+
+<h3>Check In For Battle</h3>
+
+<input id="checkArtistName" placeholder="Artist Name">
+
+<button onclick="artistCheckIn()">
+CHECK IN
+</button>
+
+<p id="checkMessage"></p>
+
+</div>
+
+
+<div class="portal-card">
+
+<h3>LIVE ARTIST QUEUE</h3>
+
+<div id="artistQueue">
+No artists checked in.
+</div>
+
+</div>
+
+
+<div class="portal-card voting">
+
+<h3>VOTE FOR THE CROWN</h3>
+
+<div class="battle-choice">
+
+<button onclick="vote('artistA')">
+ARTIST A
+<span id="artistACount">0</span>
+</button>
+
+
+<button onclick="vote('artistB')">
+ARTIST B
+<span id="artistBCount">0</span>
+</button>
+
+</div>
+
+<p id="voteMessage"></p>
+
+</div>
+
+<!-- ================= H4H VIDEO + VOTING ================= -->
+
+<section class="h4h-media">
+
+
+<div class="portal-card">
+
+<h2>THURSDAYS H4H LIVE CHANNEL</h2>
+
+<div class="youtube-box">
+
+<iframe
+width="100%"
+height="315"
+src="https://www.youtube.com/embed/live_stream?channel=YQ0IV7DwsIA5ADvc"
+title="H4H Live"
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+</div>
+
+</div>
+
+
+
+<div class="portal-card">
+
+<h2>H4H BATTLE VIDEOS</h2>
+
+<div class="youtube-box">
+
+<iframe
+width="100%"
+height="315"
+src="https://www.youtube.com/embed/videoseries?list=PLa9auhfp7FjQ&si"
+title="H4H Playlist"
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+
+</div>
+
+</div>
+
+
+
+<div class="portal-card">
+
+<h2>TRACK VOTING</h2>
+
+<div id="trackVoting">
+
+</div>
+
+
+</div>
+
+
+<div class="portal-card">
+
+<h2>H4H TOP 10 MIXTAPE</h2>
+
+<div id="leaderboard">
+
+Loading rankings...
+
+</div>
+
+</div>
+
+
+</section>  
+
+</section> 
+  <footer>
+  <p class="footer">© HIT4HIT · Road to the Crown</p>
+
+  <div class="footer-contact">
+    <a href="/INFO/">INFO</a>
+    <a href="/PROMO/">PROMO</a>
+    <a href="https://radiomeltdown.com/NewsStory">THE STATIC</a>
+  </div>
+</footer>
+
+<style>
+footer{
+    text-align:center;
+    padding:30px 20px;
+}
+
+.footer{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:20px;
+    color:white;
+}
+
+.footer-contact{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.footer-contact a{
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+    text-decoration:none;
+    padding:10px 20px;
+}
+
+.footer-contact a:hover{
+    color:#ff0000;
+}
+</style>
+
+<script>
+/* ===================== HERO PHOTO ROTATION (no storage dependency — stays plain) ===================== */
+const PHOTOS = [
+  { src:'H4Hpromo.PNG' },
+  { src:'IvonnaLing.PNG' },
+  { src:'Louiefresh.PNG' },
+  { src:'RebelQueen.PNG' },
+  { src:'3vs3.PNG' }
+];
+let heroIdx = 0;
+function renderHero(){
+  const hero = document.getElementById('hero');
+  const dots = document.getElementById('heroDots');
+  document.querySelectorAll('.hero-slide').forEach(el=>el.remove());
+  PHOTOS.forEach((p,i)=>{
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i===heroIdx ? ' active' : '');
+    slide.style.backgroundImage = `url('${p.src}')`;
+    hero.insertBefore(slide, hero.firstChild);
+  });
+  dots.innerHTML = PHOTOS.map((p,i)=>`<span class="${i===heroIdx?'active':''}"></span>`).join('');
+}
+renderHero();
+setInterval(()=>{
+  heroIdx = (heroIdx+1) % PHOTOS.length;
+  renderHero();
+}, 5500);
+</script>
+
+<!-- ================= RADIO + ARTIST CHECK-IN + VOTING — one Firebase-backed module =====================
+     window.storage only exists inside Claude's own artifact preview, not on a real deployed site,
+     so it never actually synced anything once this page was live. Everything shared below now runs
+     through the same Firebase project the Battle Control panel already used (same project as the
+     STAFF page's radio module), under different database paths so nothing collides. ==== -->
+<script type="module">
+import {initializeApp}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+getDatabase,
+ref,
+set,
+get
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig={
+apiKey:"AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
+authDomain:"h4h-walkie.firebaseapp.com",
+projectId:"h4h-walkie",
+storageBucket:"h4h-walkie.firebasestorage.app",
+messagingSenderId:"253773392789",
+appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
+};
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+
+/* ===================== STORAGE HELPERS — Firebase-backed, same call shape as before =====================
+   Drop-in replacement: same sset(key,val)/sget(key) signatures as the old window.storage helpers,
+   so nothing below needed to change except this backend. */
+async function sset(key, val){
+  try{ await set(ref(db, key), val); return val; }
+  catch(e){ console.error('firebase set failed', key, e); return null; }
+}
+async function sget(key){
+  try{
+    const snap = await get(ref(db, key));
+    return snap.exists() ? snap.val() : null;
+  }catch(e){ console.error('firebase get failed', key, e); return null; }
+}
+
+/* ===================== RADIO — LISTENER ONLY, WIRED TO THE STAFF BROADCAST =====================
+   Uses the same 'radio_state' path the STAFF page's radio module writes to, and the same GitHub
+   STAFF/ folder to resolve track names/urls. This page is a pure listener: it never becomes the
+   driver (no auto-advance-on-end logic here), it just tunes in and stays synced. Only "now
+   playing" is shown — no track list/queue. */
+const GITHUB_OWNER = 'fairefaretravels';
+const GITHUB_REPO = 'H4H';
+const GITHUB_BRANCH = 'main';
+const STAFF_PATH = 'STAFF';
+const AUDIO_EXT = ['mp3','wav','m4a','ogg','aac','flac'];
+const STORAGE_KEY = 'radio_state'; // matches the STAFF page's broadcast channel
+
+let RADIO_TRACKS = []; // [{name, url}] — used only to resolve which url the driver is playing
+let playing = false;
+let currentTrack = null; // {name, url}
+let syncTimer = null;
+let handledCountdownTs = null;
+
+async function fetchStaffAudioFiles(){
+  try{
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`, {
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if(!res.ok) throw new Error('GitHub API error '+res.status);
+    const data = await res.json();
+    return data
+      .filter(f => f.type === 'file' && AUDIO_EXT.includes((f.name.split('.').pop()||'').toLowerCase()))
+      .sort((a,b)=>a.name.localeCompare(b.name))
+      .map(f => ({ name: f.name, url: f.download_url }));
+  }catch(e){
+    console.error('Could not load STAFF folder from GitHub', e);
+    return null; // null = fetch failed, distinct from "folder is empty"
+  }
+}
+
+}
+
+async function radioBoot(){
+  RADIO_TRACKS = (await fetchStaffAudioFiles()) || [];
+  setInterval(async ()=>{
+    const fresh = await fetchStaffAudioFiles();
+    if(fresh) RADIO_TRACKS = fresh;
+  }, 60000);
+  syncLoop();
+}
+
+function updateUi(track, isLive){
+  const btn = document.getElementById('tuneBtn');
+  const lbl = document.getElementById('tuneLabel');
+  const tag = document.getElementById('onairTag');
+  const disc = document.getElementById('disc');
+  const title = document.getElementById('nowTitle');
+  const sub = document.getElementById('nowSub');
+  const hint = document.getElementById('tuneHint');
+
+  btn.classList.toggle('on', playing);
+  lbl.textContent = playing ? 'LEAVE' : 'TUNE IN';
+
+  if(track){
+    title.textContent = track.name;
+    sub.textContent = isLive ? 'Live now' : 'Loading…';
+    tag.textContent = isLive ? 'ON AIR' : 'BUFFERING';
+    tag.classList.toggle('live', isLive);
+    disc.classList.toggle('spin', isLive);
+    hint.textContent = 'Everyone hears the same track, live';
+  } else {
+    title.textContent = 'Nothing on air yet';
+    sub.textContent = 'Tap tune in to join the broadcast';
+    tag.textContent = 'STREAM STARTING SOON';
+    tag.classList.remove('live');
+    disc.classList.remove('spin');
+  }
+}
+
+async function tuneToggle(){
+  if(playing){
+    stopLocal();
+    return;
+  }
+
+  const state = await sget(STORAGE_KEY);
+
+  if(state && state.phase && state.phase !== 'idle' && state.track){
+
+    const audio = document.getElementById('radioAudio');
+
+    audio.src = state.track.url;
+    audio.load();
+
+    try{
+      await audio.play();
+      playing = true;
+      updateUi(state.track, true);
+    } catch(err){
+      console.error("Audio play failed:", err);
+      alert("Tap play again to start audio.");
+    }
+
+  } else {
+    alert('Nothing is on air right now — check back once staff starts the broadcast.');
+  }
+}
+
+/* ---- listener: joins the STAFF-driven broadcast and syncs to it ---- */
+async function joinListener(state){
+  playing = true;
+  const audio = document.getElementById('radioAudio');
+  if(state.phase === 'live'){
+    audio.src = state.track.url;
+    const expected = state.position + (Date.now()-state.anchorTs)/1000;
+    audio.currentTime = Math.max(0, expected);
+    currentTrack = state.track;
+    await audio.play().catch(()=>{});
+    updateUi(state.track, true);
+  } else if(state.phase === 'countdown'){
+    audio.src = state.track.url;
+    audio.currentTime = state.position || 0;
+    currentTrack = state.track;
+    handledCountdownTs = state.countdownTargetTs;
+    runCountdown(state.countdownTargetTs, 'Get ready: '+state.track.name);
+    setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+    updateUi(state.track, false);
+  }
+}
+
+function syncLoop(){
+  syncTimer = setInterval(async ()=>{
+    const state = await sget(STORAGE_KEY);
+
+    if(!state || state.phase==='idle' || !state.track){
+      if(playing) stopLocal();
+      updateIdleHint(null);
+      return;
+    }
+    if(!playing){ updateIdleHint(state); return; }
+
+    const audio = document.getElementById('radioAudio');
+    if(state.phase==='countdown'){
+      if(handledCountdownTs !== state.countdownTargetTs){
+        handledCountdownTs = state.countdownTargetTs;
+        audio.src = state.track.url;
+        audio.currentTime = state.position || 0;
+        currentTrack = state.track;
+        runCountdown(state.countdownTargetTs, 'Get ready: '+state.track.name);
+        setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+        updateUi(state.track, false);
+      }
+      return;
+    }
+    const changedTrack = !currentTrack || currentTrack.url !== state.track.url;
+    const expected = state.position + (Date.now()-state.anchorTs)/1000;
+    if(changedTrack){
+      currentTrack = state.track;
+      audio.src = state.track.url;
+      audio.currentTime = Math.max(0, expected);
+      audio.play().catch(()=>{});
+      updateUi(state.track, true);
+      return;
+    }
+    if(Math.abs(audio.currentTime - expected) > 1.2){ audio.currentTime = Math.max(0, expected); }
+  }, 1500);
+}
+function runCountdown(targetTs, label){
+  const el = document.getElementById('countdownOverlay');
+  el.classList.add('show');
+  const render = ()=>{
+    const remaining = Math.ceil((targetTs - Date.now())/1000);
+    if(remaining<=0){ el.classList.remove('show'); return false; }
+    el.innerHTML = `<div class="num">${remaining}</div><div class="lbl">${label}</div>`;
+    return true;
+  };
+  if(!render()) return;
+  const iv = setInterval(()=>{ if(!render()) clearInterval(iv); }, 200);
+}
+function updateIdleHint(state){
+  const sub = document.getElementById('nowSub');
+  if(state && state.track){
+    document.getElementById('nowTitle').textContent = 'Live now: ' + state.track.name;
+    sub.textContent = 'Tap tune in to join';
+  }
+}
+function setVolume(v){
+  const audio = document.getElementById('radioAudio');
+  audio.volume = v/100; audio.muted = false;
+  document.getElementById('muteBtn').textContent = (v==0) ? 'MUTED' : 'MUTE';
+}
+function toggleMute(){
+  const audio = document.getElementById('radioAudio');
+  audio.muted = !audio.muted;
+  document.getElementById('muteBtn').textContent = audio.muted ? 'MUTED' : 'MUTE';
+}
+
+radioBoot();
+
+/* ================= H4H ARTIST CHECK-IN — now shared across all devices ================= */
+/* Queue lives in Firebase instead of localStorage, so everyone checking in from their own phone
+   sees the same live queue, not just their own browser's copy. Re-fetches
+   the freshest queue right before every write to minimize clobbering another device's update,
+   and polls every few seconds to pick up check-ins/buzzes made elsewhere. */
+const ARTIST_QUEUE_KEY = 'h4h_artist_queue';
+let artistQueue = [];
+
+async function loadArtistQueue(){
+  const fresh = await sget(ARTIST_QUEUE_KEY);
+  artistQueue = fresh || [];
+  renderArtistQueue();
+}
+
+async function artistCheckIn(){
+
+let name =
+document.getElementById("checkArtistName")
+.value.trim();
+
+
+if(!name){
+return;
+}
+
+const fresh = await sget(ARTIST_QUEUE_KEY);
+artistQueue = fresh || [];
+
+artistQueue.push({
+
+name:name,
+
+time:new Date().toLocaleTimeString(),
+
+ready:false
+
+});
+
+
+await sset(ARTIST_QUEUE_KEY, artistQueue);
+
+
+document.getElementById("checkArtistName").value="";
+
+
+document.getElementById("checkMessage").innerHTML=
+name+" is checked in";
+
+
+renderArtistQueue();
+
+}
+
+
+
+async function buzzArtist(index){
+
+const fresh = await sget(ARTIST_QUEUE_KEY);
+artistQueue = fresh || artistQueue;
+if(!artistQueue[index]) return;
+
+artistQueue[index].ready=true;
+
+
+await sset(ARTIST_QUEUE_KEY, artistQueue);
+
+
+renderArtistQueue();
+
+}
+
+
+
+function renderArtistQueue(){
+
+let box=document.getElementById("artistQueue");
+
+
+if(!artistQueue.length){
+
+box.innerHTML="No artists checked in.";
+
+return;
+
+}
+
+
+box.innerHTML=
+artistQueue.map((artist,index)=>`
+
+<div class="artist-row">
+
+<div>
+<b>${artist.name}</b><br>
+<small>${artist.time}</small>
+</div>
+
+
+<button onclick="buzzArtist(${index})">
+${artist.ready ? "BUZZED" : "BUZZ"}
+</button>
+
+
+</div>
+
+`).join("");
+
+}
+
+
+loadArtistQueue();
+setInterval(loadArtistQueue, 4000);
+
+/* ================= TRACK VOTING — shared vote counts, per-device "already voted" flag =================
+   Vote counts move to shared storage so the leaderboard reflects everyone's votes, not just the
+   voting device's own clicks. Which tracks *this* device has voted for stays in localStorage —
+   that's the one piece that should NOT be shared, or one phone could vote for every device. */
+const H4H_TRACKS = [
+
+{
+id:"track001",
+artist:"Artist A",
+song:"My New Song",
+votes:0
+},
+
+{
+id:"track002",
+artist:"Artist B",
+song:"Battle Anthem",
+votes:0
+}
+
+];
+
+const TRACK_VOTES_KEY = 'h4h_track_votes';
+
+function hasVotedLocally(id){
+  const voted = JSON.parse(localStorage.getItem("h4h_track_votes_local")) || [];
+  return voted.includes(id);
+}
+function markVotedLocally(id){
+  const voted = JSON.parse(localStorage.getItem("h4h_track_votes_local")) || [];
+  voted.push(id);
+  localStorage.setItem("h4h_track_votes_local", JSON.stringify(voted));
+}
+
+async function loadTrackVotes(){
+  const counts = (await sget(TRACK_VOTES_KEY)) || {};
+  H4H_TRACKS.forEach(t => { t.votes = counts[t.id] || 0; });
+  renderVoting();
+  renderLeaderboard();
+}
+
+function renderVoting(){
+
+let box=document.getElementById("trackVoting");
+
+
+box.innerHTML = H4H_TRACKS.map(track=>`
+
+<div class="track-row">
+
+<div>
+<b>${track.artist}</b><br>
+${track.song}
+</div>
+
+
+<button onclick="voteTrack('${track.id}')">
+VOTE (${track.votes})
+</button>
+
+
+</div>
+
+
+`).join("");
+
+}
+
+/* FIX: renderLeaderboard was previously declared *inside* voteTrack(), so it never existed as a
+   real global function and never ran on page load — it only worked by accident right after a
+   vote. It's now a standalone function, called both here on boot and again after every vote. */
+function renderLeaderboard(){
+
+let box=document.getElementById("leaderboard");
+
+
+let sorted =
+[...H4H_TRACKS]
+.sort((a,b)=>b.votes-a.votes);
+
+
+box.innerHTML =
+sorted.slice(0,10)
+.map((t,i)=>`
+
+<div class="track-row">
+
+<div>
+#${i+1}
+${t.artist}
+<br>
+${t.song}
+</div>
+
+<div>
+${t.votes}
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+async function voteTrack(id){
+
+if(hasVotedLocally(id)){
+
+alert("You already voted for this track");
+
+return;
+
+}
+
+const counts = (await sget(TRACK_VOTES_KEY)) || {};
+counts[id] = (counts[id] || 0) + 1;
+await sset(TRACK_VOTES_KEY, counts);
+
+markVotedLocally(id);
+
+H4H_TRACKS.forEach(t => { t.votes = counts[t.id] || 0; });
+
+renderVoting();
+renderLeaderboard();
+
+}
+
+loadTrackVotes();
+setInterval(loadTrackVotes, 4000);
+
+/* ================= CROWN VOTE — was previously broken (vote() was never defined) =================
+   The "VOTE FOR THE CROWN" buttons call vote('artistA') / vote('artistB'), but no such function
+   existed anywhere in the original script, so clicking them silently failed. Wired up here as a
+   shared, one-vote-per-device count, same pattern as track voting above. */
+const CROWN_VOTE_KEY = 'h4h_crown_votes';
+const CROWN_VOTED_LOCAL_KEY = 'h4h_crown_voted_local';
+
+async function loadCrownVotes(){
+  const counts = (await sget(CROWN_VOTE_KEY)) || {artistA:0, artistB:0};
+  document.getElementById('artistACount').textContent = counts.artistA || 0;
+  document.getElementById('artistBCount').textContent = counts.artistB || 0;
+}
+
+async function vote(which){
+  if(localStorage.getItem(CROWN_VOTED_LOCAL_KEY)){
+    document.getElementById('voteMessage').textContent = "You already voted for the crown.";
+    return;
+  }
+  const counts = (await sget(CROWN_VOTE_KEY)) || {artistA:0, artistB:0};
+  counts[which] = (counts[which] || 0) + 1;
+  await sset(CROWN_VOTE_KEY, counts);
+  localStorage.setItem(CROWN_VOTED_LOCAL_KEY, which);
+  document.getElementById('voteMessage').textContent = "Vote recorded!";
+  loadCrownVotes();
+}
+
+loadCrownVotes();
+setInterval(loadCrownVotes, 4000);
+
+/* Module scripts don't expose top-level functions on window automatically — the inline
+   onclick="..." / oninput="..." attributes above need these to find the functions. */
+window.tuneToggle = tuneToggle;
+window.toggleMute = toggleMute;
+window.setVolume = setVolume;
+window.artistCheckIn = artistCheckIn;
+window.buzzArtist = buzzArtist;
+window.voteTrack = voteTrack;
+window.vote = vote;
+</script>
+</body>
+</html>
