@@ -260,11 +260,15 @@ function escapeHtml(s){ const d = document.createElement('div'); d.textContent =
    who taps Tune In joins as a listener synced to that same clock. Auto-advance on track end plays
    the next track immediately (no countdown) so the browser's autoplay permission carries over from
    the still-active playback instead of being rejected. */
-const GITHUB_OWNER = 'fairefaretravels';
-const GITHUB_REPO = 'H4H';
-const GITHUB_BRANCH = 'main';
-const STAFF_PATH = 'STAFF';
+/* ===================== RADIO STATION — IONOS STAFF AUTO SCAN ===================== */
+/*
+ Upload MP3/WAV files directly into the STAFF folder.
+ playlist.php automatically finds them.
+ No GitHub API needed.
+*/
+
 const AUDIO_EXT = ['mp3','wav','m4a','ogg','aac','flac'];
+
 const RADIO_COUNTDOWN_MS = 3000;
 const RADIO_REFRESH_MS = 60000;
 
@@ -276,8 +280,47 @@ let radioHeartbeatTimer = null;
 let radioSyncTimer = null;
 let radioHandledCountdownTs = null;
 
+
+/* Pull audio list from STAFF folder */
 async function fetchStaffAudioFiles(){
+
   try{
+
+    const res = await fetch(
+      'playlist.php?nocache=' + Date.now()
+    );
+
+    if(!res.ok){
+      throw new Error(
+        'Playlist error ' + res.status
+      );
+    }
+
+    const data = await res.json();
+
+    return data
+      .filter(file =>
+        AUDIO_EXT.includes(
+          file.name.split('.').pop().toLowerCase()
+        )
+      )
+      .map(file => ({
+        name:file.name,
+        url:file.url
+      }));
+
+  }catch(e){
+
+    console.error(
+      'Could not load STAFF audio:',
+      e
+    );
+
+    return null;
+
+  }
+
+}
     const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`, {
       headers: { 'Accept': 'application/vnd.github+json' }
     });
