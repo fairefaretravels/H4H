@@ -182,6 +182,7 @@ a{color:var(--amber);}
     <a class="menu-item" href="https://radiomeltdown.online/H4H-RADIO/">H4H-RADIO</a>
     <a class="menu-item" href="https://radiomeltdown.online/PROMO/">PROMO</a>
     <a class="menu-item" href="https://radiomeltdown.online/WALKIE-TALKIE/">STAFF WALKIE</a>
+    <a class="menu-item" href="https://radiomeltdown.online/STAFF/VOTE/">VOTE</a>
   </div>
 </div>
 
@@ -378,8 +379,8 @@ async function radioInit(){
 
   RADIO_TRACKS = fetched || [];
 
-  console.log("RADIO TRACKS:", RADIO_TRACKS);
-
+  console.log(RADIO_TRACKS);
+  alert("Tracks found: " + RADIO_TRACKS.length);
 
   updateRadioNowBox();
 
