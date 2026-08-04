@@ -565,6 +565,17 @@ async function tuneToggle(){
   }
 }
 
+
+function stopLocal(){
+  const audio = document.getElementById('radioAudio');
+  audio.pause();
+  audio.currentTime = 0;
+  playing = false;
+  currentTrack = null;
+  updateUi(null,false);
+}
+
+
 /* ---- listener: joins the STAFF-driven broadcast and syncs to it ---- */
 async function joinListener(state){
   playing = true;
@@ -596,7 +607,10 @@ function syncLoop(){
       updateIdleHint(null);
       return;
     }
-    if(!playing){ updateIdleHint(state); return; }
+    if(!playing){
+  joinListener(state);
+  return;
+}
 
     const audio = document.getElementById('radioAudio');
     if(state.phase==='countdown'){
