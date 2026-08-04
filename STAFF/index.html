@@ -331,8 +331,16 @@ async function fetchStaffAudioFiles(){
     return data
       .filter(f => f.type === 'file' && AUDIO_EXT.includes((f.name.split('.').pop()||'').toLowerCase()))
       .sort((a,b)=>a.name.localeCompare(b.name))
-      .map(f => ({ name: f.name, url: f.download_url }));
-  }catch(e){
+      radioSyncLoop();
+  setInterval(async ()=>{
+    const fresh = await fetchStaffAudioFiles();
+    if(fresh === null) return;
+    const changed = JSON.stringify(fresh.map(t=>t.name)) !== JSON.stringify(RADIO_TRACKS.map(t=>t.name));
+    if(changed){
+      RADIO_TRACKS = fresh;
+    }
+  }, RADIO_REFRESH_MS);
+}
     console.error('Could not load STAFF folder from GitHub', e);
     return null; // null = fetch failed, distinct from "folder is empty"
   }
@@ -341,6 +349,9 @@ async function fetchStaffAudioFiles(){
 async function radioInit(){
   const fetched = await fetchStaffAudioFiles();
   RADIO_TRACKS = fetched || [];
+  
+  console.log(RADIO_TRACKS);
+  
   updateRadioNowBox();
   if(fetched === null){
     document.getElementById('radioNowPlaying').textContent = "Couldn't reach the STAFF folder on GitHub — try refreshing.";
