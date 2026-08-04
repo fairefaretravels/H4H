@@ -281,13 +281,6 @@ color:var(--gold);
 font-weight:bold;
 }
 
- .hero{
-  min-height:80vh;
-  background-image:url("H4Hpromo.PNG");
-  background-size:cover;
-  background-position:center;
-  position:relative;
-} 
 </style>
 </head>
 <body>
@@ -295,7 +288,7 @@ font-weight:bold;
 
 <nav class="topnav">
   <a class="ghost" href="/FLOW-CHART/">BATTLEGROUND</a>
-  <a href="/PROMO/">ARTISTS</a>
+  <a href="/PROMO/">ARTISTS PROMO</a>
   <a href="/INFO/">INFO</a>
   <a href="/ARTISTS/">GROUP-WALKIE</a>
 </nav>
@@ -328,7 +321,7 @@ font-weight:bold;
     </div>
 
     <div class="tune-wrap">
-      <button class="tune-btn" id="tuneBtn" onclick="tuneToggle()">
+      <button class="tune-btn" id="tuneBtn" onclick="radioToggle()">
         <span class="lbl" id="tuneLabel">TUNE IN</span>
       </button>
       <div class="tune-hint" id="tuneHint">Official Hit 4 Hit Radio</div>
@@ -345,142 +338,22 @@ font-weight:bold;
 
  <!-- ================= H4H ARTIST CHECK-IN ================= -->
 
-<section class="h4h-portal">
+</section> <!-- closes h4h-portal -->
 
-<h2>ARTIST CHECK-IN</h2>
-
-<div class="portal-card">
-
-<h3>Check In For Battle</h3>
-
-<input id="checkArtistName" placeholder="Artist Name">
-
-<button onclick="artistCheckIn()">
-CHECK IN
-</button>
-
-<p id="checkMessage"></p>
-
-</div>
-
-
-<div class="portal-card">
-
-<h3>LIVE ARTIST QUEUE</h3>
-
-<div id="artistQueue">
-No artists checked in.
-</div>
-
-</div>
-
-
-<div class="portal-card voting">
-
-<h3>VOTE FOR THE CROWN</h3>
-
-<div class="battle-choice">
-
-<button onclick="vote('artistA')">
-ARTIST A
-<span id="artistACount">0</span>
-</button>
-
-
-<button onclick="vote('artistB')">
-ARTIST B
-<span id="artistBCount">0</span>
-</button>
-
-</div>
-
-<p id="voteMessage"></p>
-
-</div>
 
 <!-- ================= H4H VIDEO + VOTING ================= -->
 
 <section class="h4h-media">
 
-
-<div class="portal-card">
-
-<h2>THURSDAYS H4H LIVE CHANNEL</h2>
-
-<div class="youtube-box">
-
-<iframe
-width="100%"
-height="315"
-src="https://www.youtube.com/embed/live_stream?channel=YQ0IV7DwsIA5ADvc"
-title="H4H Live"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-</div>
-
-</div>
-
-
-
-<div class="portal-card">
-
-<h2>H4H BATTLE VIDEOS</h2>
-
-<div class="youtube-box">
-
-<iframe
-width="100%"
-height="315"
-src="https://www.youtube.com/embed/videoseries?list=PLa9auhfp7FjQ&si"
-title="H4H Playlist"
-frameborder="0"
-allowfullscreen>
-</iframe>
-
-
-</div>
-
-</div>
-
-
-
-<div class="portal-card">
-
-<h2>TRACK VOTING</h2>
-
-<div id="trackVoting">
-
-</div>
-
-
-</div>
-
-
-<div class="portal-card">
-
-<h2>H4H TOP 10 MIXTAPE</h2>
-
-<div id="leaderboard">
-
-Loading rankings...
-
-</div>
-
-</div>
-
-
-</section>  
-
+...
 </section> 
   <footer>
   <p class="footer">© HIT4HIT · Road to the Crown</p>
 
   <div class="footer-contact">
     <a href="/INFO/">INFO</a>
-    <a href="/PROMO/">PROMO</a>
-    <a href="https://radiomeltdown.com/NewsStory">THE STATIC</a>
+    <a href="/PROMO/">ARTISTS PROMO</a>
+    <a href="https://radiomeltdown.com/NewsStory">THE STATIC NEWSLETTER</a>
   </div>
 </footer>
 
@@ -624,14 +497,15 @@ async function fetchStaffAudioFiles(){
   }
 }
 
-}
-
 async function radioBoot(){
+  async function radioBoot(){
   RADIO_TRACKS = (await fetchStaffAudioFiles()) || [];
+
   setInterval(async ()=>{
     const fresh = await fetchStaffAudioFiles();
     if(fresh) RADIO_TRACKS = fresh;
   }, 60000);
+
   syncLoop();
 }
 
