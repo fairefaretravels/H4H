@@ -1,0 +1,62 @@
+[
+  {
+    "id": "track001",
+    "name": "H4H Radio Drop",
+    "artist": "HIT4HIT",
+    "url": "STAFF/H4Hradiodrop.mp3"
+  },
+  {
+    "id": "track002",
+    "name": "Afternoon Drive",
+    "artist": "HIT4HIT",
+    "url": "STAFF/Afternoon drive.mp3"
+  },
+  {
+    "id": "track003",
+    "name": "Party Going Dilla",
+    "artist": "Mackinthedark",
+    "url": "STAFF/Mackinthedark- Party Going Dilla.mp3"
+  },
+  {
+    "id": "track004",
+    "name": "FINAL DESTINATION SONG2",
+    "artist": "HIT4HIT Battle",
+    "url": "STAFF/FINAL DESTINATION SONG2.mp3"
+  },
+  {
+    "id": "track005",
+    "name": "BBl",
+    "artist": "G4E Soulja X UptGamino x Seneca Mack",
+    "url": "STAFF/G4E Soulja X UptGamino x Seneca Mac-BBl.mp3"
+  },
+  {
+    "id": "track006",
+    "name": "March",
+    "artist": "G4E Soulja X UptGambino",
+    "url": "STAFF/G4ESoulja X Uptgambino-March.mp3"
+  },
+  {
+    "id": "track007",
+    "name": "Al Luv",
+    "artist": "Al Luv feat The Switchblades",
+    "url": "STAFF/Al Luv feat The Switchblades.mp3"
+  },
+  {
+    "id": "track008",
+    "name": "Hit4Hit 1",
+    "artist": "HIT4HIT Battle",
+    "url": "STAFF/Hit4Hit 1.mp3"
+  },
+  {
+    "id": "track009",
+    "name": "Ghetto Matrix",
+    "artist": "The Switchblades",
+    "url": "STAFF/The Switchblades - Ghetto Matrix.mp3"
+  },
+  {
+    "id": "track010",
+    "name": "House Mix",
+    "artist": "Mackinthedark",
+    "url": "STAFF/Mackinthedark House Mix.mp3"
+  }
+]
