@@ -1,25 +1,32 @@
 <?php
 header('Content-Type: application/json');
 
-$allowed = array('mp3','wav','m4a','ogg','aac','flac');
+$files = scandir(__DIR__);
+$tracks = [];
 
-$files = array();
+foreach($files as $file){
 
-foreach (scandir('.') as $file) {
+    if(is_file(__DIR__ . "/" . $file)){
 
-    if ($file === '.' || $file === '..') continue;
+        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        if(in_array($ext, [
+            'mp3',
+            'wav',
+            'm4a',
+            'ogg',
+            'aac',
+            'flac'
+        ])){
 
-    if (in_array($ext, $allowed)) {
-        $files[] = array(
-            "name" => $file,
-            "url" => $file
-        );
+            $tracks[] = [
+                "name"=>$file,
+                "url"=>$file
+            ];
+
+        }
     }
 }
 
-sort($files);
-
-echo json_encode($files);
+echo json_encode($tracks, JSON_PRETTY_PRINT);
 ?>
