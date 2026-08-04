@@ -316,37 +316,123 @@ const RADIO_REFRESH_MS = 60000;
 let RADIO_TRACKS = []; // [{name, url}]
 let radioPlaying = false;
 let radioIsDriver = false;
-let radioCurrentTrack = null; // {name, url}
+let radioCurrentTrack = null;
 let radioHeartbeatTimer = null;
 let radioSyncTimer = null;
 let radioHandledCountdownTs = null;
 
+
 async function fetchStaffAudioFiles(){
+
   try{
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`, {
-      headers: { 'Accept': 'application/vnd.github+json' }
-    });
-    if(!res.ok) throw new Error('GitHub API error '+res.status);
-    const data = await res.json();
-    return data
-      .filter(f => f.type === 'file' && AUDIO_EXT.includes((f.name.split('.').pop()||'').toLowerCase()))
-      .sort((a,b)=>a.name.localeCompare(b.name))
-      radioSyncLoop();
-  setInterval(async ()=>{
-    const fresh = await fetchStaffAudioFiles();
-    if(fresh === null) return;
-    const changed = JSON.stringify(fresh.map(t=>t.name)) !== JSON.stringify(RADIO_TRACKS.map(t=>t.name));
-    if(changed){
-      RADIO_TRACKS = fresh;
+
+    const res = await fetch(
+      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`,
+      {
+        headers:{
+          'Accept':'application/vnd.github+json'
+        }
+      }
+    );
+
+    if(!res.ok){
+      throw new Error('GitHub API error ' + res.status);
     }
-  }, RADIO_REFRESH_MS);
-}
-    console.error('Could not load STAFF folder from GitHub', e);
-    return null; // null = fetch failed, distinct from "folder is empty"
+
+    const data = await res.json();
+
+    return data
+      .filter(file =>
+        file.type === 'file' &&
+        AUDIO_EXT.includes(
+          (file.name.split('.').pop() || '').toLowerCase()
+        )
+      )
+      .sort((a,b)=>a.name.localeCompare(b.name))
+      .map(file => ({
+        name:file.name,
+        url:`STAFF/${encodeURIComponent(file.name)}`
+      }));
+
+  }catch(error){
+
+    console.error(
+      "Could not load STAFF folder from GitHub",
+      error
+    );
+
+    return null;
+
   }
+
 }
 
+
 async function radioInit(){
+
+  const fetched = await fetchStaffAudioFiles();
+
+  RADIO_TRACKS = fetched || [];
+
+  console.log("RADIO TRACKS:", RADIO_TRACKS);
+
+
+  updateRadioNowBox();
+
+
+  if(fetched === null){
+
+    document.getElementById('radioNowPlaying').textContent =
+      "Couldn't reach STAFF folder.";
+
+  }
+
+
+  const audio = document.getElementById('radioAudio');
+
+
+  audio.addEventListener('ended',()=>{
+
+    if(radioPlaying && radioIsDriver){
+
+      radioDriverNext();
+
+    }
+
+  });
+
+
+  radioSyncLoop();
+
+
+  setInterval(async()=>{
+
+    const fresh = await fetchStaffAudioFiles();
+
+    if(fresh === null) return;
+
+
+    const changed =
+      JSON.stringify(fresh.map(t=>t.name)) !==
+      JSON.stringify(RADIO_TRACKS.map(t=>t.name));
+
+
+    if(changed){
+
+      RADIO_TRACKS = fresh;
+
+      console.log(
+        "TRACK LIST UPDATED:",
+        RADIO_TRACKS
+      );
+
+    }
+
+
+  }, RADIO_REFRESH_MS);
+
+
+}
   const fetched = await fetchStaffAudioFiles();
   RADIO_TRACKS = fetched || [];
   
