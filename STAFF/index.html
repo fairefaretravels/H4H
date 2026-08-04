@@ -580,6 +580,14 @@ onValue(ref(db,"battle/current"), (snapshot)=>{
     }
   }
 });
+ window.testRadioStart = async function(){
+  if(RADIO_TRACKS.length === 0){
+    console.log("No tracks loaded");
+    return;
+  }
+
+  radioPlayImmediately(RADIO_TRACKS[0]);
+}; 
 </script>
 </body>
 </html>
