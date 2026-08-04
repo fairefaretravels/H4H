@@ -241,6 +241,25 @@ document.addEventListener('click', (e)=>{
 
 <script type="module">
 
+window.testRadio = async function(){
+  console.log("Tracks:", RADIO_TRACKS);
+
+  if(!RADIO_TRACKS.length){
+    console.log("No tracks found");
+    return;
+  }
+
+  await sset('radio_state',{
+    track: RADIO_TRACKS[0],
+    phase:'live',
+    position:0,
+    anchorTs:Date.now(),
+    countdownTargetTs:null
+  });
+
+  console.log("Broadcast sent");
+};  
+
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
