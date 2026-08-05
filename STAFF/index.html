@@ -966,7 +966,7 @@ const firebaseConfig={
 };
 
 const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
+const db=getFirestore(app);
 
 /* ===================== STORAGE HELPERS — Firebase-backed ===================== */
 async function sset(key, val){
@@ -1266,51 +1266,137 @@ window.radioToggle = radioToggle;
 radioInit();
 
 /* ================= BATTLE CONTROL (same Firebase app/db as the radio above) ================= */
-window.startVote=async()=>{
-  let A = document.getElementById("artistA").value;
-  let B = document.getElementById("artistB").value;
-  await set(ref(db,"battle/current"), { artistA:A, artistB:B, votesA:0, votesB:0, open:true });
-}
-window.closeVote=async()=>{
-  await update(ref(db,"battle/current"), { open:false });
-}
-onValue(ref(db,"battle/current"), (snapshot)=>{
-  let data=snapshot.val();
-  if(!data)return;
-  aName.innerHTML=data.artistA;
-  bName.innerHTML=data.artistB;
-  votesA.innerHTML="🅰️ "+data.votesA+" Votes";
-  votesB.innerHTML="🅱️ "+data.votesB+" Votes";
-  if(!data.open){
-    if(data.votesA > data.votesB){
-      winner.innerHTML="🏆 WINNER: "+data.artistA;
-    }
-    else if(data.votesB > data.votesA){
-      winner.innerHTML="🏆 WINNER: "+data.artistB;
-    }
-    else{
-      winner.innerHTML="🤝 TIE";
-    }
-  }
-});
- window.testRadio = async function(){
-  console.log("Tracks:", RADIO_TRACKS);
+// ================= BATTLE CONTROL =================
 
-  if(!RADIO_TRACKS.length){
-    console.log("No tracks found");
+const battleRef = doc(db, "h4h_battles", "qualifier_1");
+
+
+window.startVote = async function(){
+
+  const A = document.getElementById("artistA").value.trim();
+  const B = document.getElementById("artistB").value.trim();
+
+  if(!A || !B){
+    alert("Enter both artists");
     return;
   }
 
-  await sset('radio_state',{
-    track: RADIO_TRACKS[0],
-    phase:'live',
-    position:0,
-    anchorTs:Date.now(),
-    countdownTargetTs:null
+
+  await setDoc(battleRef,{
+
+    round:"Qualifier",
+
+    status:"live",
+
+    artistA:{
+      name:A,
+      photo:"",
+      votes:0
+    },
+
+    artistB:{
+      name:B,
+      photo:"",
+      votes:0
+    }
+
   });
 
-  console.log("Broadcast sent");
-}; 
+
+  console.log("Voting opened");
+
+};
+
+
+
+window.closeVote = async function(){
+
+
+  await updateDoc(battleRef,{
+
+    status:"closed"
+
+  });
+
+
+  console.log("Voting closed");
+
+};
+
+
+
+// LIVE RESULTS LISTENER
+
+onSnapshot(battleRef,(snapshot)=>{
+
+
+  if(!snapshot.exists()){
+
+    document.getElementById("status").innerHTML =
+    "NO ACTIVE BATTLE";
+
+    return;
+
+  }
+
+
+  const data = snapshot.data();
+
+
+
+  document.getElementById("aName").innerHTML =
+  data.artistA.name;
+
+
+  document.getElementById("bName").innerHTML =
+  data.artistB.name;
+
+
+
+  document.getElementById("votesA").innerHTML =
+  "🅰️ " + data.artistA.votes + " Votes";
+
+
+  document.getElementById("votesB").innerHTML =
+  "🅱️ " + data.artistB.votes + " Votes";
+
+
+
+  document.getElementById("status").innerHTML =
+  data.status.toUpperCase();
+
+
+
+  if(data.status === "closed"){
+
+
+    if(data.artistA.votes > data.artistB.votes){
+
+      document.getElementById("winner").innerHTML =
+      "WINNER: " + data.artistA.name;
+
+    }
+
+
+    else if(data.artistB.votes > data.artistA.votes){
+
+      document.getElementById("winner").innerHTML =
+      "WINNER: " + data.artistB.name;
+
+    }
+
+
+    else{
+
+      document.getElementById("winner").innerHTML =
+      "TIE";
+
+    }
+
+  }
+
+
+});
 </script>
 </body>
 </html>
