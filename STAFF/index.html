@@ -198,6 +198,10 @@ a{color:var(--amber);}
 </div>
 
 <audio id="radioAudio"></audio>
+  
+ <button onclick="testRadio()">
+START RADIO TEST
+</button> 
 
 <div class="battle-section">
   <div class="battle-inner">
@@ -226,6 +230,7 @@ a{color:var(--amber);}
 </div>
 
 <script>
+  
 function toggleMenu(e){
   if(e) e.stopPropagation();
   document.getElementById('menuDropdown').classList.toggle('show');
@@ -600,13 +605,23 @@ onValue(ref(db,"battle/current"), (snapshot)=>{
     }
   }
 });
- window.testRadioStart = async function(){
-  if(RADIO_TRACKS.length === 0){
-    console.log("No tracks loaded");
+ window.testRadio = async function(){
+  console.log("Tracks:", RADIO_TRACKS);
+
+  if(!RADIO_TRACKS.length){
+    console.log("No tracks found");
     return;
   }
 
-  radioPlayImmediately(RADIO_TRACKS[0]);
+  await sset('radio_state',{
+    track: RADIO_TRACKS[0],
+    phase:'live',
+    position:0,
+    anchorTs:Date.now(),
+    countdownTargetTs:null
+  });
+
+  console.log("Broadcast sent");
 }; 
 </script>
 </body>
