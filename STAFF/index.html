@@ -165,6 +165,7 @@ a{color:var(--amber);}
   <button class="menu-toggle" onclick="toggleMenu(event)">
     <span class="bars">☰</span> Menu
   </button>
+
   <div class="menu-dropdown" id="menuDropdown">
     <a class="menu-item" href="https://radiomeltdown.online/INFO/">INFO</a>
     <a class="menu-item" href="https://radiomeltdown.online/H4H-RADIO/">H4H-RADIO</a>
@@ -174,60 +175,216 @@ a{color:var(--amber);}
   </div>
 </div>
 
+
+<!-- ================= HERO PHOTO CAROUSEL ================= -->
+
+<section class="hero" id="hero">
+
+  <div class="hero-scrim"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      There can be only one KING and QUEEN
+    </p>
+
+    <h1 class="hero-title">
+      HIT FOR HIT
+    </h1>
+
+    <p class="hero-sub">
+      The song-for-song battle for the crown
+    </p>
+  </div>
+
+  <div class="hero-dots" id="heroDots"></div>
+
+</section>
+
+
+<!-- ================= RADIO ================= -->
+
 <div class="radio-wrap">
+
   <div class="radio-card">
+
     <h1>Hit4Hit Battles™ Radio</h1>
-    <p class="sub">Streaming live from the STAFF folder</p>
+
+    <p class="sub">
+      Streaming live from the STUDIO 
+    </p>
+
 
     <div class="now-playing-box" id="radioNowBox">
-      <div class="now-playing-icon" id="radioNowIcon">📻</div>
-      <div class="now-playing-meta">
-        <b id="radioNowTitle">VIBE AND VOTE LIVE</b>
-        <span id="radioNowStatus">Loading tracks…</span>
+
+      <div class="now-playing-icon" id="radioNowIcon">
+        📻
       </div>
+
+      <div class="now-playing-meta">
+
+        <b id="radioNowTitle">
+          VIBE AND VOTE LIVE
+        </b>
+
+        <span id="radioNowStatus">
+          Loading tracks…
+        </span>
+
+      </div>
+
     </div>
+
 
     <div class="shuffle-wrap">
-      <button class="shuffle-btn" id="radioTuneBtn" onclick="radioToggle()">
-        <span class="ic">📻</span>
-        <span class="lbl" id="radioTuneLabel">TUNE IN</span>
+
+      <button 
+        class="shuffle-btn" 
+        id="radioTuneBtn" 
+        onclick="radioToggle()"
+      >
+
+        <span class="ic">
+          📻
+        </span>
+
+        <span class="lbl" id="radioTuneLabel">
+          TUNE IN
+        </span>
+
       </button>
-      <div class="shuffle-hint" id="radioNowPlaying">Loading…</div>
+
+
+      <div class="shuffle-hint" id="radioNowPlaying">
+        Loading…
+      </div>
+
     </div>
+
+
   </div>
+
 </div>
+
 
 <audio id="radioAudio"></audio>
-  
- <button onclick="testRadio()">
-START RADIO TEST
-</button> 
+
+
+<!-- ================= BATTLE CONTROL ================= -->
 
 <div class="battle-section">
+
   <div class="battle-inner">
-    <h1>HIT FOR HIT BATTLES™<br>LIVE CONTROL</h1>
+
+    <h1>
+      HIT FOR HIT BATTLES™<br>
+      LIVE CONTROL
+    </h1>
+
 
     <div class="battle-box">
-      <h2>Current Battle</h2>
-      <input id="artistA" placeholder="Artist A">
-      <input id="artistB" placeholder="Artist B">
-      <button class="start" onclick="startVote()">🚀 OPEN VOTING</button>
-      <button class="stop" onclick="closeVote()">🛑 CLOSE VOTING</button>
+
+      <h2>
+        Current Battle
+      </h2>
+
+
+      <input id="artistA" placeholder="COCO THE QUEEN">
+
+      <input id="artistB" placeholder="BADDEST REBEL">
+
+
+      <button class="start" onclick="startVote()">
+        OPEN VOTING
+      </button>
+
+
+      <button class="stop" onclick="closeVote()">
+        CLOSE VOTING
+      </button>
+
     </div>
 
+
+
     <div class="battle-box">
-      <h2>LIVE RESULTS</h2>
+
+      <h2>
+        LIVE RESULTS
+      </h2>
+
+
       <div class="battle-score">
-        <div id="aName">Artist A</div>
-        <div id="votesA">0</div>
+
+        <div id="aName">
+          Artist A
+        </div>
+
+        <div id="votesA">
+          0
+        </div>
+
+
         <br>
-        <div id="bName">Artist B</div>
-        <div id="votesB">0</div>
+
+
+        <div id="bName">
+          Artist B
+        </div>
+
+        <div id="votesB">
+          0
+        </div>
+
+
         <h2 id="winner"></h2>
+
       </div>
+
     </div>
+
+
   </div>
+
 </div>
+
+  <script>
+const PHOTOS = [
+  { src:'H4Hpromo.PNG' },
+  { src:'IvonnaLing.PNG' },
+  { src:'Louiefresh.PNG' },
+  { src:'RebelQueen.PNG' },
+  { src:'3vs3.PNG' }
+];
+
+let heroIdx = 0;
+
+function renderHero(){
+  const hero = document.getElementById('hero');
+  const dots = document.getElementById('heroDots');
+
+  if(!hero || !dots) return;
+
+  document.querySelectorAll('.hero-slide').forEach(el=>el.remove());
+
+  PHOTOS.forEach((p,i)=>{
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i===heroIdx ? ' active' : '');
+    slide.style.backgroundImage = `url('${p.src}')`;
+    hero.insertBefore(slide, hero.firstChild);
+  });
+
+  dots.innerHTML = PHOTOS.map((p,i)=>
+    `<span class="${i===heroIdx?'active':''}"></span>`
+  ).join('');
+}
+
+renderHero();
+
+setInterval(()=>{
+  heroIdx = (heroIdx + 1) % PHOTOS.length;
+  renderHero();
+},5500);
+</script>
 
 <script>
   
