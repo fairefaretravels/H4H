@@ -1284,7 +1284,7 @@ radioInit();
 
 window.startVote = async function(){
 
-  try{
+  try {
 
     const A = document.getElementById("artistA").value.trim();
     const B = document.getElementById("artistB").value.trim();
@@ -1294,31 +1294,28 @@ window.startVote = async function(){
       return;
     }
 
+    alert("Trying to open voting...");
+
     await setDoc(battleRef,{
-
       round:"Qualifier",
-
       status:"live",
-
       artistA:{
         name:A,
         photo:"",
         votes:0
       },
-
       artistB:{
         name:B,
         photo:"",
         votes:0
       }
-
     });
 
-    alert("✅ Voting opened successfully!");
+    alert("Voting opened!");
 
-  }catch(err){
+  } catch(error){
 
-    alert("❌ Error:\n\n" + err.message);
+    alert(error.message);
 
   }
 
