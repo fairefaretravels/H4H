@@ -489,27 +489,44 @@ h1{
 footer{
   text-align:center;
   margin-top:60px;
-  color:var(--text-dim);
-  font-family:var(--font-mono);
-  font-size:11px;
-  letter-spacing:2px;
+  padding:30px 20px;
+  background:#000;
+  color:#fff;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:1px;
+  border-top:3px solid #ff0000;
 }
 
 footer a{
-  color:var(--gold-soft);
+  color:#ff0000;
   text-decoration:none;
+  font-weight:800;
+  transition:.3s ease;
 }
 
 footer a:hover{
-  color:var(--gold);
+  color:#fff;
 }
 
 footer .footer-contact{
-  margin-top:8px;
+  margin-top:15px;
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:14px;
+  gap:18px;
+}
+
+footer .footer-contact a{
+  padding:8px 14px;
+  border:2px solid #ff0000;
+  border-radius:6px;
+}
+
+footer .footer-contact a:hover{
+  background:#ff0000;
+  color:#000;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -666,8 +683,8 @@ footer .footer-contact{
   <div class="follow">
     <div class="follow-title">Connect With Us</div>
     <div class="follow-items">
-      <a href="mailto:H4Hbooking@radiomeltdown.online">✉ hitforhitbattles@gmail.com</a>
-      <a href="https://instagram.com/hitforhitbattles" target="_blank" rel="noopener">📷 @hitforhitbattles</a>
+      <a href="mailto:H4Hbooking@radiomeltdown.online">H4Hbooking@radiomeltdown.online</a>
+      <a href="https://instagram.com/hitforhitbattles" target="_blank" rel="noopener"> @hitforhitbattles</a>
     </div>
   </div>
 </div>
@@ -678,6 +695,7 @@ footer .footer-contact{
   <div class="footer-contact">
     <a href="/INFO/">INFO</a>
     <a href="/PROMO/">PROMO</a>
+    <a href="/H4H-RADIO/VOTE/">VOTE</a>
     <a href="/H4H-RADIO/">H4H-RADIO</a>
     </a>
   </div>
