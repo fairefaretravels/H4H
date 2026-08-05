@@ -322,6 +322,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+const container = document.getElementById("battleContainer");
+
+
 const battles = [
   "qualifier_1",
   "qualifier_2",
@@ -329,96 +332,94 @@ const battles = [
 ];
 
 
-const container = document.getElementById("battleContainer");
-
-
 function hasVoted(id){
   return localStorage.getItem("h4h_vote_" + id);
 }
 
 
-function renderBattle(id,data){
+function renderBattle(id, data){
 
-let box = document.getElementById(id);
-
-if(!box){
-
-box = document.createElement("div");
-
-box.className="card";
-
-box.id=id;
-
-container.appendChild(box);
-
-}
+  let box = document.getElementById(id);
 
 
-box.innerHTML = `
+  if(!box){
 
-<div class="battle-title">
-${data.round || "QUALIFIER BATTLE"}
-</div>
+    box = document.createElement("div");
+    box.className = "card";
+    box.id = id;
 
+    container.appendChild(box);
 
-<div class="artist-card">
-
-<img 
-src="${data.artistA.photo || ''}"
-style="${data.artistA.photo ? '' : 'display:none'}">
-
-<h2>${data.artistA.name}</h2>
-
-<button 
-class="vote-btn artist-a"
-onclick="vote('${id}','A')">
-
-VOTE ${data.artistA.name}
-
-</button>
-
-<p>${data.artistA.votes || 0} VOTES</p>
-
-</div>
+  }
 
 
-<div class="artist-card">
+  box.innerHTML = `
 
-<img 
-src="${data.artistB.photo || ''}"
-style="${data.artistB.photo ? '' : 'display:none'}">
-
-<h2>${data.artistB.name}</h2>
-
-<button 
-class="vote-btn artist-b"
-onclick="vote('${id}','B')">
-
-VOTE ${data.artistB.name}
-
-</button>
-
-<p>${data.artistB.votes || 0} VOTES</p>
-
-</div>
+    <div class="battle-title">
+      ${data.round || "QUALIFIER BATTLE"}
+    </div>
 
 
-<div class="status">
+    <div class="artist-card">
 
-${data.status === "live" ? "VOTING IS LIVE" : "VOTING CLOSED"}
+      <img 
+      src="${data.artistA.photo || ''}"
+      style="${data.artistA.photo ? '' : 'display:none'}">
 
-</div>
+      <h2>${data.artistA.name}</h2>
 
-`;
+      <button 
+      class="vote-btn artist-a"
+      onclick="vote('${id}','A')">
+      VOTE ${data.artistA.name}
+      </button>
+
+      <p>${data.artistA.votes || 0} VOTES</p>
+
+    </div>
 
 
-if(data.status !== "live" || hasVoted(id)){
 
-box.querySelectorAll("button").forEach(btn=>{
-btn.disabled=true;
-});
+    <div class="artist-card">
 
-}
+      <img 
+      src="${data.artistB.photo || ''}"
+      style="${data.artistB.photo ? '' : 'display:none'}">
+
+      <h2>${data.artistB.name}</h2>
+
+      <button 
+      class="vote-btn artist-b"
+      onclick="vote('${id}','B')">
+      VOTE ${data.artistB.name}
+      </button>
+
+      <p>${data.artistB.votes || 0} VOTES</p>
+
+    </div>
+
+
+
+    <div class="status">
+
+      ${
+        data.status === "live"
+        ? "VOTING IS LIVE"
+        : "VOTING CLOSED"
+      }
+
+    </div>
+
+  `;
+
+
+  if(data.status !== "live" || hasVoted(id)){
+
+    box.querySelectorAll("button").forEach(btn=>{
+      btn.disabled = true;
+    });
+
+  }
 
 }
 
@@ -427,20 +428,24 @@ btn.disabled=true;
 battles.forEach((id)=>{
 
 
-const battleRef = doc(db,"h4h_battles",id);
+  const battleRef = doc(
+    db,
+    "h4h_battle_for_the_crown",
+    id
+  );
 
 
-onSnapshot(battleRef,(snap)=>{
+  onSnapshot(battleRef,(snap)=>{
 
 
-if(snap.exists()){
+    if(snap.exists()){
 
-renderBattle(id,snap.data());
+      renderBattle(id, snap.data());
 
-}
+    }
 
 
-});
+  });
 
 
 });
@@ -450,38 +455,41 @@ renderBattle(id,snap.data());
 window.vote = async function(id,choice){
 
 
-if(hasVoted(id)){
+  if(hasVoted(id)){
 
-alert("You already voted in this battle");
+    alert("You already voted in this battle");
+    return;
 
-return;
-
-}
-
-
-const battleRef = doc(db,"h4h_battles",id);
+  }
 
 
-const field = choice==="A"
-? "artistA.votes"
-: "artistB.votes";
+  const battleRef = doc(
+    db,
+    "h4h_battle_for_the_crown",
+    id
+  );
 
 
-await updateDoc(
-battleRef,
-{
-[field]: increment(1)
-}
-);
+  const field = choice === "A"
+    ? "artistA.votes"
+    : "artistB.votes";
 
 
-localStorage.setItem(
-"h4h_vote_"+id,
-choice
-);
+  await updateDoc(
+    battleRef,
+    {
+      [field]: increment(1)
+    }
+  );
 
 
-alert("Vote counted!");
+  localStorage.setItem(
+    "h4h_vote_" + id,
+    choice
+  );
+
+
+  alert("Vote counted!");
 
 };
 
