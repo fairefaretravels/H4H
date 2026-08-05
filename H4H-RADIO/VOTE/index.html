@@ -5,64 +5,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>H4H Live Audience Voting</title>
+<title>HIT FOR HIT™ Live Voting</title>
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
-    background:#050505;
-    color:white;
-    font-family:Arial, sans-serif;
+    margin:0;
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
     text-align:center;
-    padding:20px;
 }
 
-.box{
+.header{
+    background:#ff0000;
+    padding:25px 15px;
+    border-bottom:6px solid #fff;
+}
+
+.header h1{
+    margin:0;
+    font-size:34px;
+    font-weight:1000;
+    letter-spacing:3px;
+}
+
+.header p{
+    margin:8px 0 0;
+    font-size:18px;
+    font-weight:800;
+}
+
+
+.container{
+
+    max-width:500px;
+    margin:35px auto;
+    padding:20px;
+
+}
+
+
+.card{
+
     background:#111;
-    border:1px solid #333;
-    border-radius:15px;
+    border:4px solid #fff;
     padding:25px;
-    margin:20px auto;
-    max-width:420px;
+    box-shadow:0 0 25px rgba(255,0,0,.5);
+
 }
 
-h1{
-    color:#ffcc00;
+
+.battle-title{
+
+    background:#ff0000;
+    color:#fff;
+    padding:18px;
+    font-size:26px;
+    font-weight:1000;
+    text-transform:uppercase;
+    margin-bottom:25px;
+
 }
 
-button{
+
+.vote-btn{
+
     width:100%;
-    padding:20px;
-    margin:12px 0;
+    padding:25px;
+    margin:15px 0;
+    font-size:24px;
+    font-weight:1000;
+    text-transform:uppercase;
     border:none;
-    border-radius:12px;
-    font-size:22px;
-    font-weight:bold;
     cursor:pointer;
+
 }
 
-.voteA{
-    background:#ffcc00;
-    color:black;
+
+.artist-a{
+
+    background:#fff;
+    color:#000;
+
 }
 
-.voteB{
-    background:#008cff;
-    color:white;
+
+.artist-b{
+
+    background:#ff0000;
+    color:#fff;
+
 }
 
-button:disabled{
-    opacity:.5;
+
+.vote-btn:hover{
+
+    transform:scale(1.03);
+
 }
+
 
 .status{
-    color:#00ff66;
+
+    margin-top:25px;
+    padding:18px;
+    background:#000;
+    border:3px solid #ff0000;
+    color:#fff;
     font-size:18px;
+    font-weight:900;
+    text-transform:uppercase;
+
 }
 
+
 .closed{
-    color:#ff3333;
+
+    border-color:#555;
+    color:#ff0000;
+
 }
+
+
+.footer{
+
+    margin-top:50px;
+    padding:20px;
+    background:#111;
+    color:#fff;
+    font-size:14px;
+    font-weight:800;
+    border-top:4px solid #ff0000;
+
+}
+
 
 </style>
 
@@ -72,245 +153,73 @@ button:disabled{
 <body>
 
 
+<div class="header">
+
 <h1>
-🏆 HIT FOR HIT BATTLES™
+HIT FOR HIT™
 </h1>
 
-<h2>
-LIVE AUDIENCE VOTE
-</h2>
+<p>
+LIVE AUDIENCE VOTING
+</p>
+
+</div>
 
 
 
-<div class="box">
+<div class="container">
 
 
-<h2 id="battleTitle">
-Loading Battle...
-</h2>
+<div class="card">
+
+
+<div class="battle-title" id="battleTitle">
+LOADING BATTLE...
+</div>
+
 
 
 <button 
-class="voteA"
+class="vote-btn artist-a"
 id="btnA"
 onclick="vote('A')">
 
-🅰️ ARTIST A
+ARTIST A
 
 </button>
+
 
 
 <button 
-class="voteB"
+class="vote-btn artist-b"
 id="btnB"
 onclick="vote('B')">
 
-🅱️ ARTIST B
+ARTIST B
 
 </button>
 
 
-<p id="status" class="status">
-Waiting for voting...
-</p>
+
+<div id="status" class="status">
+
+WAITING FOR VOTING...
+
+</div>
+
+
+</div>
 
 
 </div>
 
 
 
-<script type="module">
+<div class="footer">
 
+HIT FOR HIT BATTLES™ | STV RADIOMELTDOWN
 
-import { initializeApp }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-
-getDatabase,
-ref,
-onValue,
-update
-
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-
-const firebaseConfig = {
-
-apiKey:"AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
-
-authDomain:"h4h-walkie.firebaseapp.com",
-
-projectId:"h4h-walkie",
-
-storageBucket:"h4h-walkie.firebasestorage.app",
-
-messagingSenderId:"253773392789",
-
-appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
-
-};
-
-
-
-const app = initializeApp(firebaseConfig);
-
-const db = getDatabase(app);
-
-
-
-let battle = null;
-
-
-
-onValue(
-ref(db,"battle/current"),
-(snapshot)=>{
-
-
-battle = snapshot.val();
-
-
-if(!battle){
-
-document.getElementById("battleTitle").innerHTML =
-"No active battle";
-
-return;
-
-}
-
-
-
-document.getElementById("battleTitle").innerHTML =
-battle.artistA + " 🆚 " + battle.artistB;
-
-
-
-document.getElementById("btnA").innerHTML =
-"🅰️ "+battle.artistA;
-
-
-
-document.getElementById("btnB").innerHTML =
-"🅱️ "+battle.artistB;
-
-
-
-if(!battle.open){
-
-
-document.getElementById("status").innerHTML =
-"Voting Closed";
-
-
-document.getElementById("status").className =
-"closed";
-
-
-document.getElementById("btnA").disabled=true;
-
-document.getElementById("btnB").disabled=true;
-
-
-}
-
-
-
-});
-
-
-
-window.vote = async function(choice){
-
-
-
-if(!battle){
-
-return;
-
-}
-
-
-
-if(!battle.open){
-
-alert("Voting is closed");
-
-return;
-
-}
-
-
-
-let alreadyVoted =
-localStorage.getItem("h4h_vote");
-
-
-if(alreadyVoted){
-
-alert("You already voted!");
-
-return;
-
-}
-
-
-
-if(choice==="A"){
-
-
-await update(
-ref(db,"battle/current"),
-{
-
-votesA:
-(battle.votesA || 0) + 1
-
-});
-
-
-}
-
-
-
-if(choice==="B"){
-
-
-await update(
-ref(db,"battle/current"),
-{
-
-votesB:
-(battle.votesB || 0) + 1
-
-});
-
-
-}
-
-
-
-localStorage.setItem(
-"h4h_vote",
-"submitted"
-);
-
-
-
-document.getElementById("status").innerHTML =
-"✅ Vote Counted";
-
-
-}
-
-
-</script>
+</div>
 
 
 </body>
