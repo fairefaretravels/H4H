@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="STAFF/H4Hpromo.PNG">
+<meta property="og:title" content="Hit4Hit Battles™ Radiomeltdown">
+<meta property="og:description" content="Music, radio, culture and entertainment.">
+<meta property="og:image" content="https://radiomeltdown.online/STAFF/H4Hpromo.PNG">
+<meta property="og:url" content="https://radiomeltdown.online">
+<meta charset="UTF-8">
+<meta name="description" content="Hit4Hit Battles™ — streaming radio, music, and entertainment.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Hit4Hit Battles™ — Staff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#050505;
+  --panel:#0d0d0d;
+  --panel2:#151515;
+  --line:#2b2b2b;
+
+  --red:#d7192d;
+  --red-dark:#850d18;
+
+  --white:#ffffff;
+  --gray:#9a9a9a;
+
+  --font-display:'Bebas Neue',sans-serif;
+  --font-script:'Permanent Marker',cursive;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+
+
+*{
+ box-sizing:border-box;
+}
+
+
+html,body{
+ margin:0;
+ padding:0;
+}
+
+
+body{
+
+background:#000;
+
+color:white;
+
+font-family:var(--font-body);
+
+min-height:100vh;
+
+}
+
+
+
+
+button{
+font-family:var(--font-body);
+cursor:pointer;
+}
+
+
+a{
+color:var(--red);
+}
+
+
+
+/* GRAIN */
+
+.grain{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+opacity:.04;
+
+z-index:999;
+
+background:
+repeating-linear-gradient(
+0deg,
+white 0px,
+transparent 1px,
+transparent 3px
+);
+
+}
+
+
+
+
+/* MENU */
+
+
+.menu-wrap{
+
+position:fixed;
+
+top:15px;
+
+right:15px;
+
+z-index:1000;
+
+}
+
+
+.menu-toggle{
+
+background:var(--red);
+
+color:white;
+
+border:0;
+
+padding:10px 15px;
+
+font-family:var(--font-mono);
+
+font-size:12px;
+
+font-weight:bold;
+
+border-radius:4px;
+
+}
+
+
+
+.menu-dropdown{
+
+display:none;
+
+position:absolute;
+
+right:0;
+
+top:45px;
+
+width:210px;
+
+background:#111;
+
+border:1px solid #333;
+
+}
+
+
+
+.menu-dropdown.show{
+
+display:block;
+
+}
+
+
+
+.menu-item{
+
+display:block;
+
+width:100%;
+
+padding:12px;
+
+background:none;
+
+border:0;
+
+border-bottom:1px solid #222;
+
+color:white;
+
+text-align:left;
+
+font-family:var(--font-mono);
+
+font-size:12px;
+
+}
+
+
+
+
+/* HERO */
+
+
+.hero{
+
+position:relative;
+
+min-height:35vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+padding:30px 20px;
+
+overflow:hidden;
+
+}
+
+
+
+.hero-slide{
+
+position:absolute;
+
+inset:0;
+
+background-size:cover;
+
+background-position:center;
+
+opacity:0;
+
+transition:.8s;
+
+}
+
+
+.hero-slide.active{
+
+opacity:1;
+
+}
+
+
+
+.hero-scrim{
+
+position:absolute;
+
+inset:0;
+
+background:
+linear-gradient(
+black,
+rgba(0,0,0,.8)
+);
+
+}
+
+
+
+.hero-content{
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+
+.hero-eyebrow{
+
+font-family:var(--font-mono);
+
+font-size:11px;
+
+letter-spacing:3px;
+
+color:#aaa;
+
+}
+
+
+
+.hero-title{
+
+font-family:var(--font-display);
+
+font-size:clamp(55px,12vw,95px);
+
+line-height:.85;
+
+margin:10px 0;
+
+}
+
+
+
+.hero-sub{
+
+font-family:var(--font-script);
+
+color:var(--red);
+
+font-size:18px;
+
+}
+
+
+
+.hero-dots{
+
+display:flex;
+
+gap:8px;
+
+margin-top:15px;
+
+justify-content:center;
+
+}
+
+
+
+
+/* RADIO AREA */
+
+
+.radio-wrap{
+
+padding:20px 15px;
+
+display:flex;
+
+justify-content:center;
+
+background:#000;
+
+}
+
+
+
+.radio-card{
+
+width:100%;
+
+max-width:420px;
+
+background:#050505;
+
+border:1px solid #333;
+
+border-top:4px solid var(--red);
+
+border-radius:12px;
+
+padding:20px;
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.8);
+
+}
+
+
+
+.radio-card h1{
+
+font-family:var(--font-display);
+
+font-size:34px;
+
+text-align:center;
+
+margin:0;
+
+}
+
+
+
+.radio-card p.sub{
+
+text-align:center;
+
+font-family:var(--font-mono);
+
+font-size:11px;
+
+color:#999;
+
+letter-spacing:2px;
+
+}
+
+
+
+
+/* NOW PLAYING */
+
+
+.now-playing-box{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+background:#111;
+
+border:1px solid #333;
+
+border-radius:8px;
+
+padding:14px;
+
+margin:18px 0;
+
+}
+
+
+
+.now-playing-box.live{
+
+border-color:var(--red);
+
+}
+
+
+
+.now-playing-icon{
+
+font-size:22px;
+
+}
+
+
+
+.now-playing-meta{
+
+flex:1;
+
+min-width:0;
+
+}
+
+
+
+.now-playing-meta b{
+
+display:block;
+
+font-family:var(--font-display);
+
+font-size:20px;
+
+white-space:nowrap;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+}
+
+
+
+.now-playing-meta span{
+
+font-family:var(--font-mono);
+
+font-size:10px;
+
+color:#999;
+
+}
+
+
+
+
+/* PLAYER */
+
+
+.shuffle-wrap{
+
+text-align:center;
+
+}
+
+
+
+.shuffle-btn{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+background:#000;
+
+border:3px solid white;
+
+color:white;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+margin:auto;
+
+}
+
+
+
+.shuffle-btn.on{
+
+background:var(--red);
+
+border-color:white;
+
+box-shadow:
+0 0 35px rgba(215,25,45,.7);
+
+}
+
+
+
+.shuffle-btn .ic{
+
+font-size:25px;
+
+}
+
+
+
+.shuffle-btn .lbl{
+
+font-family:var(--font-display);
+
+font-size:13px;
+
+}
+
+
+
+.shuffle-hint{
+
+font-family:var(--font-mono);
+
+font-size:11px;
+
+color:#999;
+
+margin-top:12px;
+
+}
+
+
+
+
+/* BATTLE */
+
+
+.battle-section{
+
+padding:35px 15px 50px;
+
+background:#050505;
+
+border-top:1px solid #222;
+
+}
+
+
+
+.battle-inner{
+
+max-width:420px;
+
+margin:auto;
+
+}
+
+
+
+.battle-inner h1{
+
+font-family:var(--font-display);
+
+font-size:30px;
+
+text-align:center;
+
+}
+
+
+
+.battle-box{
+
+background:#111;
+
+border:1px solid #333;
+
+border-radius:10px;
+
+padding:20px;
+
+}
+
+
+
+.battle-box input{
+
+width:100%;
+
+background:#000;
+
+border:1px solid #333;
+
+color:white;
+
+padding:13px;
+
+margin-bottom:10px;
+
+}
+
+
+
+.battle-box button{
+
+width:100%;
+
+padding:14px;
+
+border:0;
+
+margin-top:8px;
+
+font-weight:bold;
+
+}
+
+
+
+.start{
+
+background:white;
+
+color:black;
+
+}
+
+
+
+.stop{
+
+background:var(--red);
+
+color:white;
+
+}
+
+
+
+#winner{
+
+color:var(--red);
+
+font-family:var(--font-display);
+
+font-size:24px;
+
+}
+
+
+
+
+audio{
+
+display:none;
+
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="menu-wrap" id="menuWrap">
+  <button class="menu-toggle" onclick="toggleMenu(event)">
+    <span class="bars">☰</span> Menu
+  </button>
+
+  <div class="menu-dropdown" id="menuDropdown">
+    <a class="menu-item" href="https://radiomeltdown.online/INFO/">INFO</a>
+    <a class="menu-item" href="https://radiomeltdown.online/H4H-RADIO/">H4H-RADIO</a>
+    <a class="menu-item" href="https://radiomeltdown.online/PROMO/">PROMO</a>
+    <a class="menu-item" href="https://radiomeltdown.online/WALKIE-TALKIE/">STAFF WALKIE</a>
+    <a class="menu-item" href="https://radiomeltdown.online/FLOW-CHART/">BATTLEGROUND</a>
+    <a class="menu-item" href="https://radiomeltdown.online/STAFF/VOTE/">RESULTS</a>
+  </div>
+</div>
+
+
+<!-- ================= HERO PHOTO CAROUSEL ================= -->
+
+<section class="hero" id="hero">
+
+  <div class="hero-scrim"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      There can be only one KING and QUEEN
+    </p>
+
+    <h1 class="hero-title">
+      HIT FOR HIT
+    </h1>
+
+    <p class="hero-sub">
+      The song-for-song battle for the crown
+    </p>
+  </div>
+
+  <div class="hero-dots" id="heroDots"></div>
+
+</section>
+
+
+<!-- ================= RADIO ================= -->
+
+<div class="radio-wrap">
+
+  <div class="radio-card">
+
+    <h1>Hit4Hit Battles™ Radio</h1>
+
+    <p class="sub">
+      Streaming live from the STUDIO 
+    </p>
+
+
+    <div class="now-playing-box" id="radioNowBox">
+
+      <div class="now-playing-icon" id="radioNowIcon">
+        📻
+      </div>
+
+      <div class="now-playing-meta">
+
+        <b id="radioNowTitle">
+          VIBE AND VOTE LIVE
+        </b>
+
+        <span id="radioNowStatus">
+          Loading tracks…
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="shuffle-wrap">
+
+      <button 
+        class="shuffle-btn" 
+        id="radioTuneBtn" 
+        onclick="radioToggle()"
+      >
+
+        <span class="ic">
+          📻
+        </span>
+
+        <span class="lbl" id="radioTuneLabel">
+          TUNE IN
+        </span>
+
+      </button>
+
+
+      <div class="shuffle-hint" id="radioNowPlaying">
+        Loading…
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<audio id="radioAudio"></audio>
+
+
+<!-- ================= BATTLE CONTROL ================= -->
+
+<div class="battle-section">
+
+  <div class="battle-inner">
+
+    <p class="battle-eyebrow">Live Control</p>
+
+    <h1>
+      HIT FOR HIT
+      <span class="accent">Battles™</span>
+    </h1>
+
+
+    <div class="battle-box">
+
+      <h2>
+        Current Battle
+      </h2>
+
+
+      <input id="artistA" placeholder="COCO THE QUEEN">
+
+      <input id="artistB" placeholder="BADDEST REBEL">
+
+
+      <button class="start" onclick="startVote()">
+        OPEN VOTING
+      </button>
+
+
+      <button class="stop" onclick="closeVote()">
+        CLOSE VOTING
+      </button>
+
+    </div>
+
+
+
+    <div class="battle-box">
+
+      <h2>
+        LIVE RESULTS
+      </h2>
+
+      <div id="status" style="font-family:var(--font-mono);font-size:11px;color:#999;letter-spacing:2px;margin-bottom:10px;"></div>
+
+      <div class="battle-score">
+
+        <div id="aName">
+          Artist A
+        </div>
+
+        <div id="votesA">
+          0
+        </div>
+
+
+        <br>
+
+
+        <div id="bName">
+          Artist B
+        </div>
+
+        <div id="votesB">
+          0
+        </div>
+
+
+        <h2 id="winner"></h2>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+  <script>
+const PHOTOS = [
+  { src:'H4Hpromo.PNG' },
+  { src:'IvonnaLing.PNG' },
+  { src:'Louiefresh.PNG' },
+  { src:'RebelQueen.PNG' },
+  { src:'3vs3.PNG' }
+];
+
+let heroIdx = 0;
+
+function renderHero(){
+  const hero = document.getElementById('hero');
+  const dots = document.getElementById('heroDots');
+
+  if(!hero || !dots) return;
+
+  document.querySelectorAll('.hero-slide').forEach(el=>el.remove());
+
+  PHOTOS.forEach((p,i)=>{
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide' + (i===heroIdx ? ' active' : '');
+    slide.style.backgroundImage = `url('${p.src}')`;
+    hero.insertBefore(slide, hero.firstChild);
+  });
+
+  dots.innerHTML = PHOTOS.map((p,i)=>
+    `<span class="${i===heroIdx?'active':''}"></span>`
+  ).join('');
+}
+
+renderHero();
+
+setInterval(()=>{
+  heroIdx = (heroIdx + 1) % PHOTOS.length;
+  renderHero();
+},5500);
+</script>
+
+<script>
+  
+function toggleMenu(e){
+  if(e) e.stopPropagation();
+  document.getElementById('menuDropdown').classList.toggle('show');
+}
+function closeMenu(){
+  document.getElementById('menuDropdown').classList.remove('show');
+}
+document.addEventListener('click', (e)=>{
+  const wrap = document.getElementById('menuWrap');
+  if(wrap && !wrap.contains(e.target)) closeMenu();
+});
+</script>
+
+<script type="module">
+
+window.testRadio = async function(){
+  console.log("Tracks:", RADIO_TRACKS);
+
+  if(!RADIO_TRACKS.length){
+    console.log("No tracks found");
+    return;
+  }
+
+  await sset('radio_state',{
+    track: RADIO_TRACKS[0],
+    phase:'live',
+    position:0,
+    anchorTs:Date.now(),
+    countdownTargetTs:null
+  });
+
+  console.log("Broadcast sent");
+};  
+
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { 
+  getFirestore,
+  doc,
+  setDoc,
+  updateDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
+  authDomain:"h4h-walkie.firebaseapp.com",
+  projectId:"h4h-walkie",
+  storageBucket:"h4h-walkie.firebasestorage.app",
+  messagingSenderId:"253773392789",
+  appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const rtdb = getDatabase(app);
+const battleRef = doc(db, "h4h_battles", "qualifier_1");
+
+/* ===================== STORAGE HELPERS — Firebase-backed ===================== */
+async function sset(key, val){
+  try{ await set(ref(rtdb, key), val); return val; }
+  catch(e){ console.error('firebase set failed', key, e); return null; }
+}
+async function sget(key){
+  try{
+    const snap = await get(ref(rtdb, key));
+    return snap.exists() ? snap.val() : null;
+  }catch(e){ console.error('firebase get failed', key, e); return null; }
+}
+
+/* ===================== RADIO STATION — DRIVER (STAFF page) =====================
+   Auto-pulls whatever audio is in the GitHub STAFF folder. No hardcoded track list:
+   on load (and every 60s after) this asks GitHub what files currently sit in /STAFF,
+   filters to audio files, and uses those directly. Drop a new mp3/wav/m4a into
+   STAFF/ on GitHub and it shows up here on its own — nothing in this file needs to
+   change.
+
+   The first person to hit Tune In becomes the "driver" and runs the shared clock;
+   everyone else who taps Tune In joins as a listener synced to that same clock.
+   Auto-advance on track end plays the next track immediately (no countdown) so the
+   browser's autoplay permission carries over from the still-active playback instead
+   of being rejected.
+
+   Uses GitHub's absolute download_url for every track (not a relative STAFF/ path)
+   so the URL resolves the same way regardless of what page — or folder depth — is
+   reading radio_state from Firebase. */
+const GITHUB_OWNER = 'fairefaretravels';
+const GITHUB_REPO = 'H4H';
+const GITHUB_BRANCH = 'main';
+const STAFF_PATH = 'STAFF';
+const AUDIO_EXT = ['mp3','wav','m4a','ogg','aac','flac'];
+const RADIO_COUNTDOWN_MS = 3000;
+const RADIO_REFRESH_MS = 60000;
+const STORAGE_KEY = 'radio_state';
+
+let RADIO_TRACKS = []; // [{name, url}]
+let radioPlaying = false;
+let radioIsDriver = false;
+let radioCurrentTrack = null;
+let radioHeartbeatTimer = null;
+let radioSyncTimer = null;
+let radioHandledCountdownTs = null;
+
+async function fetchStaffAudioFiles(){
+  try{
+    const res = await fetch(
+      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${STAFF_PATH}?ref=${GITHUB_BRANCH}`,
+      { headers: { 'Accept': 'application/vnd.github+json' } }
+    );
+    if(!res.ok) throw new Error('GitHub API error ' + res.status);
+    const data = await res.json();
+    return data
+      .filter(file => file.type === 'file' && AUDIO_EXT.includes((file.name.split('.').pop() || '').toLowerCase()))
+      .sort((a,b)=>a.name.localeCompare(b.name))
+      .map(file => ({ name: file.name, url: file.download_url }));
+  }catch(error){
+    console.error('Could not load STAFF folder from GitHub', error);
+    return null; // null = fetch failed, distinct from "folder is empty"
+  }
+}
+
+async function radioInit(){
+  const fetched = await fetchStaffAudioFiles();
+  RADIO_TRACKS = fetched || [];
+
+  updateRadioNowBox();
+
+  if(fetched === null){
+    document.getElementById('radioNowPlaying').textContent = "Couldn't reach the STAFF folder on GitHub — try refreshing.";
+  }
+
+  const audio = document.getElementById('radioAudio');
+  audio.addEventListener('ended', ()=>{
+    if(radioPlaying && radioIsDriver) radioDriverNext();
+  });
+
+  radioSyncLoop();
+
+  setInterval(async ()=>{
+    const fresh = await fetchStaffAudioFiles();
+    if(fresh === null) return;
+    const changed = JSON.stringify(fresh.map(t=>t.name)) !== JSON.stringify(RADIO_TRACKS.map(t=>t.name));
+    if(changed){
+      RADIO_TRACKS = fresh;
+    }
+  }, RADIO_REFRESH_MS);
+}
+
+function updateRadioNowBox(){
+  const box = document.getElementById('radioNowBox');
+  const title = document.getElementById('radioNowTitle');
+  const status = document.getElementById('radioNowStatus');
+  if(!box) return;
+  if(radioCurrentTrack){
+    box.classList.toggle('live', radioPlaying);
+    title.textContent = radioCurrentTrack.name;
+    status.textContent = radioPlaying ? 'On air now' : 'Loading…';
+  } else {
+    box.classList.remove('live');
+    title.textContent = 'Nothing on air yet';
+    status.textContent = RADIO_TRACKS.length ? RADIO_TRACKS.length+' track(s) ready — tap Tune In' : 'No tracks in STAFF yet';
+  }
+}
+
+async function radioToggle(){
+  if(radioPlaying){ radioStopLocal(); return; }
+  if(!RADIO_TRACKS.length){ alert('No tracks in the STAFF folder yet.'); return; }
+  const state = await sget('radio_state');
+  if(state && state.phase && state.phase !== 'idle' && state.track){
+    radioJoinListener(state);
+  } else {
+    radioBecomeDriverAndStart(RADIO_TRACKS[0]);
+  }
+}
+
+function radioStopLocal(){
+  const wasDriver = radioIsDriver;
+  radioPlaying = false;
+  radioIsDriver = false;
+  const audio = document.getElementById('radioAudio');
+  audio.pause(); audio.removeAttribute('src'); audio.load();
+  radioStopHeartbeat();
+  if(wasDriver){ sset('radio_state', {track:null, phase:'idle', position:0, anchorTs:Date.now(), countdownTargetTs:null}); }
+  radioCurrentTrack = null;
+  updateRadioUi(null, false);
+}
+
+async function radioBecomeDriverAndStart(track){
+  radioIsDriver = true;
+  radioPlaying = true;
+  const targetTs = Date.now() + RADIO_COUNTDOWN_MS;
+  const audio = document.getElementById('radioAudio');
+  audio.src = track.url;
+  audio.currentTime = 0;
+  radioCurrentTrack = track;
+  await sset('radio_state', {track, phase:'countdown', position:0, anchorTs:Date.now(), countdownTargetTs:targetTs});
+  radioRunCountdown(targetTs, 'Going live: '+track.name);
+  updateRadioUi(track, false);
+  setTimeout(()=>{
+    audio.play().then(async ()=>{
+      updateRadioUi(track, true);
+      await sset('radio_state', {track, phase:'live', position:0, anchorTs:targetTs, countdownTargetTs:null});
+      radioStartHeartbeat();
+    }).catch(async ()=>{
+      alert('Could not play "'+track.name+'" — the file may not be a direct audio link.');
+      await sset('radio_state', {track:null, phase:'idle', position:0, anchorTs:Date.now(), countdownTargetTs:null});
+      radioStopLocal();
+    });
+  }, Math.max(0, targetTs - Date.now()));
+}
+
+async function radioPlayImmediately(track){
+  radioIsDriver = true;
+  radioPlaying = true;
+  const audio = document.getElementById('radioAudio');
+  radioCurrentTrack = track;
+  audio.src = track.url;
+  audio.currentTime = 0;
+  updateRadioUi(track, false);
+  try{
+    await audio.play();
+    updateRadioUi(track, true);
+    await sset('radio_state', {track, phase:'live', position:0, anchorTs:Date.now(), countdownTargetTs:null});
+    radioStartHeartbeat();
+  }catch(err){
+    console.error('Auto-advance play failed, retrying', err);
+    setTimeout(()=>{ audio.play().catch(e=>console.error('radio retry failed', e)); }, 300);
+  }
+}
+
+function radioDriverNext(){
+  if(!RADIO_TRACKS.length) return;
+  const curIdx = radioCurrentTrack ? RADIO_TRACKS.findIndex(t=>t.url===radioCurrentTrack.url) : -1;
+  const nextIdx = curIdx>-1 ? (curIdx+1) % RADIO_TRACKS.length : 0;
+  radioPlayImmediately(RADIO_TRACKS[nextIdx]);
+}
+
+function radioStartHeartbeat(){
+  radioStopHeartbeat();
+  radioHeartbeatTimer = setInterval(()=>{
+    if(!radioPlaying || !radioIsDriver) return;
+    const audio = document.getElementById('radioAudio');
+    sset('radio_state', {track:radioCurrentTrack, phase:'live', position:audio.currentTime, anchorTs:Date.now(), countdownTargetTs:null});
+  }, 4000);
+}
+
+function radioStopHeartbeat(){
+  if(radioHeartbeatTimer){ clearInterval(radioHeartbeatTimer); radioHeartbeatTimer=null; }
+}
+
+async function radioJoinListener(state){
+  radioIsDriver = false;
+  radioPlaying = true;
+  const audio = document.getElementById('radioAudio');
+  if(state.phase === 'live'){
+    audio.src = state.track.url;
+    const expected = state.position + (Date.now()-state.anchorTs)/1000;
+    audio.currentTime = Math.max(0, expected);
+    radioCurrentTrack = state.track;
+    await audio.play().catch(()=>{});
+    updateRadioUi(state.track, true);
+  } else if(state.phase === 'countdown'){
+    audio.src = state.track.url;
+    audio.currentTime = state.position || 0;
+    radioCurrentTrack = state.track;
+    radioHandledCountdownTs = state.countdownTargetTs;
+    radioRunCountdown(state.countdownTargetTs, 'Get ready: '+state.track.name);
+    setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+    updateRadioUi(state.track, false);
+  }
+}
+
+function radioSyncLoop(){
+  radioSyncTimer = setInterval(async ()=>{
+    const state = await sget('radio_state');
+    if(radioIsDriver) return;
+
+    if(!state || state.phase==='idle' || !state.track){
+      if(radioPlaying) radioStopLocal();
+      updateRadioIdleHint(null);
+      return;
+    }
+    if(!radioPlaying){
+      updateRadioIdleHint(state);
+      return;
+    }
+    const audio = document.getElementById('radioAudio');
+    if(state.phase==='countdown'){
+      if(radioHandledCountdownTs !== state.countdownTargetTs){
+        radioHandledCountdownTs = state.countdownTargetTs;
+        audio.src = state.track.url;
+        audio.currentTime = state.position || 0;
+        radioCurrentTrack = state.track;
+        radioRunCountdown(state.countdownTargetTs, 'Get ready: '+state.track.name);
+        setTimeout(()=>{ audio.currentTime = state.position||0; audio.play().catch(()=>{}); }, Math.max(0, state.countdownTargetTs - Date.now()));
+        updateRadioUi(state.track, false);
+      }
+      return;
+    }
+    const changedTrack = !radioCurrentTrack || radioCurrentTrack.url !== state.track.url;
+    const expected = state.position + (Date.now()-state.anchorTs)/1000;
+    if(changedTrack){
+      radioCurrentTrack = state.track;
+      audio.src = state.track.url;
+      audio.currentTime = Math.max(0, expected);
+      audio.play().catch(()=>{});
+      updateRadioUi(state.track, true);
+      return;
+    }
+    if(Math.abs(audio.currentTime - expected) > 1.2){ audio.currentTime = Math.max(0, expected); }
+  }, 1500);
+}
+
+function radioRunCountdown(targetTs, label){
+  const el = document.getElementById('radioNowPlaying');
+  if(!el) return;
+  const render = ()=>{
+    const remaining = Math.ceil((targetTs - Date.now())/1000);
+    if(remaining<=0) return false;
+    el.textContent = '⏳ '+label+' in '+remaining+'…';
+    return true;
+  };
+  if(!render()) return;
+  const iv = setInterval(()=>{ if(!render()) clearInterval(iv); }, 200);
+}
+
+function updateRadioIdleHint(state){
+  const now = document.getElementById('radioNowPlaying');
+  if(!now) return;
+  if(state && state.track){
+    now.textContent = '🔴 Live now: '+state.track.name+' — tap Tune In to join';
+  } else {
+    now.textContent = RADIO_TRACKS.length ? RADIO_TRACKS.length+' track(s) in STAFF — tap Tune In to start' : 'Nothing in STAFF yet';
+  }
+}
+
+function updateRadioUi(track, isLive){
+  const btn = document.getElementById('radioTuneBtn');
+  const lbl = document.getElementById('radioTuneLabel');
+  const now = document.getElementById('radioNowPlaying');
+  if(btn) btn.classList.toggle('on', radioPlaying);
+  if(lbl) lbl.textContent = radioPlaying ? (radioIsDriver ? 'STOP' : 'LEAVE') : 'TUNE IN';
+  if(now && track){
+    const idx = RADIO_TRACKS.findIndex(t=>t.url===track.url);
+    now.textContent = (isLive ? '🔴 On air: ' : '⏳ Loading: ') + track.name + (idx>-1 ? ' ('+(idx+1)+' of '+RADIO_TRACKS.length+')' : '');
+  } else if(now && !radioPlaying){
+    updateRadioIdleHint(null);
+  }
+  updateRadioNowBox();
+}
+
+window.radioToggle = radioToggle;
+
+radioInit();
+
+/* ================= BATTLE CONTROL (same Firebase app/db as the radio above) ================= */
+
+window.startVote = async function(){
+
+  try{
+
+    const A = document.getElementById("artistA").value.trim();
+    const B = document.getElementById("artistB").value.trim();
+
+    if(!A || !B){
+      alert("Enter both artists");
+      return;
+    }
+
+    await setDoc(battleRef,{
+
+      round:"Qualifier",
+
+      status:"live",
+
+      artistA:{
+        name:A,
+        photo:"",
+        votes:0
+      },
+
+      artistB:{
+        name:B,
+        photo:"",
+        votes:0
+      }
+
+    });
+
+    alert("✅ Voting opened successfully!");
+
+  }catch(err){
+
+    alert("❌ Error:\n\n" + err.message);
+
+  }
+
+};
+
+
+
+window.closeVote = async function(){
+
+
+  await updateDoc(battleRef,{
+
+    status:"closed"
+
+  });
+
+
+  console.log("Voting closed");
+
+};
+
+
+
+// LIVE RESULTS LISTENER
+
+onSnapshot(battleRef,(snapshot)=>{
+
+
+  if(!snapshot.exists()){
+
+    document.getElementById("status").innerHTML =
+    "NO ACTIVE BATTLE";
+
+    return;
+
+  }
+
+
+  const data = snapshot.data();
+
+
+
+  document.getElementById("aName").innerHTML =
+  data.artistA.name;
+
+
+  document.getElementById("bName").innerHTML =
+  data.artistB.name;
+
+
+
+  document.getElementById("votesA").innerHTML =
+  "🅰️ " + data.artistA.votes + " Votes";
+
+
+  document.getElementById("votesB").innerHTML =
+  "🅱️ " + data.artistB.votes + " Votes";
+
+
+
+  document.getElementById("status").innerHTML =
+  data.status.toUpperCase();
+
+
+
+  if(data.status === "closed"){
+
+
+    if(data.artistA.votes > data.artistB.votes){
+
+      document.getElementById("winner").innerHTML =
+      "WINNER: " + data.artistA.name;
+
+    }
+
+
+    else if(data.artistB.votes > data.artistA.votes){
+
+      document.getElementById("winner").innerHTML =
+      "WINNER: " + data.artistB.name;
+
+    }
+
+
+    else{
+
+      document.getElementById("winner").innerHTML =
+      "TIE";
+
+    }
+
+  }
+
+
+});
+</script>
+</body>
+</html>
