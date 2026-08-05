@@ -47,66 +47,124 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     min-height:100vh;
-    background:#090909;
-    color:white;
-    font-family:Arial, sans-serif;
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
     display:flex;
     justify-content:center;
-    align-items:center;
 }
+
 
 .container{
-    width:90%;
-    max-width:700px;
+    width:92%;
+    max-width:750px;
     text-align:center;
-    padding:40px 0;
+    padding:50px 0;
 }
+
 
 h1{
-    font-size:60px;
-    color:#FFD700;
+    font-size:52px;
+    line-height:1.1;
+    color:#ff0000;
+    font-weight:1000;
     letter-spacing:3px;
+    text-transform:uppercase;
+    border-bottom:6px solid #fff;
+    padding-bottom:25px;
 }
 
+
 p{
-    color:#ccc;
-    font-size:18px;
+    color:#fff;
+    font-size:20px;
+    font-weight:800;
+    line-height:1.5;
+    text-transform:uppercase;
 }
+
 
 .card{
     margin:25px 0;
-    padding:25px;
-    background:#151515;
-    border:1px solid #333;
-    border-radius:15px;
+    padding:30px 20px;
+    background:#111;
+    border:3px solid #fff;
+    box-shadow:0 0 20px rgba(255,0,0,.35);
 }
+
+
+.card h2{
+    margin-top:0;
+    color:#fff;
+    font-size:28px;
+    font-weight:1000;
+    text-transform:uppercase;
+    border-left:8px solid #ff0000;
+    padding-left:15px;
+}
+
 
 a{
     display:block;
-    margin:15px auto;
-    padding:15px 25px;
-    width:250px;
-    border-radius:10px;
+    margin:18px auto 0;
+    padding:18px 25px;
+    width:90%;
+    max-width:350px;
     text-decoration:none;
-    color:#000;
-    background:#FFD700;
-    font-weight:bold;
-    transition:.3s;
+    color:#fff;
+    background:#ff0000;
+    border:3px solid #ff0000;
+    font-size:18px;
+    font-weight:1000;
+    text-transform:uppercase;
+    transition:.2s ease;
 }
+
 
 a:hover{
-    transform:scale(1.05);
-    background:white;
+    background:#fff;
+    color:#000;
+    transform:scale(1.03);
 }
 
+
 .back{
-    background:#222;
-    color:#FFD700;
-    border:1px solid #FFD700;
+    background:#fff;
+    color:#000;
+    border-color:#fff;
 }
+
+
+.back:hover{
+    background:#ff0000;
+    color:#fff;
+    border-color:#ff0000;
+}
+
+
+@media(max-width:600px){
+
+h1{
+    font-size:34px;
+}
+
+.card h2{
+    font-size:22px;
+}
+
+a{
+    font-size:16px;
+}
+
+}
+
 
 </style>
 
@@ -135,7 +193,7 @@ Official Artist Packet
 
 <h2>Mission</h2>
 
-<a href="Mission.md">
+<a href="Mission.html">
 Read Mission
 </a>
 
@@ -147,7 +205,7 @@ Read Mission
 
 <div class="card">
 
-<h2>Industry Pitch</h2>
+<h2>ATTENTION SPONSORS</h2>
 
 <a href="Pitch.html">
 View Sponsor & Label Pitch
@@ -164,7 +222,7 @@ View Sponsor & Label Pitch
 <h2>Artist Agreement</h2>
 
 <a href="Agreement.html">
-Read Artist Agreement
+Attention: Read and Sign
 </a>
 
 </div>
@@ -175,10 +233,10 @@ Read Artist Agreement
 
 <div class="card">
 
-<h2>Promo Photos</h2>
+<h2>Promo Media</h2>
 
 <a href="../PROMO/">
-View Promo Photos
+View, Download, or Copy Promo
 </a>
 
 </div>
@@ -234,7 +292,7 @@ Get In Touch
 <h2>Tournament Flow</h2>
 
 <a class="back" href="../FLOW-CHART/">
-Back To Flow Chart
+BACK TO BATTLEGROUND
 </a>
 
 </div>
