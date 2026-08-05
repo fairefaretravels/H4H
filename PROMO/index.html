@@ -13,117 +13,188 @@
 <title>HIT FOR HIT — Artist Promo</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#0b0b0b;
-    color:white;
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
 }
+
 
 header{
     text-align:center;
-    padding:30px 15px;
-    background:linear-gradient(135deg,#111,#222);
+    padding:40px 20px;
+    background:#ff0000;
+    border-bottom:6px solid #fff;
 }
 
 header h1{
     margin:0;
-    font-size:32px;
+    font-size:42px;
+    font-weight:1000;
+    letter-spacing:4px;
 }
 
 header p{
-    color:#bbb;
+    margin:10px 0 0;
+    color:#fff;
+    font-size:20px;
+    font-weight:900;
+    text-transform:uppercase;
 }
+
 
 .container{
     width:95%;
     max-width:900px;
     margin:auto;
-    padding:20px 0;
+    padding:30px 0;
 }
+
 
 .card{
-    background:#161616;
-    border-radius:18px;
+    background:#111;
+    border:3px solid #fff;
+    margin-bottom:35px;
     overflow:hidden;
-    margin-bottom:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.5);
+    box-shadow:0 0 25px rgba(255,0,0,.35);
 }
 
-.card img{
-    width:100%;
-    display:block;
-    aspect-ratio:1/1;
-    object-fit:cover;
-}
 
-.content{
-    padding:20px;
-}
-
-h2{
-    margin-top:0;
-}
-
-.platform{
-    background:#222;
-    border-radius:12px;
-    padding:15px;
-    margin-top:15px;
-}
-
-.platform h3{
-    margin:0 0 8px;
-    color:#ffcc00;
-}
-
-.copy{
-    color:#ddd;
-    line-height:1.5;
-}
-
-button{
-    margin-top:10px;
-    padding:10px 15px;
-    border:none;
-    border-radius:20px;
-    background:#ffcc00;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#888;
-}
-
+.card img,
 .card video{
     width:100%;
     display:block;
     object-fit:cover;
-    border-radius:15px 15px 0 0;
-}  
-
- .download-btn{
-    display:inline-block;
-    margin-top:15px;
-    padding:12px 25px;
-    background:#ffcc00;
-    color:#000;
-    font-weight:bold;
-    text-decoration:none;
-    border-radius:25px;
 }
 
-.download-btn:hover{
-    background:white;
-}   
 
+.content{
+    padding:25px;
+}
+
+
+h2{
+    margin-top:0;
+    color:#ff0000;
+    font-size:30px;
+    font-weight:1000;
+    text-transform:uppercase;
+    border-bottom:3px solid #fff;
+    padding-bottom:12px;
+}
+
+
+.platform{
+    background:#000;
+    border-left:6px solid #ff0000;
+    padding:20px;
+    margin-top:20px;
+}
+
+
+.platform h3{
+    margin:0 0 12px;
+    color:#fff;
+    font-size:22px;
+    font-weight:1000;
+    text-transform:uppercase;
+}
+
+
+.copy{
+    color:#fff;
+    line-height:1.7;
+    font-size:16px;
+    font-weight:600;
+}
+
+
+.download-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:15px 30px;
+    background:#ff0000;
+    color:#fff;
+    font-size:18px;
+    font-weight:1000;
+    text-decoration:none;
+    text-transform:uppercase;
+    border:3px solid #ff0000;
+}
+
+
+.download-btn:hover{
+    background:#fff;
+    color:#000;
+}
+
+
+footer{
+    margin-top:50px;
+    padding:40px 20px;
+    background:#111;
+    border-top:5px solid #ff0000;
+    text-align:center;
+}
+
+
+.footer{
+    font-size:26px;
+    font-weight:1000;
+    color:#fff;
+    text-transform:uppercase;
+}
+
+
+.footer-contact{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:25px;
+}
+
+
+.footer-contact a{
+    background:#ff0000;
+    color:#fff;
+    padding:14px 25px;
+    font-size:18px;
+    font-weight:1000;
+    text-decoration:none;
+    border:2px solid #ff0000;
+}
+
+
+.footer-contact a:hover{
+    background:#fff;
+    color:#000;
+}
+
+
+@media(max-width:600px){
+
+header h1{
+    font-size:30px;
+}
+
+h2{
+    font-size:24px;
+}
+
+.footer-contact a{
+    width:100%;
+}
+
+}
+
+</style>
 </style>
 
 </head>
@@ -197,7 +268,7 @@ Follow the journey.
 <div class="platform">
 <h3>TikTok</h3>
 <p class="copy">
-The next wave is here 🚀  
+The next wave is here   
 HIT FOR HIT BATTLES | Crowning King & Queen! is bringing the heat.  
 Follow for music, moments, and behind the scenes. HIT FOR HIT™ is a next-generation music battle platform where artists compete, fans vote, and culture connects. Built to showcase talent, create opportunities, and spotlight the next wave of artists, H4H brings the energy of competition and entertainment together on one stage.
 </p>
@@ -207,7 +278,7 @@ Follow for music, moments, and behind the scenes. HIT FOR HIT™ is a next-gener
 <div class="platform">
 <h3>Snapchat</h3>
 <p class="copy">
-Add HIT FOR HIT BATTLES | Crowning King & Queen! 👻  
+Add HIT FOR HIT BATTLES | Crowning King & Queen!  
 Follow the journey. New music and exclusive content coming soon. HIT FOR HIT™ is a next-generation music battle platform where artists compete, fans vote, and culture connects. Built to showcase talent, create opportunities, and spotlight the next wave of artists, H4H brings the energy of competition and entertainment together on one stage.
 </p>
 </div>
