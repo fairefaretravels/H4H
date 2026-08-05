@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIT FOR HIT: The Battle for the Crown Begins — The Static</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f4f1ea;
+    --ink:#141210;
+    --black:#0a0a0a;
+    --red:#c81e2c;
+    --red-dim:#8f1420;
+    --gray:#8a857c;
+    --hair:#d8d3c7;
+
+    --font-display:'Playfair Display', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--font-body);
+    display:flex;
+    justify-content:center;
+  }
+
+  .page{
+    width:100%;
+    max-width:520px;
+    background:var(--cream);
+    min-height:100vh;
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    background:var(--black);
+    padding:22px 20px 20px;
+    text-align:center;
+  }
+  .masthead .brand{
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:3px;
+    color:#fff;
+  }
+  .masthead .brand .accent{ color:var(--red); }
+
+  .issue-block{
+    background:var(--black);
+    padding:26px 24px 24px;
+    text-align:center;
+    border-top:1px solid #1f1f1f;
+  }
+  .issue-line{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:2px;
+    color:#8f8b82;
+    line-height:1.6;
+  }
+  .issue-rule{
+    width:100%;
+    height:1px;
+    background:var(--red-dim);
+    margin:16px 0;
+    opacity:.6;
+  }
+  .masthead-title{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:44px;
+    color:#fff;
+    line-height:1;
+  }
+  .masthead-tag{
+    font-family:var(--font-mono);
+    font-size:15px;
+    letter-spacing:4px;
+    color:var(--red);
+    margin-top:12px;
+  }
+  .masthead-rule{
+    width:100%;
+    height:1px;
+    background:var(--red-dim);
+    margin:20px 0 16px;
+    opacity:.6;
+  }
+  .nav-row{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .nav-row a{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--red);
+    text-decoration:none;
+  }
+
+  /* ---------- ARTICLE ---------- */
+  .article{
+    padding:28px 22px 10px;
+    max-width:480px;
+    margin:0 auto;
+    text-align:center;
+  }
+
+  .kicker-row{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .cover-tag{
+    background:var(--red);
+    color:#fff;
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:2px;
+    padding:6px 12px;
+    border-radius:3px;
+  }
+  .kicker-meta{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--gray);
+  }
+
+  .top-hair{
+    width:100%;
+    height:2px;
+    background:var(--ink);
+    margin-bottom:20px;
+  }
+
+  h1.headline{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:32px;
+    line-height:1.18;
+    letter-spacing:.2px;
+  }
+
+  .byline{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:16px 0 22px;
+  }
+  .byline .stub{
+    width:22px;
+    height:2px;
+    background:var(--red);
+  }
+  .byline span{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--gray);
+  }
+
+  .cover-image{
+    background:var(--black);
+    padding:56px 20px;
+    margin-bottom:26px;
+    position:relative;
+  }
+  .cover-image .frame-rule{
+    width:56px;
+    height:1px;
+    background:var(--red);
+    margin:0 auto 16px;
+  }
+  .cover-image .frame-title{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-weight:600;
+    font-size:26px;
+    color:#fff;
+  }
+  .cover-image .frame-sub{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:2.5px;
+    color:#8f8b82;
+    margin-top:12px;
+  }
+  .cover-image .frame-rule.bottom{ margin:16px auto 0; }
+
+  p.lede{
+    font-family:var(--font-body);
+    font-size:18px;
+    line-height:1.65;
+    color:var(--ink);
+    margin-bottom:22px;
+  }
+
+  blockquote.pullquote{
+    background:var(--black);
+    border-top:3px solid var(--red);
+    padding:24px 22px;
+    margin:8px 0 26px;
+    text-align:center;
+  }
+  blockquote.pullquote p{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-size:18px;
+    line-height:1.55;
+    color:#fff;
+  }
+  blockquote.pullquote cite{
+    display:block;
+    margin-top:14px;
+    font-family:var(--font-mono);
+    font-style:normal;
+    font-size:13px;
+    letter-spacing:1.5px;
+    color:var(--red);
+  }
+
+  p.body-text{
+    font-family:var(--font-body);
+    font-size:18px;
+    line-height:1.7;
+    color:var(--ink);
+    margin-bottom:22px;
+  }
+  p.body-text b{ font-weight:700; }
+
+  .end-mark{
+    width:8px;
+    height:8px;
+    background:var(--red);
+    margin:10px auto 30px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    background:var(--black);
+    padding:26px 20px 34px;
+    text-align:center;
+  }
+  .site-footer .url{
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:2px;
+    color:#fff;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="brand">STV <span class="accent">RADIO</span>MELTDOWN</div>
+  </div>
+
+  <div class="issue-block">
+    <div class="issue-line">VOL. 1 &middot; ISSUE 03 &middot; AUGUST 2026 &middot; STV RADIOMELTDOWN<br>LITHONIA, GA</div>
+    <div class="issue-rule"></div>
+    <div class="masthead-title">The Static</div>
+    <div class="masthead-tag">WHERE MUSIC MEETS THE MOMENT</div>
+    <div class="masthead-rule"></div>
+    <div class="nav-row">
+      <a href="#">FEATURES</a>
+      <a href="#">SOUNDS</a>
+      <a href="#">CULTURE</a>
+      <a href="#">DEEP CUTS</a>
+    </div>
+  </div>
+
+  <!-- ARTICLE -->
+  <div class="article">
+
+    <div class="kicker-row">
+      <span class="cover-tag">COVER STORY</span>
+      <span class="kicker-meta">HIP-HOP &middot; BATTLE &middot; H4H</span>
+    </div>
+
+    <div class="top-hair"></div>
+
+    <h1 class="headline">HIT FOR HIT: The Battle for the Crown Begins</h1>
+
+    <div class="byline">
+      <span class="stub"></span>
+      <span>BY THE STATIC &nbsp;&middot;&nbsp; 4 MIN READ</span>
+      <span class="stub"></span>
+    </div>
+
+    <div class="cover-image">
+      <div class="frame-rule"></div>
+      <div class="frame-title">Hit4Hit Battles™</div>
+      <div class="frame-sub">SONG-FOR-SONG &middot; THE CROWN AWAITS</div>
+      <div class="frame-rule bottom"></div>
+    </div>
+
+    <p class="lede">The stage is set for HIT FOR HIT, a song-for-song competition where artists go head-to-head for recognition, respect, and the ultimate crown. Powered by STV Radiomeltdown, the event brings together rising voices ready to prove their talent one round at a time.</p>
+
+    <blockquote class="pullquote">
+      <p>"Unlike a traditional showcase, HIT FOR HIT puts the spotlight on performance, creativity, and crowd impact."</p>
+      <cite>— THE STATIC ON WHAT SETS H4H APART</cite>
+    </blockquote>
+
+    <p class="body-text"><b>Artists must defend their records.</b> They challenge their opponents round after round, and deliver moments built to leave a lasting impression on the crowd in the room.</p>
+
+    <p class="body-text">From the qualifiers to the final crowning event, every battle moves one step closer to finding the next King and Queen of HIT FOR HIT. Fans will decide which artists rise, which songs stand tall, and who earns the crown.</p>
+
+    <p class="body-text">The competition is more than a battle — it's a celebration of independent artists, music culture, and the power of the next generation of talent.</p>
+
+    <div class="end-mark"></div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <div class="url">radiomeltdown.com</div>
+  </div>
+
+</div>
+
+</body>
+</html>
