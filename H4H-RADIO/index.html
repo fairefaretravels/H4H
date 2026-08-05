@@ -140,278 +140,317 @@ a{color:var(--amber);}
 
     overflow:hidden;
 }
-.player-now{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
-.disc{
-  width:52px; height:52px; border-radius:50%;
-  background:conic-gradient(var(--gold),#000,var(--gold));
-  border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-.disc::after{ content:""; width:16px; height:16px; border-radius:50%; background:var(--ink); border:1px solid var(--gold); }
-.disc.spin{ animation:spin 3.2s linear infinite; }
-@keyframes spin{ from{transform:rotate(0);} to{transform:rotate(360deg);} }
-.now-meta{ flex:1; min-width:0; }
-.now-title{ font-weight:700; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--chalk); }
-.now-sub{ font-family:var(--font-mono); font-size:10px; color:var(--chalk-dim); margin-top:2px; }
-.onair-tag{
-  font-family:var(--font-mono); font-size:9px; letter-spacing:.5px; text-transform:uppercase;
-  padding:4px 9px; border-radius:20px; border:1px solid var(--line); color:var(--chalk-dim); flex-shrink:0;
-  text-align:right;
-}
-.onair-tag.live{ color:var(--live); border-color:var(--live); }
 
-.tune-wrap{ text-align:center; padding:6px 0 2px; }
-.tune-btn{
-  width:104px; height:104px; border-radius:50%; border:2px solid var(--line);
-  background:radial-gradient(circle at 35% 30%, var(--panel2), var(--ink2));
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  margin:0 auto; box-shadow:0 8px 20px rgba(0,0,0,.4);
-}
-.player-controls{
+
+/* NOW PLAYING */
+
+.player-now{
     display:flex;
-    justify-content:center;
-    margin:30px 0;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
 }
 
-.play-btn{
-    width:90px;
-    height:90px;
-    border:none;
+
+.disc{
+    width:52px;
+    height:52px;
     border-radius:50%;
-    background:linear-gradient(135deg,#FFD84A,#C89B00);
-    color:#000;
-    font-size:42px;
-    cursor:pointer;
-    box-shadow:0 15px 35px rgba(255,208,55,.45);
-    transition:.25s;
+
+    background:
+    conic-gradient(var(--gold),#000,var(--gold));
+
+    border:1px solid var(--line);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
 }
 
-.play-btn:hover{
-    transform:scale(1.05);
+
+.disc::after{
+    content:"";
+    width:16px;
+    height:16px;
+    border-radius:50%;
+
+    background:var(--ink);
+
+    border:1px solid var(--gold);
 }
 
-.play-btn:active{
-    transform:scale(.96);
-}
-.volume-row{ display:flex; align-items:center; gap:10px; margin-top:18px; }
-.volume-row button{
-  background:var(--panel2); border:1px solid var(--line); color:var(--chalk); border-radius:8px;
-  padding:0 12px; height:34px; font-size:10px; font-family:var(--font-mono); letter-spacing:1px; flex-shrink:0;
-}
-.volume-row button:hover{ border-color:var(--amber); color:var(--gold); }
-.volume-row input[type=range]{
-  flex:1; -webkit-appearance:none; height:4px; border-radius:4px; background:var(--line); outline:none;
-}
-.volume-row input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--gold); cursor:pointer;
-}
-.volume-row input[type=range]::-moz-range-thumb{
-  width:14px; height:14px; border-radius:50%; background:var(--gold); border:none; cursor:pointer;
-}
-.skip-row{ display:flex; justify-content:center; margin-top:12px; }
-.skip-row button{
-  background:var(--panel2); border:1px solid var(--line); color:var(--chalk-dim); border-radius:8px;
-  padding:8px 16px; font-size:10px; font-family:var(--font-mono); letter-spacing:1.5px; text-transform:uppercase;
-}
-.skip-row button:hover{ border-color:var(--amber); color:var(--gold); }
 
-.footer{
-  text-align:center; padding:0 18px 40px; font-family:var(--font-mono);
-  font-size:9.5px; color:var(--chalk-dim); letter-spacing:.5px;
+.disc.spin{
+    animation:spin 3.2s linear infinite;
 }
-audio{ display:none; }
 
-.h4h-portal{ max-width:640px; margin:40px auto; padding:20px; }
-.portal-card{
-  background:linear-gradient(160deg,var(--panel),var(--panel2));
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:25px;
-  margin-bottom:20px;
-  text-align:center;
-}
-.portal-card h2, .portal-card h3{
-  font-family:var(--font-display);
-  letter-spacing:1px;
-  color:var(--chalk);
-  margin-top:0;
-}
-.portal-card input{
-  width:100%;
-  padding:14px;
-  background:#000000;
-  border:1px solid var(--line);
-  color:var(--chalk);
-  border-radius:8px;
-  margin-bottom:10px;
-}
-.portal-card button{
-  background:linear-gradient(135deg,var(--amber),var(--gold));
-  border:0;
-  color:var(--ink);
-  padding:12px 22px;
-  border-radius:10px;
-  font-weight:bold;
-  font-family:var(--font-display);
-  letter-spacing:1px;
-}
-.battle-choice{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:14px 0;
-}
-.artist-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  border-bottom:1px solid var(--line);
-  color:var(--chalk);
-  text-align:left;
-}
-.track-row{
-  display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:9px;
-  border:1px solid var(--line); margin-bottom:6px; background:var(--panel);
-  color:var(--chalk); text-align:left;
-}
-#checkMessage, #voteMessage{
-  color:var(--gold);
-  font-family:var(--font-mono);
-  font-size:11.5px;
-  letter-spacing:.5px;
-}
-#artistQueue, #trackVoting, #leaderboard{
-  color:var(--chalk-dim);
-}
-.ready{
-  color:var(--gold);
-  font-weight:bold;
-}
-footer{ text-align:center; padding:30px 20px; }
-.footer{ font-size:28px; font-weight:bold; margin-bottom:20px; color:white; }
-.footer-contact{ display:flex; justify-content:center; align-items:center; gap:30px; flex-wrap:wrap; }
-.footer-contact a{ font-size:24px; font-weight:bold; color:white; text-decoration:none; padding:10px 20px; }
-.footer-contact a:hover{ color:#ff0000; }
-  .album-cover{
 
-width:220px;
-height:220px;
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
 
-margin:auto;
 
-border-radius:28px;
+.now-meta{
+    flex:1;
+    min-width:0;
+}
 
-overflow:hidden;
 
-position:relative;
+.now-title{
+    font-size:15px;
+    font-weight:700;
+
+    color:var(--chalk);
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+}
+
+
+.now-sub{
+
+    font-family:var(--font-mono);
+
+    font-size:10px;
+
+    color:var(--chalk-dim);
+
+    margin-top:4px;
+
+}
+
+
+
+
+.onair-tag{
+
+font-family:var(--font-mono);
+
+font-size:10px;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+
+padding:6px 12px;
+
+border-radius:999px;
+
+border:1px solid var(--line);
+
+color:var(--chalk-dim);
+
+background:#171717;
+
+}
+
+
+
+.onair-tag.live{
+
+background:var(--gold);
+
+border-color:var(--gold);
+
+color:#000;
 
 box-shadow:
-
-0 20px 50px rgba(0,0,0,.5);
-
-}
-
-.album-cover img{
-
-width:100%;
-height:100%;
-object-fit:cover;
+0 0 20px rgba(255,208,55,.35);
 
 }
 
-.live-ring{
 
-position:absolute;
-inset:-4px;
 
-border-radius:32px;
+/* PLAY BUTTON */
 
-border:3px solid var(--gold);
 
-animation:pulse 2s infinite;
-
-}
-
-@keyframes pulse{
-
-0%{opacity:.2;transform:scale(.98);}
-50%{opacity:1;transform:scale(1);}
-100%{opacity:.2;transform:scale(.98);}
-
-}
-.controls{
+.player-controls{
 
 display:flex;
 justify-content:center;
-align-items:center;
-gap:22px;
 margin:28px 0;
 
 }
 
-.controls button{
 
-width:62px;
-height:62px;
+.play-btn{
 
-border-radius:50%;
+width:90px;
+height:90px;
 
 border:none;
 
-background:#202020;
+border-radius:50%;
 
-color:white;
+background:
+linear-gradient(135deg,#FFD84A,#C89B00);
 
-font-size:24px;
+color:#000;
+
+font-size:42px;
+
+cursor:pointer;
+
+
+box-shadow:
+0 15px 35px rgba(255,208,55,.45);
+
 
 transition:.25s;
 
 }
 
-.controls button:hover{
 
-transform:scale(1.08);
+.play-btn:hover{
+
+transform:scale(1.05);
+
+}
+
+
+.play-btn:active{
+
+transform:scale(.96);
 
 }
 
-.controls .play{
 
-width:82px;
-height:82px;
 
-background:linear-gradient(135deg,#FFD84A,#C99A00);
 
-color:black;
+/* VOLUME */
 
-font-size:34px;
 
-box-shadow:
+.volume-row{
 
-0 0 30px rgba(255,208,55,.45);
+display:flex;
 
-}
-.now-title{
+align-items:center;
 
-font-size:24px;
-font-weight:700;
-text-align:center;
+gap:10px;
 
-margin-top:22px;
+margin-top:20px;
 
 }
-.now-sub{
 
-text-align:center;
 
-font-size:15px;
+.volume-row button{
 
-color:#999;
+background:var(--panel2);
 
-margin-top:6px;
+border:1px solid var(--line);
 
-}  
+color:var(--chalk);
+
+border-radius:8px;
+
+height:34px;
+
+padding:0 14px;
+
+font-family:var(--font-mono);
+
+font-size:10px;
+
+letter-spacing:1px;
+
+}
+
+
+
+.volume-row input[type=range]{
+
+flex:1;
+
+height:5px;
+
+appearance:none;
+
+background:var(--line);
+
+border-radius:20px;
+
+}
+
+
+
+.volume-row input[type=range]::-webkit-slider-thumb{
+
+appearance:none;
+
+width:14px;
+
+height:14px;
+
+border-radius:50%;
+
+background:var(--gold);
+
+cursor:pointer;
+
+}
+
+
+
+/* SKIP */
+
+
+.skip-row{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:15px;
+
+}
+
+
+.skip-row button{
+
+background:var(--panel2);
+
+border:1px solid var(--line);
+
+color:var(--chalk-dim);
+
+border-radius:8px;
+
+padding:9px 18px;
+
+font-family:var(--font-mono);
+
+font-size:10px;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+
+}
+
+
+
+.skip-row button:hover{
+
+border-color:var(--gold);
+
+color:var(--gold);
+
+}
+
+
+
+
+/* PROGRESS */
+
 .progress{
 
 height:6px;
@@ -420,11 +459,13 @@ background:#2a2a2a;
 
 border-radius:50px;
 
-margin:24px 0;
-
 overflow:hidden;
 
+margin:24px 0;
+
 }
+
+
 .progress-fill{
 
 width:40%;
@@ -436,50 +477,21 @@ background:linear-gradient(90deg,#FFD84A,#F5C400);
 border-radius:50px;
 
 }
-  .volume-row{
 
-margin-top:25px;
 
-}
-.volume-row input{
 
-height:6px;
+/* AUDIO */
 
-border-radius:20px;
+audio{
+
+display:none;
 
 }
- .onair-tag{
-
-display:inline-flex;
-
-margin:auto;
-
-padding:8px 18px;
-
-border-radius:999px;
-
-background:#171717;
-
-font-size:12px;
-
-font-weight:700;
-
-letter-spacing:2px;
-
-}
-
-.onair-tag.live{
-
-background:#FFD84A;
-
-color:black;
-
-box-shadow:0 0 20px rgba(255,208,55,.35);
-
-} 
-</style>
+</script>
 </head>
+
 <body>
+
 <div class="grain"></div>
 
 <nav class="topnav">
@@ -490,69 +502,162 @@ box-shadow:0 0 20px rgba(255,208,55,.35);
   <a href="/ARTISTS/">GROUP-WALKIE</a>
 </nav>
 
+
 <section class="hero" id="hero">
+
   <div class="hero-scrim"></div>
+
   <div class="hero-content">
-    <p class="hero-eyebrow">There can be only one KING and QUEEN</p>
-    <h1 class="hero-title">HIT FOR HIT</h1>
-    <p class="hero-sub">The song-for-song battle for the crown</p>
+    <p class="hero-eyebrow">
+      THERE CAN BE ONLY ONE KING AND QUEEN
+    </p>
+
+    <h1 class="hero-title">
+      HIT FOR HIT
+    </h1>
+
+    <p class="hero-sub">
+      THE SONG-FOR-SONG BATTLE FOR THE CROWN
+    </p>
   </div>
+
   <div class="hero-dots" id="heroDots"></div>
+
 </section>
 
-<div class="progress">
 
-<div class="progress-fill"></div>
 
-</div>
-  
 <section class="station">
-  <p class="station-eyebrow">PROMO MIX</p>
-  <h2 class="station-title">Hit 4 Hit Radio</h2>
 
-<div class="progress">
+  <div class="station-header">
 
-<div class="progress-fill"></div>
+    <p class="station-eyebrow">
+      PROMO MIX
+    </p>
 
-</div>  
-  
+    <h2 class="station-title">
+      HIT 4 HIT RADIO
+    </h2>
+
+  </div>
+
+
+  <div class="progress">
+    <div class="progress-fill"></div>
+  </div>
+
+
+
   <div class="player-bar">
+
+
     <div class="player-now">
+
       <div class="disc" id="disc"></div>
+
+
       <div class="now-meta">
-        <div class="now-title" id="nowTitle">Nothing loaded yet</div>
-        <div class="now-sub" id="nowSub">PLAY</div>
+
+        <div class="now-title" id="nowTitle">
+          STREAM STARTING
+        </div>
+
+        <div class="now-sub" id="nowSub">
+          HIT 4 HIT RADIO
+        </div>
+
       </div>
-      <span class="onair-tag" id="onairTag">STANDBY</span>
+
+
+      <span class="onair-tag" id="onairTag">
+        STANDBY
+      </span>
+
+
     </div>
+
+
+
 
     <div class="player-controls">
-    <button class="play-btn" id="tuneBtn" onclick="tuneToggle()">
-        <span id="tuneLabel">▶</span>
-    </button>
-</div>
+
+      <button 
+        class="play-btn" 
+        id="tuneBtn" 
+        onclick="tuneToggle()">
+
+        <span id="tuneLabel">
+          ▶
+        </span>
+
+      </button>
+
+    </div>
+
+
+
 
     <div class="volume-row">
-      <button id="muteBtn" onclick="toggleMute()">MUTE</button>
-      <input type="range" id="volumeSlider" min="0" max="100" value="100" oninput="setVolume(this.value)">
+
+      <button id="muteBtn" onclick="toggleMute()">
+        MUTE
+      </button>
+
+
+      <input 
+        type="range" 
+        id="volumeSlider" 
+        min="0" 
+        max="100" 
+        value="100"
+        oninput="setVolume(this.value)"
+      >
+
     </div>
 
+
+
+
     <div class="skip-row">
-      <button onclick="skipTrack()">SKIP ▸</button>
+
+      <button onclick="skipTrack()">
+        SKIP ▸
+      </button>
+
     </div>
+
+
   </div>
+
+
 </section>
+
+
 
 <audio id="radioAudio"></audio>
 
-<section class="h4h-media">
+
+
+<section class="h4h-media" id="media">
+
 </section>
 
+
+
+
 <footer>
-  <p class="footer">© HIT 4 HIT BATTLES</p>
+
+  <p class="footer">
+    © HIT 4 HIT BATTLES
+  </p>
   <div class="footer-contact">
-    <a href="https://radiomeltdown.com/NewsStory">THE STATIC NEWSLETTER</a>
+
+    <a href="https://radiomeltdown.com/NewsStory">
+      THE STATIC NEWSLETTER
+    </a>
+
   </div>
+
 </footer>
 
 <script>
