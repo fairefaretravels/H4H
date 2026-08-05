@@ -248,6 +248,7 @@ HIT FOR HIT BATTLES™ | STV RADIOMELTDOWN
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
   getFirestore,
   doc,
@@ -269,120 +270,170 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const battleRef = doc(db, "h4h_battles", "qualifier_1");
 
-let battleData = null;
-let currentBattleId = null;
 
-/* Falls back to a round+name signature if the staff page hasn't been
-   updated to send battleId yet, so this still works either way. */
-function getBattleId(data){
-  if(data.battleId) return data.battleId;
-  return (data.round || '') + '|' + (data.artistA?.name || '') + '|' + (data.artistB?.name || '');
+const battles = [
+  "qualifier_1",
+  "qualifier_2",
+  "qualifier_3"
+];
+
+
+const container = document.getElementById("battleContainer");
+
+
+function hasVoted(id){
+  return localStorage.getItem("h4h_vote_" + id);
 }
 
-function hasVotedFor(battleId){
-  return localStorage.getItem('h4h_voted_' + battleId);
+
+function renderBattle(id,data){
+
+let box = document.getElementById(id);
+
+if(!box){
+
+box = document.createElement("div");
+
+box.className="card";
+
+box.id=id;
+
+container.appendChild(box);
+
 }
 
-function markVoted(battleId, choice){
-  localStorage.setItem('h4h_voted_' + battleId, choice);
-}
 
-function refreshButtons(){
-  const btnA = document.getElementById('btnA');
-  const btnB = document.getElementById('btnB');
-  const statusEl = document.getElementById('status');
+box.innerHTML = `
 
-  if(!battleData){
-    btnA.disabled = true;
-    btnB.disabled = true;
-    return;
-  }
+<div class="battle-title">
+${data.round || "QUALIFIER BATTLE"}
+</div>
 
-  const isLive = battleData.status === 'live';
-  const alreadyVoted = hasVotedFor(currentBattleId);
 
-  if(!isLive){
-    btnA.disabled = true;
-    btnB.disabled = true;
-    statusEl.textContent = battleData.status === 'closed' ? 'VOTING CLOSED' : 'WAITING FOR VOTING...';
-    statusEl.classList.toggle('closed', battleData.status === 'closed');
-  } else if(alreadyVoted){
-    btnA.disabled = true;
-    btnB.disabled = true;
-    statusEl.textContent = 'YOU ALREADY VOTED FOR THIS BATTLE';
-    statusEl.classList.remove('closed');
-  } else {
-    btnA.disabled = false;
-    btnB.disabled = false;
-    statusEl.textContent = 'VOTING IS LIVE — TAP TO VOTE';
-    statusEl.classList.remove('closed');
-  }
-}
+<div class="artist-card">
 
-function renderBattle(data){
-  battleData = data;
-  currentBattleId = getBattleId(data);
+<img 
+src="${data.artistA.photo || ''}"
+style="${data.artistA.photo ? '' : 'display:none'}">
 
-  document.getElementById('battleTitle').textContent =
-    (data.round || 'BATTLE') + ' ROUND';
+<h2>${data.artistA.name}</h2>
 
-  document.getElementById('nameA').textContent = data.artistA?.name || 'ARTIST A';
-  document.getElementById('nameB').textContent = data.artistB?.name || 'ARTIST B';
+<button 
+class="vote-btn artist-a"
+onclick="vote('${id}','A')">
 
-  const photoA = document.getElementById('photoA');
-  const photoB = document.getElementById('photoB');
-  if(data.artistA?.photo){ photoA.src = data.artistA.photo; photoA.style.display = 'inline-block'; }
-  else { photoA.style.display = 'none'; }
-  if(data.artistB?.photo){ photoB.src = data.artistB.photo; photoB.style.display = 'inline-block'; }
-  else { photoB.style.display = 'none'; }
+VOTE ${data.artistA.name}
 
-  document.getElementById('votesA').textContent = (data.artistA?.votes || 0) + ' VOTES';
-  document.getElementById('votesB').textContent = (data.artistB?.votes || 0) + ' VOTES';
+</button>
 
-  refreshButtons();
-}
+<p>${data.artistA.votes || 0} VOTES</p>
 
-onSnapshot(battleRef, (snap)=>{
-  if(!snap.exists()){
-    document.getElementById('battleTitle').textContent = 'NO BATTLE FOUND';
-    document.getElementById('status').textContent = 'NO ACTIVE BATTLE';
-    document.getElementById('btnA').disabled = true;
-    document.getElementById('btnB').disabled = true;
-    return;
-  }
-  renderBattle(snap.data());
-}, (err)=>{
-  console.error('battle listener error', err);
-  document.getElementById('status').textContent = 'CONNECTION ERROR — TRY REFRESHING';
+</div>
+
+
+<div class="artist-card">
+
+<img 
+src="${data.artistB.photo || ''}"
+style="${data.artistB.photo ? '' : 'display:none'}">
+
+<h2>${data.artistB.name}</h2>
+
+<button 
+class="vote-btn artist-b"
+onclick="vote('${id}','B')">
+
+VOTE ${data.artistB.name}
+
+</button>
+
+<p>${data.artistB.votes || 0} VOTES</p>
+
+</div>
+
+
+<div class="status">
+
+${data.status === "live" ? "VOTING IS LIVE" : "VOTING CLOSED"}
+
+</div>
+
+`;
+
+
+if(data.status !== "live" || hasVoted(id)){
+
+box.querySelectorAll("button").forEach(btn=>{
+btn.disabled=true;
 });
 
-window.vote = async function(choice){
+}
 
-  if(!battleData || battleData.status !== 'live') return;
-  if(hasVotedFor(currentBattleId)) return;
+}
 
-  const field = choice === 'A' ? 'artistA.votes' : 'artistB.votes';
 
-  // Lock the buttons immediately so a double-tap can't slip through
-  // before the write finishes.
-  markVoted(currentBattleId, choice);
-  refreshButtons();
 
-  try{
-    await updateDoc(battleRef, { [field]: increment(1) });
-    document.getElementById('status').textContent = 'VOTE COUNTED — THANK YOU!';
-  }catch(err){
-    console.error('vote failed', err);
-    // Roll back the local lock so they can try again if the write failed.
-    localStorage.removeItem('h4h_voted_' + currentBattleId);
-    refreshButtons();
-    alert('Vote failed to send — check your connection and try again.');
-  }
+battles.forEach((id)=>{
+
+
+const battleRef = doc(db,"h4h_battles",id);
+
+
+onSnapshot(battleRef,(snap)=>{
+
+
+if(snap.exists()){
+
+renderBattle(id,snap.data());
+
+}
+
+
+});
+
+
+});
+
+
+
+window.vote = async function(id,choice){
+
+
+if(hasVoted(id)){
+
+alert("You already voted in this battle");
+
+return;
+
+}
+
+
+const battleRef = doc(db,"h4h_battles",id);
+
+
+const field = choice==="A"
+? "artistA.votes"
+: "artistB.votes";
+
+
+await updateDoc(
+battleRef,
+{
+[field]: increment(1)
+}
+);
+
+
+localStorage.setItem(
+"h4h_vote_"+id,
+choice
+);
+
+
+alert("Vote counted!");
 
 };
 
+
 </script>
-</body>
-</html>
