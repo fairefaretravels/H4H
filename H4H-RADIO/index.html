@@ -76,43 +76,113 @@ a{color:var(--amber);}
 }
 .topnav a.ghost:hover{ border-color:var(--amber); color:var(--amber); }
 
+<section class="hero" id="hero">
+  <div class="hero-slide active" style="background-image:url('STAFF/H4Hpromo.PNG');"></div>
+  <div class="hero-slide" style="background-image:url('STAFF/IvonnaLing.PNG');"></div>
+  <div class="hero-slide" style="background-image:url('STAFF/Louiefresh.PNG');"></div>
+  <div class="hero-slide" style="background-image:url('STAFF/RebelQueen.PNG');"></div>
+  <div class="hero-slide" style="background-image:url('STAFF/3vs3.PNG');"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">There can be only one KING and QUEEN</p>
+    <h1 class="hero-title">HIT FOR HIT</h1>
+    <p class="hero-sub">The song-for-song battle for the crown</p>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</section>
 .hero{
-  position:relative; width:100%; min-height:100svh;
-  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-  overflow:hidden; padding:0 0 40px;
+  position:relative;
+  width:100%;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  overflow:hidden;
+  padding:0 0 40px;
 }
 .hero-slide{
-  position:absolute; inset:0; opacity:0;
-  background-size:cover; background-position:center;
-  filter:grayscale(1) contrast(1.05);
+  position:absolute;
+  inset:0;
+  opacity:0;
+  background-size:cover;
+  background-position:center;
+  filter:none;
   transform:scale(1.06);
   transition:opacity 1.4s ease, transform 7s ease-out;
+  z-index:0;
 }
-.hero-slide.active{ opacity:1; transform:scale(1); }
+.hero-slide.active{
+  opacity:1;
+  transform:scale(1);
+}
 .hero-scrim{
-  position:absolute; inset:0;
+  position:absolute;
+  inset:0;
   background:
-    linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.94) 100%),
-    linear-gradient(90deg, rgba(0,0,0,.55), transparent 40%, transparent 60%, rgba(0,0,0,.55));
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.15) 0%,
+      rgba(0,0,0,.35) 45%,
+      rgba(0,0,0,.94) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.55),
+      transparent 40%,
+      transparent 60%,
+      rgba(0,0,0,.55)
+    );
   z-index:1;
 }
-.hero-content{ position:relative; z-index:2; text-align:center; padding:0 20px; }
+.hero-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 20px;
+}
 .hero-eyebrow{
-  font-family:var(--font-mono); font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  color:var(--gold); margin:0 0 10px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:0 0 10px;
 }
 .hero-title{
-  font-family:var(--font-display); font-size:min(18vw, 108px); line-height:.9;
-  letter-spacing:2px; margin:0; color:var(--chalk);
+  font-family:var(--font-display);
+  font-size:min(18vw,108px);
+  line-height:.9;
+  letter-spacing:2px;
+  margin:0;
+  color:var(--chalk);
   text-shadow:0 8px 40px rgba(0,0,0,.5);
 }
 .hero-sub{
-  font-family:var(--font-mono); font-size:12px; letter-spacing:1px; color:var(--chalk-dim);
-  margin:14px 0 0; text-transform:uppercase;
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:1px;
+  color:var(--chalk-dim);
+  margin:14px 0 0;
+  text-transform:uppercase;
 }
-.hero-dots{ position:relative; z-index:2; display:flex; gap:6px; margin-top:22px; }
-.hero-dots span{ width:22px; height:3px; border-radius:3px; background:rgba(255,255,255,.25); transition:background .3s; }
-.hero-dots span.active{ background:var(--gold); }
+.hero-dots{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:6px;
+  margin-top:22px;
+}
+.hero-dots span{
+  width:22px;
+  height:3px;
+  border-radius:3px;
+  background:rgba(255,255,255,.25);
+  transition:background .3s;
+}
+.hero-dots span.active{
+  background:var(--gold);
+}
 
 .station{ max-width:640px; margin:0 auto; padding:48px 18px 70px; }
 .station-eyebrow{
@@ -394,23 +464,25 @@ const PHOTOS = [
   { src:'STAFF/RebelQueen.PNG' },
   { src:'STAFF/3vs3.PNG' }
 ];
+
 let heroIdx = 0;
+
 function renderHero(){
   const hero = document.getElementById('hero');
-  const dots = document.getElementById('heroDots');
-  document.querySelectorAll('.hero-slide').forEach(el=>el.remove());
-  PHOTOS.forEach((p,i)=>{
+
+  document.querySelectorAll('.hero-slide').forEach(el => el.remove());
+
+  PHOTOS.forEach((photo, i)=>{
     const slide = document.createElement('div');
-    slide.className = 'hero-slide' + (i===heroIdx ? ' active' : '');
-    slide.style.backgroundImage = `url('${p.src}')`;
+
+    slide.className = 'hero-slide' + (i === heroIdx ? ' active' : '');
+    slide.style.backgroundImage = `url("${photo.src}")`;
+
     hero.insertBefore(slide, hero.firstChild);
   });
-  dots.innerHTML = PHOTOS.map((p,i)=>`<span class="${i===heroIdx?'active':''}"></span>`).join('');
 }
+
 renderHero();
-setInterval(()=>{
-  heroIdx = (heroIdx+1) % PHOTOS.length;
-  renderHero();
 }, 5500);
 </script>
 
