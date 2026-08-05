@@ -147,23 +147,74 @@ a{color:var(--amber);}
 }
 .onair-tag.live{ color:var(--live); border-color:var(--live); }
 
-.tune-wrap{ text-align:center; padding:6px 0 2px; }
+.tune-wrap{
+  text-align:center;
+  padding:10px 0 4px;
+}
 .tune-btn{
-  width:104px; height:104px; border-radius:50%; border:2px solid var(--line);
-  background:radial-gradient(circle at 35% 30%, var(--panel2), var(--ink2));
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  margin:0 auto; box-shadow:0 8px 20px rgba(0,0,0,.4);
+  width:104px;
+  height:104px;
+  border-radius:50%;
+  border:2px solid #333;
+  background:#0b0b0b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto;
+  cursor:pointer;
+  position:relative;
+  transition:all .25s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,.55);
 }
-.tune-btn .lbl{ font-family:var(--font-display); font-size:15px; letter-spacing:1px; color:var(--chalk); }
+/* PLAY ICON */
+.tune-btn::before{
+  content:"";
+  width:0;
+  height:0;
+  border-top:15px solid transparent;
+  border-bottom:15px solid transparent;
+  border-left:24px solid #fff;
+  margin-left:7px;
+}
+/* ACTIVE / PLAYING */
 .tune-btn.on{
-  border-color:var(--gold);
-  background:radial-gradient(circle at 35% 30%, var(--gold), var(--amber));
-  box-shadow:0 0 30px rgba(240,201,61,.35);
+  background:#c90000;
+  border-color:#ff3b3b;
+  box-shadow:
+    0 0 35px rgba(255,0,0,.45),
+    inset 0 0 20px rgba(0,0,0,.35);
 }
-.tune-btn.on .lbl{ color:var(--ink); }
+/* PAUSE ICON */
+.tune-btn.on::before{
+  content:"";
+  width:22px;
+  height:26px;
+  border:none;
+  margin-left:0;
+  background:
+    linear-gradient(
+      to right,
+      #fff 0,
+      #fff 7px,
+      transparent 7px,
+      transparent 15px,
+      #fff 15px,
+      #fff 22px
+    );
+}
+.tune-btn:hover{
+  transform:scale(1.05);
+}
+.tune-btn .lbl{
+  display:none;
+}
 .tune-hint{
-  font-family:var(--font-mono); font-size:9.5px; color:var(--chalk-dim);
-  letter-spacing:.5px; margin-top:12px; text-transform:uppercase;
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  color:var(--chalk-dim);
+  letter-spacing:.5px;
+  margin-top:12px;
+  text-transform:uppercase;
 }
 
 .volume-row{ display:flex; align-items:center; gap:10px; margin-top:18px; }
@@ -374,7 +425,7 @@ setInterval(()=>{
 const GITHUB_OWNER = 'fairefaretravels';
 const GITHUB_REPO = 'H4H';
 const GITHUB_BRANCH = 'main';
-const MIXTAPE_PATH = 'STAFF/MIXTAPE';
+const MIXTAPE_PATH = 'STAFF';
 const AUDIO_EXT = ['mp3','wav','m4a','ogg','aac','flac'];
 const REFRESH_MS = 60000;
 
@@ -447,26 +498,28 @@ function updateIdleUi(fetchFailed){
 
 function updateUi(track, isLive){
   const btn = document.getElementById('tuneBtn');
-  const lbl = document.getElementById('tuneLabel');
   const tag = document.getElementById('onairTag');
   const disc = document.getElementById('disc');
   const title = document.getElementById('nowTitle');
   const sub = document.getElementById('nowSub');
 
+  // Button changes black/play -> red/pause
   btn.classList.toggle('on', playing);
-  lbl.textContent = playing ? 'STOP' : 'TUNE IN';
 
   if(track){
-    const idx = PLAY_QUEUE.findIndex(t=>t.url===track.url);
     title.textContent = track.name;
     sub.textContent = isLive ? 'Playing now' : 'Loading…';
+
     tag.textContent = isLive ? 'ON AIR' : 'BUFFERING';
     tag.classList.toggle('live', isLive);
+
     disc.classList.toggle('spin', isLive);
   } else {
     updateIdleUi(false);
+
     tag.textContent = 'STANDBY';
     tag.classList.remove('live');
+
     disc.classList.remove('spin');
   }
 }
