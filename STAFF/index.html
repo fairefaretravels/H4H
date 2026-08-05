@@ -981,7 +981,7 @@ const firebaseConfig={
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const rtdb = getDatabase(app);
-const battleRef = doc(db, "h4h_battles", "qualifier_1");
+const battleRef = doc(db,"h4h_battle_for_the_crown","qualifier_1")
 
 /* ===================== STORAGE HELPERS — Firebase-backed ===================== */
 async function sset(key, val){
