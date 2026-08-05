@@ -221,6 +221,96 @@ HIT FOR HIT BATTLES™ | STV RADIOMELTDOWN
 
 </div>
 
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc,
+  updateDoc,
+  increment
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  // YOUR EXISTING FIREBASE CONFIG HERE
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+const battleRef = doc(db,"h4h_battles","qualifier_1");
+
+
+let battleData;
+
+
+async function loadBattle(){
+
+  const snap = await getDoc(battleRef);
+
+  if(!snap.exists()){
+    document.getElementById("status").textContent="NO BATTLE FOUND";
+    return;
+  }
+
+  battleData = snap.data();
+
+
+  document.getElementById("battleTitle").textContent =
+  battleData.round + " ROUND";
+
+
+  document.getElementById("btnA").textContent =
+  battleData.artistA.name;
+
+
+  document.getElementById("btnB").textContent =
+  battleData.artistB.name;
+
+
+  document.getElementById("status").textContent =
+  battleData.status;
+
+}
+
+
+window.vote = async function(choice){
+
+  if(!battleData) return;
+
+
+  let field;
+
+
+  if(choice==="A"){
+    field="artistA.votes";
+  }else{
+    field="artistB.votes";
+  }
+
+
+  await updateDoc(
+    battleRef,
+    {
+      [field]: increment(1)
+    }
+  );
+
+
+  document.getElementById("status").textContent =
+  "VOTE COUNTED";
+
+
+};
+
+
+loadBattle();
+
+
+</script>
 </body>
 </html>
