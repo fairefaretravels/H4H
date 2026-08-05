@@ -128,15 +128,14 @@ from
 
 
 import {
-
-getDatabase,
-ref,
-onValue,
-update
-
+getFirestore,
+doc,
+setDoc,
+updateDoc,
+onSnapshot
 }
 from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
@@ -160,7 +159,7 @@ appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
 
 const app = initializeApp(firebaseConfig);
 
-const db = getDatabase(app);
+const db = getFirestore(app);
 
 
 
@@ -168,17 +167,13 @@ let battle = null;
 
 
 
-onValue(
-ref(db,"battle/current"),
-(snapshot)=>{
+const battleRef = doc(db,"h4h_battles","qualifier_1");
 
+onSnapshot(battleRef,(snapshot)=>{
 
-battle = snapshot.val();
+if(!snapshot.exists()){
 
-
-if(!battle){
-
-document.getElementById("battleTitle").innerHTML =
+document.getElementById("status").innerHTML =
 "No active battle";
 
 return;
@@ -186,46 +181,76 @@ return;
 }
 
 
-
-document.getElementById("battleTitle").innerHTML =
-battle.artistA + " 🆚 " + battle.artistB;
+battle = snapshot.data();
 
 
-
-document.getElementById("btnA").innerHTML =
-"🅰️ "+battle.artistA;
-
+document.getElementById("aName").innerHTML =
+battle.artistA.name;
 
 
-document.getElementById("btnB").innerHTML =
-"🅱️ "+battle.artistB;
+document.getElementById("bName").innerHTML =
+battle.artistB.name;
 
 
+document.getElementById("votesA").innerHTML =
+battle.artistA.votes;
 
-if(!battle.open){
+
+document.getElementById("votesB").innerHTML =
+battle.artistB.votes;
 
 
 document.getElementById("status").innerHTML =
-"Voting Closed";
-
-
-document.getElementById("status").className =
-"closed";
-
-
-document.getElementById("btnA").disabled=true;
-
-document.getElementById("btnB").disabled=true;
-
-
-}
-
+battle.status.toUpperCase();
 
 
 });
 
 
+window.startVote = async function(){
 
+const artistA =
+document.getElementById("artistA").value;
+
+const artistB =
+document.getElementById("artistB").value;
+
+
+await setDoc(
+doc(db,"h4h_battles","qualifier_1"),
+{
+
+round:"Qualifier",
+
+status:"live",
+
+artistA:{
+name:artistA,
+photo:"",
+votes:0
+},
+
+artistB:{
+name:artistB,
+photo:"",
+votes:0
+}
+
+}
+);
+
+};
+
+window.closeVote = async function(){
+
+await updateDoc(
+doc(db,"h4h_battles","qualifier_1"),
+{
+status:"closed"
+}
+);
+
+};    
 window.vote = async function(choice){
 
 
