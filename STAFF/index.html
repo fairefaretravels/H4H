@@ -971,8 +971,9 @@ const firebaseConfig={
   appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const battleRef = doc(db, "h4h_battles", "qualifier_1");
 
 /* ===================== STORAGE HELPERS — Firebase-backed ===================== */
 async function sset(key, val){
@@ -1272,44 +1273,49 @@ window.radioToggle = radioToggle;
 radioInit();
 
 /* ================= BATTLE CONTROL (same Firebase app/db as the radio above) ================= */
-// ================= BATTLE CONTROL =================
 
 const battleRef = doc(db, "h4h_battles", "qualifier_1");
 
 
 window.startVote = async function(){
 
-  const A = document.getElementById("artistA").value.trim();
-  const B = document.getElementById("artistB").value.trim();
+  try{
 
-  if(!A || !B){
-    alert("Enter both artists");
-    return;
-  }
+    const A = document.getElementById("artistA").value.trim();
+    const B = document.getElementById("artistB").value.trim();
 
-
-  await setDoc(battleRef,{
-
-    round:"Qualifier",
-
-    status:"live",
-
-    artistA:{
-      name:A,
-      photo:"",
-      votes:0
-    },
-
-    artistB:{
-      name:B,
-      photo:"",
-      votes:0
+    if(!A || !B){
+      alert("Enter both artists");
+      return;
     }
 
-  });
+    await setDoc(battleRef,{
 
+      round:"Qualifier",
 
-  console.log("Voting opened");
+      status:"live",
+
+      artistA:{
+        name:A,
+        photo:"",
+        votes:0
+      },
+
+      artistB:{
+        name:B,
+        photo:"",
+        votes:0
+      }
+
+    });
+
+    alert("✅ Voting opened successfully!");
+
+  }catch(err){
+
+    alert("❌ Error:\n\n" + err.message);
+
+  }
 
 };
 
