@@ -121,22 +121,17 @@ Waiting for voting...
 
 <script type="module">
 
-
 import { initializeApp }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 getFirestore,
 doc,
-setDoc,
+onSnapshot,
 updateDoc,
-onSnapshot
+increment
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -156,20 +151,19 @@ appId:"1:253773392789:web:27b1141ffa1f1b7815a49c"
 };
 
 
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
 
-
 let battle = null;
-
 
 
 const battleRef = doc(db,"h4h_battles","qualifier_1");
 
+
 onSnapshot(battleRef,(snapshot)=>{
+
 
 if(!snapshot.exists()){
 
@@ -184,103 +178,64 @@ return;
 battle = snapshot.data();
 
 
-document.getElementById("aName").innerHTML =
-battle.artistA.name;
+document.getElementById("battleTitle").innerHTML =
+battle.artistA.name + " 🆚 " + battle.artistB.name;
 
 
-document.getElementById("bName").innerHTML =
-battle.artistB.name;
+document.getElementById("btnA").innerHTML =
+"🅰️ " + battle.artistA.name;
 
 
-document.getElementById("votesA").innerHTML =
-battle.artistA.votes;
+document.getElementById("btnB").innerHTML =
+"🅱️ " + battle.artistB.name;
 
 
-document.getElementById("votesB").innerHTML =
-battle.artistB.votes;
-
+if(battle.status !== "live"){
 
 document.getElementById("status").innerHTML =
-battle.status.toUpperCase();
+"Voting Closed";
 
+document.getElementById("status").className =
+"status closed";
+
+
+document.getElementById("btnA").disabled=true;
+document.getElementById("btnB").disabled=true;
+
+}
+else{
+
+document.getElementById("status").innerHTML =
+"Voting is LIVE";
+
+}
 
 });
 
 
-window.startVote = async function(){
-
-const artistA =
-document.getElementById("artistA").value;
-
-const artistB =
-document.getElementById("artistB").value;
-
-
-await setDoc(
-doc(db,"h4h_battles","qualifier_1"),
-{
-
-round:"Qualifier",
-
-status:"live",
-
-artistA:{
-name:artistA,
-photo:"",
-votes:0
-},
-
-artistB:{
-name:artistB,
-photo:"",
-votes:0
-}
-
-}
-);
-
-};
-
-window.closeVote = async function(){
-
-await updateDoc(
-doc(db,"h4h_battles","qualifier_1"),
-{
-status:"closed"
-}
-);
-
-};    
 window.vote = async function(choice){
 
 
-
 if(!battle){
-
 return;
-
 }
 
 
-
-if(!battle.open){
+if(battle.status !== "live"){
 
 alert("Voting is closed");
-
 return;
 
 }
 
 
-
-let alreadyVoted =
+let voted =
 localStorage.getItem("h4h_vote");
 
 
-if(alreadyVoted){
+if(voted){
 
 alert("You already voted!");
-
 return;
 
 }
@@ -289,16 +244,12 @@ return;
 
 if(choice==="A"){
 
-
-await update(
-ref(db,"battle/current"),
+await updateDoc(
+battleRef,
 {
-
-votesA:
-(battle.votesA || 0) + 1
-
-});
-
+"artistA.votes": increment(1)
+}
+);
 
 }
 
@@ -306,19 +257,14 @@ votesA:
 
 if(choice==="B"){
 
-
-await update(
-ref(db,"battle/current"),
+await updateDoc(
+battleRef,
 {
-
-votesB:
-(battle.votesB || 0) + 1
-
-});
-
+"artistB.votes": increment(1)
+}
+);
 
 }
-
 
 
 localStorage.setItem(
@@ -327,16 +273,11 @@ localStorage.setItem(
 );
 
 
-
 document.getElementById("status").innerHTML =
 "✅ Vote Counted";
 
 
-}
+};
 
 
 </script>
-
-
-</body>
-</html>
