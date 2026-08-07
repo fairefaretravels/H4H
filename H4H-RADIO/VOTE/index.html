@@ -238,46 +238,6 @@ LIVE AUDIENCE VOTING
 </div>
 
 
-
-<div class="artist-card">
-
-<img id="photoA" src="" alt="Artist A" style="display:none;">
-
-<h2 id="nameA">ARTIST A</h2>
-
-<button 
-class="vote-btn artist-a"
-id="btnA"
-onclick="vote('A')"
-disabled>
-VOTE
-</button>
-
-<p id="votesA">0 VOTES</p>
-
-</div>
-
-
-<div class="artist-card">
-
-<img id="photoB" src="" alt="Artist B" style="display:none;">
-
-<h2 id="nameB">ARTIST B</h2>
-
-<button 
-class="vote-btn artist-b"
-id="btnB"
-onclick="vote('B')"
-disabled>
-VOTE
-</button>
-
-<p id="votesB">0 VOTES</p>
-
-</div>
-
-
-
 <div id="status" class="status">
 
 WAITING FOR VOTING...
@@ -454,14 +414,12 @@ battles.forEach((id)=>{
 
 window.vote = async function(id,choice){
 
+try{
 
   if(hasVoted(id)){
-
     alert("You already voted in this battle");
     return;
-
   }
-
 
   const battleRef = doc(
     db,
@@ -469,27 +427,27 @@ window.vote = async function(id,choice){
     id
   );
 
-
   const field = choice === "A"
     ? "artistA.votes"
     : "artistB.votes";
 
-
-  await updateDoc(
-    battleRef,
-    {
-      [field]: increment(1)
-    }
-  );
-
+  await updateDoc(battleRef,{
+    [field]: increment(1)
+  });
 
   localStorage.setItem(
     "h4h_vote_" + id,
     choice
   );
 
-
   alert("Vote counted!");
+
+}catch(error){
+
+ console.error(error);
+ alert("Vote failed: " + error.message);
+
+}
 
 };
 
