@@ -410,7 +410,8 @@ battles.forEach((id)=>{
 
 });
 
-
+window.vote = async function(id,choice){
+  
 
 window.vote = async function(id,choice){
 
@@ -451,5 +452,36 @@ try{
 
 };
 
+window.vote = async function(id,choice){
 
+try{
+
+console.log("Voting:", id, choice);
+
+const battleRef = doc(
+  db,
+  "h4h_battle_for_the_crown",
+  id
+);
+
+const field = choice === "A"
+? "artistA.votes"
+: "artistB.votes";
+
+console.log("Updating:", field);
+
+await updateDoc(battleRef,{
+  [field]: increment(1)
+});
+
+alert("Vote counted!");
+
+}catch(e){
+
+console.error("VOTE ERROR:", e);
+alert(e.message);
+
+}
+
+};
 </script>
