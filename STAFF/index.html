@@ -1368,11 +1368,23 @@ window.startVote = async function(){
 window.closeVote = async function(){
 
 
-  await updateDoc(getBattleRef(),{
+  window.closeVote = async function(){
 
-    status:"closed"
+try{
 
-  });
+await setDoc(getBattleRef(),{
+status:"closed"
+},{merge:true});
+
+console.log("Voting closed");
+
+}catch(err){
+
+alert("Close error: " + err.message);
+
+}
+
+};
 
 
   console.log("Voting closed for " + document.getElementById('battleSelect').value);
