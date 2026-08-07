@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIT FOR HIT BATTLE | PAY VIBE VOTE</title>
+<link rel="icon" type="image/png" href="H4Hpromo.PNG">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --near-black:#141414;
+    --red:#e50914;
+    --red-dim:#8b060d;
+    --gray:#b3b3b3;
+    --white:#f5f5f1;
+    --display: 'Bebas Neue', Impact, sans-serif;
+    --body: 'Inter', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--black);
+    color:var(--white);
+    font-family:var(--body);
+    overflow-x:hidden;
+  }
+
+  /* ---------- INTRO / TA-DUM ---------- */
+  .intro{
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation: fadeOutIntro 0.8s ease forwards;
+    animation-delay:2.4s;
+  }
+  .intro-bars{
+    position:absolute;
+    inset:0;
+    display:flex;
+  }
+  .intro-bars span{
+    flex:1;
+    background:var(--red);
+    transform:scaleY(0);
+    transform-origin:bottom;
+    animation: barRise 0.5s cubic-bezier(.7,0,.3,1) forwards;
+  }
+  .intro-bars span:nth-child(1){animation-delay:0s;}
+  .intro-bars span:nth-child(2){animation-delay:.06s;}
+  .intro-bars span:nth-child(3){animation-delay:.12s;}
+  .intro-bars span:nth-child(4){animation-delay:.18s;}
+  .intro-bars span:nth-child(5){animation-delay:.24s;}
+  .intro-title{
+    position:relative;
+    z-index:2;
+    font-family:var(--display);
+    letter-spacing:6px;
+    font-size:clamp(38px,9vw,90px);
+    color:#000;
+    opacity:0;
+    animation: introTitleIn .5s ease forwards;
+    animation-delay:.9s;
+    text-align:center;
+  }
+  @keyframes barRise{
+    0%{transform:scaleY(0);}
+    50%{transform:scaleY(1);}
+    100%{transform:scaleY(0);transform-origin:top;}
+  }
+  @keyframes introTitleIn{
+    0%{opacity:0; transform:scale(.85);}
+    40%{opacity:1; transform:scale(1.05);}
+    100%{opacity:1; transform:scale(1);}
+  }
+  @keyframes fadeOutIntro{
+    to{opacity:0; visibility:hidden;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    width:100%;
+    height:92vh;
+    min-height:520px;
+    overflow:hidden;
+  }
+  .hero-slide{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center 20%;
+    opacity:0;
+    transform:scale(1.08);
+    transition:opacity 1.2s ease;
+  }
+  .hero-slide.active{
+    opacity:1;
+    animation: kenburns 8s ease forwards;
+  }
+  @keyframes kenburns{
+    from{transform:scale(1.08);}
+    to{transform:scale(1);}
+  }
+  .hero-scrim-bottom{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg, var(--black) 4%, rgba(10,10,10,0.55) 32%, rgba(10,10,10,0) 62%);
+  }
+  .hero-scrim-side{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 70%);
+  }
+  .hero-content{
+    position:absolute;
+    left:5%;
+    right:5%;
+    bottom:9%;
+    max-width:640px;
+    z-index:3;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:#fff;
+    font-family:var(--display);
+    letter-spacing:2px;
+    font-size:15px;
+    padding:5px 12px 3px;
+    border-radius:3px;
+    margin-bottom:14px;
+  }
+  .hero-title{
+    font-family:var(--display);
+    font-size:clamp(40px,8vw,88px);
+    line-height:0.95;
+    letter-spacing:1px;
+    margin:0 0 10px;
+    text-shadow:0 4px 24px rgba(0,0,0,.6);
+  }
+  .hero-sub{
+    color:var(--gray);
+    font-size:clamp(14px,2vw,17px);
+    margin:0 0 20px;
+    max-width:520px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .hero-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 26px;
+    border-radius:4px;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+  }
+  .hero-btn.primary{
+    background:#fff;
+    color:#000;
+  }
+  .hero-btn.primary:hover{background:#d9d9d9;}
+  .hero-btn.secondary{
+    background:rgba(109,109,110,0.55);
+    color:#fff;
+    backdrop-filter:blur(4px);
+  }
+  .hero-btn.secondary:hover{background:rgba(109,109,110,0.35);}
+
+  .hero-dots{
+    position:absolute;
+    z-index:3;
+    right:5%;
+    bottom:9%;
+    display:flex;
+    gap:8px;
+  }
+  .hero-dots button{
+    width:34px;
+    height:4px;
+    border:none;
+    background:rgba(255,255,255,0.35);
+    cursor:pointer;
+    padding:0;
+    border-radius:2px;
+  }
+  .hero-dots button.active{background:var(--red);}
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-label{
+    font-family:var(--display);
+    letter-spacing:1px;
+    font-size:clamp(22px,3.5vw,32px);
+    margin:48px 5% 4px;
+  }
+  .section-label span{color:var(--red);}
+  .section-caption{
+    margin:0 5% 22px;
+    color:var(--gray);
+    font-size:14px;
+  }
+
+  /* ---------- WINNERS ROW ---------- */
+  .winners-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    padding:0 5% 10px;
+  }
+  .winner-card{
+    position:relative;
+    border-radius:8px;
+    overflow:hidden;
+    aspect-ratio:2/3;
+    background:#111;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    transition:transform .3s ease;
+  }
+  .winner-card:hover{transform:translateY(-6px) scale(1.02);}
+  .winner-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .winner-scrim{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.92) 100%);
+  }
+  .winner-badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--red);
+    font-family:var(--display);
+    letter-spacing:1px;
+    font-size:12px;
+    padding:4px 9px 2px;
+    border-radius:3px;
+  }
+  .winner-name{
+    position:absolute;
+    left:12px;
+    right:12px;
+    bottom:14px;
+    font-family:var(--display);
+    font-size:clamp(20px,3vw,26px);
+    letter-spacing:0.5px;
+    line-height:1;
+  }
+  .winner-tag{
+    position:absolute;
+    left:12px;
+    bottom:0px;
+    font-size:11px;
+    color:var(--gray);
+    letter-spacing:1px;
+  }
+
+  /* ---------- ACTIONS ---------- */
+  .actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    justify-content:center;
+    padding:44px 5% 60px;
+  }
+  .btn{
+    display:inline-block;
+    padding:16px 42px;
+    background:var(--red);
+    color:#fff;
+    font-family:var(--display);
+    letter-spacing:2px;
+    font-size:20px;
+    text-decoration:none;
+    border-radius:4px;
+    box-shadow:0 0 22px rgba(229,9,20,.45);
+    transition:background .2s ease, transform .15s ease, box-shadow .2s ease;
+  }
+  .btn:hover{
+    background:#fff;
+    color:var(--red);
+    transform:translateY(-2px);
+    box-shadow:0 0 28px rgba(229,9,20,.7);
+  }
+  .btn-donate{
+    background:#1db954;
+    box-shadow:0 0 22px rgba(29,185,84,.45);
+  }
+  .btn-donate:hover{
+    background:#fff;
+    color:#1db954;
+    box-shadow:0 0 28px rgba(29,185,84,.7);
+  }
+  .btn-cash{
+    background:#00c244;
+    box-shadow:0 0 22px rgba(0,194,68,.45);
+  }
+  .btn-cash:hover{
+    background:#fff;
+    color:#00c244;
+    box-shadow:0 0 28px rgba(0,194,68,.7);
+  }
+
+  footer{
+    text-align:center;
+    color:#555;
+    font-size:12px;
+    padding-bottom:30px;
+    letter-spacing:1px;
+  }
+
+  @media (max-width:680px){
+    .winners-row{grid-template-columns:repeat(3,1fr); gap:8px;}
+    .hero{height:78vh;}
+    .hero-content{bottom:14%;}
+    .hero-dots{bottom:14%;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-slide.active{animation:none;}
+    .intro{animation:none; display:none;}
+    .intro-bars span{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="intro" id="introScreen" aria-hidden="true">
+  <div class="intro-bars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="intro-title">HIT&nbsp;FOR&nbsp;HIT</div>
+</div>
+
+<section class="hero" aria-label="Battle 1 winners">
+  <div class="hero-slide active" style="background-image:url('Ivonna.jpg')" data-name="IVONNA PEARL"></div>
+  <div class="hero-slide" style="background-image:url('Solidfam.jpg')" data-name="SOLIDFAM LOUIE"></div>
+  <div class="hero-slide" style="background-image:url('CoCo.jpg')" data-name="COCO THE QUEEN"></div>
+
+  <div class="hero-scrim-side"></div>
+  <div class="hero-scrim-bottom"></div>
+
+  <div class="hero-content">
+    <span class="eyebrow">Battle 1 &middot; Winner</span>
+    <h1 class="hero-title" id="heroTitle">IVONNA PEARL</h1>
+    <p class="hero-sub">Three battles. One stage. She took Battle 1. Vote to decide who takes the next round of HIT FOR HIT.</p>
+    <div class="hero-actions">
+      <a class="hero-btn primary" href="H4H-RADIO/VOTE/">&#9654; Vote Now</a>
+      <a class="hero-btn secondary" href="H4H-RADIO/">More Info</a>
+    </div>
+  </div>
+
+  <div class="hero-dots" id="heroDots">
+    <button class="active" data-index="0" aria-label="Ivonna Pearl"></button>
+    <button data-index="1" aria-label="Solidfam Louie"></button>
+    <button data-index="2" aria-label="Coco The Queen"></button>
+  </div>
+</section>
+
+<h2 class="section-label">Battle 1 <span>Winners</span></h2>
+<p class="section-caption">The three artists who came out on top of the first round.</p>
+
+<div class="winners-row">
+  <div class="winner-card">
+    <img src="Ivonna.jpg" alt="Ivonna Pearl">
+    <div class="winner-scrim"></div>
+    <div class="winner-badge">Winner</div>
+    <div class="winner-name">IVONNA<br>PEARL</div>
+  </div>
+  <div class="winner-card">
+    <img src="Solidfam.jpg" alt="Solidfam Louie">
+    <div class="winner-scrim"></div>
+    <div class="winner-badge">Winner</div>
+    <div class="winner-name">SOLIDFAM<br>LOUIE</div>
+  </div>
+  <div class="winner-card">
+    <img src="CoCo.jpg" alt="Coco The Queen">
+    <div class="winner-scrim"></div>
+    <div class="winner-badge">Winner</div>
+    <div class="winner-name">COCO THE<br>QUEEN</div>
+  </div>
+</div>
+
+<div class="actions">
+  <a class="btn" href="H4H-RADIO/VOTE/">VOTE</a>
+  <a class="btn" href="H4H-RADIO/">ENTER</a>
+  <a class="btn btn-donate" href="https://www.paypal.com/ncp/payment/7WLWBFT93HBLA" target="_blank" rel="noopener">DONATE</a>
+  <a class="btn btn-cash" href="https://cash.app/$MOREFIRE" target="_blank" rel="noopener">CASH APP</a>
+</div>
+
+<footer>HIT FOR HIT &middot; PAY VIBE VOTE</footer>
+
+<script>
+  const slides = document.querySelectorAll(".hero-slide");
+  const dots = document.querySelectorAll(".hero-dots button");
+  const heroTitle = document.getElementById("heroTitle");
+  let current = 0;
+
+  function goTo(index){
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current = index;
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+    heroTitle.textContent = slides[current].dataset.name;
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => goTo(parseInt(dot.dataset.index)));
+  });
+
+  setInterval(() => {
+    goTo((current + 1) % slides.length);
+  }, 5000);
+
+  // remove intro overlay from DOM after animation so it never blocks interaction
+  const intro = document.getElementById("introScreen");
+  setTimeout(() => { intro.style.display = "none"; }, 3300);
+</script>
+
+</body>
+</html>
