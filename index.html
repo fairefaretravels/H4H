@@ -328,18 +328,36 @@
     letter-spacing:1px;
   }
 
-  @media (max-width:680px){
-    .winners-row{grid-template-columns:repeat(3,1fr); gap:8px;}
-    .hero{height:78vh;}
-    .hero-content{bottom:14%;}
-    .hero-dots{bottom:14%;}
+@media(max-width:680px){
+  .hero{
+    height:70vh;
+    min-height:460px;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .hero-slide.active{animation:none;}
-    .intro{animation:none; display:none;}
-    .intro-bars span{animation:none;}
+  .hero-title{
+    font-size:clamp(42px,10vw,64px);
   }
+
+  .hero-sub{
+    font-size:14px;
+    line-height:1.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-slide.active{
+    animation:none;
+  }
+
+  .intro{
+    animation:none;
+    display:none;
+  }
+
+  .intro-bars span{
+    animation:none;
+  }
+}
 </style>
 </head>
 <body>
