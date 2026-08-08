@@ -555,10 +555,11 @@ footer p {
 /* =========================================
    TEXT SELECTION
    ========================================= */
-::selection {
+:::selection {
   background: var(--crimson);
   color: var(--bone);
 }
+</style>
 </head>
 <body>
 
@@ -1125,13 +1126,12 @@ footer p {
 
 </footer>
 
-</body>
-
 <script>
   const nav = document.getElementById('siteNav');
+
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive:true });
+  }, { passive: true });
 </script>
 
 </body>
