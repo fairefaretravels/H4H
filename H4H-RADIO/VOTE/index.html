@@ -264,9 +264,9 @@ import {
   doc,
   onSnapshot,
   updateDoc,
-  increment
+  increment,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyCNdyRTEynhQTm4BqspOxpOaC8twHeod6w",
@@ -409,79 +409,82 @@ battles.forEach((id)=>{
 
 
 });
-
-window.vote = async function(id,choice){
   
 
-window.vote = async function(id,choice){
 
-try{
 
-  if(hasVoted(id)){
-    alert("You already voted in this battle");
-    return;
+window.vote = async function(id, choice) {
+
+  try {
+
+    console.log("Voting:", id, choice);
+
+    /* Prevent duplicate voting on this device */
+    if (hasVoted(id)) {
+      alert("You have already voted in this battle.");
+      return;
+    }
+
+    /* Get the battle document */
+    const battleRef = doc(
+      db,
+      "h4h_battle_for_the_crown",
+      id
+    );
+
+    /* Check that the battle still exists */
+    const snap = await getDoc(battleRef);
+
+    if (!snap.exists()) {
+      alert("This battle could not be found.");
+      return;
+    }
+
+    const data = snap.data();
+
+    /* Make sure voting is currently live */
+    if (data.status !== "live") {
+      alert("Voting is currently closed.");
+      return;
+    }
+
+    /* Determine which artist receives the vote */
+    const field =
+      choice === "A"
+        ? "artistA.votes"
+        : "artistB.votes";
+
+    console.log("Updating:", field);
+
+    /* Add one vote */
+    await updateDoc(battleRef, {
+      [field]: increment(1)
+    });
+
+    /* Remember that this device voted */
+    localStorage.setItem(
+      "h4h_voted_" + id,
+      "true"
+    );
+
+    alert("Vote counted!");
+
+    /* Re-render the battle */
+    const updatedSnap = await getDoc(battleRef);
+
+    if (updatedSnap.exists()) {
+      renderBattle(id, updatedSnap.data());
+    }
+
+  } catch (e) {
+
+    console.error("VOTE ERROR:", e);
+
+    alert(
+      "Your vote could not be submitted. Please try again."
+    );
+
   }
-
-  const battleRef = doc(
-    db,
-    "h4h_battle_for_the_crown",
-    id
-  );
-
-  const field = choice === "A"
-    ? "artistA.votes"
-    : "artistB.votes";
-
-  await updateDoc(battleRef,{
-    [field]: increment(1)
-  });
-
-  localStorage.setItem(
-    "h4h_vote_" + id,
-    choice
-  );
-
-  alert("Vote counted!");
-
-}catch(error){
-
- console.error(error);
- alert("Vote failed: " + error.message);
-
-}
-
-};
-
-window.vote = async function(id,choice){
-
-try{
-
-console.log("Voting:", id, choice);
-
-const battleRef = doc(
-  db,
-  "h4h_battle_for_the_crown",
-  id
-);
-
-const field = choice === "A"
-? "artistA.votes"
-: "artistB.votes";
-
-console.log("Updating:", field);
-
-await updateDoc(battleRef,{
-  [field]: increment(1)
-});
-
-alert("Vote counted!");
-
-}catch(e){
-
-console.error("VOTE ERROR:", e);
-alert(e.message);
-
-}
 
 };
 </script>
