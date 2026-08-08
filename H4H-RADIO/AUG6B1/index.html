@@ -323,14 +323,16 @@
 .artist-card .tag {
   margin-top: 20px;
 }
-/* =========================================
+//* =========================================
    SPOTLIGHT MEDIA
    ========================================= */
+
 .spotlight-visual {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
+
 .spotlight-visual img,
 .spotlight-visual video {
   position: absolute;
@@ -342,7 +344,9 @@
   object-fit: cover;
   object-position: center;
 }
-.spotlight-visual::before {
+
+/* Dark media overlay */
+.spotlight-visual::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -356,9 +360,23 @@
       rgba(0, 0, 0, 0.08) 100%
     );
 }
+
+/* Crowd Pick label */
+.spotlight-visual::before {
+  content: "CROWD PICK";
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+}
+
 .spotlight-visual-tag {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   margin-top: auto;
 }
 /* =========================================
