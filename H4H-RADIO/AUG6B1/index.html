@@ -252,10 +252,9 @@
   .format-q{ font-family:var(--font-display); font-size:18px; letter-spacing:0.5px; text-transform:uppercase; color:var(--gold); }
   .format-a{ color:var(--grey); font-size:15px; line-height:1.65; max-width:560px; }
 
-  //* =========================================
+/* =========================================
    ROAD TO THE CROWN / STORYLINE
    ========================================= */
-
 .storyline {
   background: linear-gradient(
     180deg,
@@ -263,30 +262,29 @@
     var(--black-2) 100%
   );
 }
-
 .story-strip {
   margin-top: 50px;
   display: flex;
   gap: 18px;
+  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0 2px 18px;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
 }
-
 .story-card {
   min-width: 250px;
+  width: 250px;
+  flex: 0 0 250px;
   background: var(--black);
   border: 1px solid var(--grey-line);
-  padding: 26px 22px;
-  flex: 0 0 250px;
   box-sizing: border-box;
+  overflow: hidden;
 }
-
 .story-card .tag {
   display: block;
-  margin-bottom: 14px;
+  margin: 26px 22px 14px;
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 1.5px;
@@ -294,67 +292,84 @@
   color: var(--crimson);
   text-transform: uppercase;
 }
-
 .story-card h4 {
-  margin: 0 0 10px;
+  margin: 0 22px 10px;
   font-family: var(--font-display);
   font-size: 19px;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .story-card p {
-  margin: 0;
+  margin: 0 22px 26px;
   color: var(--grey);
   font-size: 13.5px;
   line-height: 1.6;
 }
-
 /* =========================================
    ARTIST PHOTO CARDS
    ========================================= */
-
 .artist-card {
-  padding: 0 0 24px;
-  overflow: hidden;
+  padding: 0 0 1px;
 }
-
 .artist-card img {
   display: block;
   width: 100%;
   height: 280px;
+  margin: 0;
   object-fit: cover;
   object-position: center;
-  margin: 0 0 20px;
 }
-
-.artist-card .tag,
-.artist-card h4,
-.artist-card p {
-  margin-left: 22px;
-  margin-right: 22px;
-}
-
 .artist-card .tag {
-  margin-bottom: 12px;
+  margin-top: 20px;
 }
-
-.artist-card h4 {
-  margin-bottom: 10px;
+/* =========================================
+   SPOTLIGHT MEDIA
+   ========================================= */
+.spotlight-visual {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-
+.spotlight-visual img,
+.spotlight-visual video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.spotlight-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.35) 45%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+}
+.spotlight-visual-tag {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+}
 /* =========================================
    UP NEXT — NETFLIX STYLE CARD
    ========================================= */
-
 .upnext {
   padding: 100px 5% 120px;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
 }
-
 .upnext-card {
   width: 100%;
   max-width: 900px;
@@ -367,27 +382,23 @@
   align-items: center;
   box-sizing: border-box;
 }
-
 .ring-wrap {
   position: relative;
   width: 130px;
   height: 130px;
   flex-shrink: 0;
 }
-
 .ring-wrap svg {
   display: block;
   width: 130px;
   height: 130px;
   transform: rotate(-90deg);
 }
-
 .ring-bg {
   fill: none;
   stroke: var(--grey-line);
   stroke-width: 4;
 }
-
 .ring-fg {
   fill: none;
   stroke: var(--crimson);
@@ -396,7 +407,6 @@
   stroke-dasharray: 345;
   stroke-dashoffset: 80;
 }
-
 .ring-label {
   position: absolute;
   inset: 0;
@@ -407,20 +417,17 @@
   font-family: var(--font-mono);
   text-align: center;
 }
-
 .ring-label .num {
   color: var(--bone);
   font-size: 22px;
   font-weight: 500;
 }
-
 .ring-label .txt {
   color: var(--grey);
   font-size: 9px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-
 .upnext-eyebrow {
   margin-bottom: 10px;
   font-family: var(--font-mono);
@@ -429,7 +436,6 @@
   color: var(--gold);
   text-transform: uppercase;
 }
-
 .upnext-title {
   margin: 0 0 14px;
   font-family: var(--font-display);
@@ -438,7 +444,6 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .upnext-desc {
   max-width: 480px;
   margin: 0 0 20px;
@@ -446,13 +451,11 @@
   font-size: 15px;
   line-height: 1.7;
 }
-
 .upnext-bullets {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
-
 .pill {
   padding: 6px 12px;
   border: 1px solid var(--grey-line);
@@ -462,11 +465,9 @@
   font-size: 11px;
   letter-spacing: 0.5px;
 }
-
 /* =========================================
    FOOTER
    ========================================= */
-
 footer {
   padding: 44px 5% 60px;
   border-top: 1px solid var(--grey-line);
@@ -477,49 +478,60 @@ footer {
   gap: 16px;
   box-sizing: border-box;
 }
-
 .foot-logo {
   color: var(--grey);
   font-family: var(--font-display);
   font-size: 14px;
   letter-spacing: 2px;
 }
-
 .foot-logo span {
   color: var(--crimson);
 }
-
 footer p {
   color: var(--grey-line);
   font-family: var(--font-mono);
   font-size: 11.5px;
   letter-spacing: 0.5px;
 }
-
 /* =========================================
    MOBILE
    ========================================= */
-
+@media (max-width: 860px) {
+  .spotlight {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .format-row {
+    grid-template-columns: 40px 1fr;
+  }
+  .format-row .format-fill {
+    display: none;
+  }
+}
 @media (max-width: 640px) {
-
   .story-strip {
     gap: 14px;
     margin-top: 35px;
+    padding-bottom: 16px;
   }
-
   .story-card {
     min-width: 245px;
+    width: 245px;
     flex-basis: 245px;
   }
-
   .artist-card img {
     height: 300px;
   }
-
+  .spotlight {
+    gap: 35px;
+  }
+  .spotlight-visual {
+    aspect-ratio: 4 / 5;
+  }
   .upnext {
     padding: 70px 5% 90px;
   }
-
   .upnext-card {
     grid-template-columns: 1fr;
     gap: 25px;
@@ -527,33 +539,26 @@ footer p {
     text-align: center;
     justify-items: center;
   }
-
   .upnext-desc {
     margin-left: auto;
     margin-right: auto;
   }
-
   .upnext-bullets {
     justify-content: center;
   }
-
   footer {
     padding: 38px 5% 50px;
     text-align: center;
     justify-content: center;
   }
 }
-
 /* =========================================
    TEXT SELECTION
    ========================================= */
-
 ::selection {
   background: var(--crimson);
   color: var(--bone);
 }
-  
-</style>
 </head>
 <body>
 
