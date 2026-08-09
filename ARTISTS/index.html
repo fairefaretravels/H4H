@@ -139,7 +139,53 @@ document.getElementById("status").innerHTML =
 }
 
 
+// Save state periodically
+const audio = document.getElementById('radioAudio');
+function saveRadioState(){
+  if(!QUEUE.length) return;
+  localStorage.setItem('h4h_radio_state', JSON.stringify({
+    url: QUEUE[queueIndex].url,
+    name: QUEUE[queueIndex].name,
+    time: audio.currentTime,
+    volume: audio.volume,
+    muted: audio.muted,
+    playing: playing,
+    queueIndex: queueIndex,
+    queue: QUEUE // persist the shuffled order too
+  }));
+}
+audio.addEventListener('timeupdate', () => {
+  // throttle: only save every ~2s
+  if (Math.floor(audio.currentTime) % 2 === 0) saveRadioState();
+});
+window.addEventListener('beforeunload', saveRadioState);
 
+// On load, try to resume instead of starting fresh
+async function radioInit(){
+  TRACKS = await fetchTracks();
+  const saved = JSON.parse(localStorage.getItem('h4h_radio_state') || 'null');
+
+  if(saved && saved.queue && saved.queue.length){
+    QUEUE = saved.queue;
+    queueIndex = saved.queueIndex;
+    audio.src = saved.url;
+    audio.volume = saved.volume;
+    audio.muted = saved.muted;
+    audio.currentTime = saved.time;
+    document.getElementById('nowTitle').textContent = saved.name;
+    if(saved.playing){
+      audio.play().then(()=>{
+        playing = true;
+        document.getElementById('tuneBtn').classList.add('on');
+        document.getElementById('tuneLabel').textContent = 'STOP';
+      }).catch(()=>{ /* autoplay blocked until user interacts */ });
+    }
+  } else {
+    QUEUE = shuffle(TRACKS);
+  }
+  updateRadioUI();
+  audio.addEventListener('ended', advanceTrack);
+}
 </script>
 
 
