@@ -535,4 +535,349 @@ async function radioInit(){
   updateRadioUI();
   audio.addEventListener('ended', advanceTrack);
 }
+
+  <div class="card">
+
+  <h2>Tournament Flow</h2>
+
+  <a class="back" href="../FLOW-CHART/">
+    BACK TO BATTLEGROUND
+  </a>
+
+</div>
+
+<!-- H4H RADIO AUDIO -->
+<audio id="radioAudio" preload="auto"></audio>
+
+<script>
+/* =========================================
+   H4H RADIO AUDIO PLAYER
+   ========================================= */
+
+const audio = document.getElementById('radioAudio');
+
+let TRACKS = [];
+let QUEUE = [];
+let queueIndex = 0;
+let playing = false;
+
+
+/* -----------------------------------------
+   GET MUSIC
+   ----------------------------------------- */
+
+async function fetchTracks() {
+  try {
+
+    const response = await fetch(
+      '../STAFF/tracks.json',
+      { cache: 'no-store' }
+    );
+
+    if (!response.ok) {
+      throw new Error('Unable to load tracks');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+
+    console.error('Radio track loading error:', error);
+
+    return [];
+  }
+}
+
+
+/* -----------------------------------------
+   SHUFFLE
+   ----------------------------------------- */
+
+function shuffle(array) {
+
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+
+/* -----------------------------------------
+   UPDATE RADIO UI
+   ----------------------------------------- */
+
+function updateRadioUI() {
+
+  const title = document.getElementById('nowTitle');
+
+  if (title && QUEUE.length) {
+
+    title.textContent =
+      QUEUE[queueIndex]?.name || 'Stream Starting';
+  }
+}
+
+
+/* -----------------------------------------
+   SAVE RADIO STATE
+   ----------------------------------------- */
+
+function saveRadioState() {
+
+  if (!QUEUE.length) return;
+
+  localStorage.setItem(
+    'h4h_radio_state',
+    JSON.stringify({
+
+      url: QUEUE[queueIndex]?.url,
+
+      name: QUEUE[queueIndex]?.name,
+
+      time: audio.currentTime,
+
+      volume: audio.volume,
+
+      muted: audio.muted,
+
+      playing: playing,
+
+      queueIndex: queueIndex,
+
+      queue: QUEUE
+
+    })
+  );
+}
+
+
+/* -----------------------------------------
+   LOAD / RESUME RADIO
+   ----------------------------------------- */
+
+async function radioInit() {
+
+  TRACKS = await fetchTracks();
+
+  const saved = JSON.parse(
+    localStorage.getItem('h4h_radio_state') || 'null'
+  );
+
+
+  /* Restore previous session */
+
+  if (
+    saved &&
+    saved.queue &&
+    saved.queue.length
+  ) {
+
+    QUEUE = saved.queue;
+
+    queueIndex =
+      saved.queueIndex || 0;
+
+    audio.src =
+      saved.url || QUEUE[queueIndex].url;
+
+    audio.volume =
+      saved.volume ?? 1;
+
+    audio.muted =
+      saved.muted ?? false;
+
+    audio.addEventListener(
+      'loadedmetadata',
+      () => {
+
+        if (saved.time) {
+
+          try {
+            audio.currentTime = saved.time;
+          } catch (error) {
+            console.log('Unable to restore playback position');
+          }
+        }
+
+      },
+      { once: true }
+    );
+
+
+    const title =
+      document.getElementById('nowTitle');
+
+    if (title) {
+
+      title.textContent =
+        saved.name || 'Stream Starting';
+    }
+
+
+    /* Attempt resume */
+
+    if (saved.playing) {
+
+      audio.play()
+        .then(() => {
+
+          playing = true;
+
+          const tuneBtn =
+            document.getElementById('tuneBtn');
+
+          const tuneLabel =
+            document.getElementById('tuneLabel');
+
+          if (tuneBtn) {
+            tuneBtn.classList.add('on');
+          }
+
+          if (tuneLabel) {
+            tuneLabel.textContent = 'STOP';
+          }
+
+        })
+        .catch(() => {
+
+          /*
+             Browser autoplay protection.
+             User must press Tune In.
+          */
+
+          console.log(
+            'Autoplay blocked — waiting for user interaction.'
+          );
+
+        });
+    }
+
+
+  } else {
+
+    /* New radio session */
+
+    QUEUE = shuffle(TRACKS);
+
+  }
+
+
+  updateRadioUI();
+
+
+  /* Prevent duplicate ended listeners */
+
+  audio.removeEventListener(
+    'ended',
+    advanceTrack
+  );
+
+  audio.addEventListener(
+    'ended',
+    advanceTrack
+  );
+}
+
+
+/* -----------------------------------------
+   NEXT TRACK
+   ----------------------------------------- */
+
+function advanceTrack() {
+
+  if (!QUEUE.length) return;
+
+  queueIndex++;
+
+  if (queueIndex >= QUEUE.length) {
+
+    queueIndex = 0;
+  }
+
+  const track =
+    QUEUE[queueIndex];
+
+  if (!track) return;
+
+  audio.src = track.url;
+
+  audio.currentTime = 0;
+
+  const title =
+    document.getElementById('nowTitle');
+
+  if (title) {
+
+    title.textContent =
+      track.name || 'Stream Starting';
+  }
+
+  audio.play()
+    .then(() => {
+
+      playing = true;
+
+      saveRadioState();
+
+    })
+    .catch(() => {
+
+      playing = false;
+
+    });
+}
+
+
+/* -----------------------------------------
+   PERIODIC SAVE
+   ----------------------------------------- */
+
+let lastSavedSecond = -1;
+
+audio.addEventListener(
+  'timeupdate',
+  () => {
+
+    const second =
+      Math.floor(audio.currentTime);
+
+    if (
+      second % 2 === 0 &&
+      second !== lastSavedSecond
+    ) {
+
+      lastSavedSecond = second;
+
+      saveRadioState();
+    }
+  }
+);
+
+
+/* -----------------------------------------
+   SAVE WHEN LEAVING PAGE
+   ----------------------------------------- */
+
+window.addEventListener(
+  'beforeunload',
+  saveRadioState
+);
+
+
+/* -----------------------------------------
+   START RADIO
+   ----------------------------------------- */
+
+radioInit();
+
+</script>
+
+</body>
+</html>
 </script>
