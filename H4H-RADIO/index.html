@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIT FOR HIT BATTLES™ RADIO</title>
+<meta name="description"
+content="HIT FOR HIT BATTLES™ — music, battles, independent artists, radio and entertainment powered by STV Radiomeltdown.">
+<meta property="og:title" content="HIT FOR HIT BATTLES™">
+<meta property="og:description" content="The song-for-song battle for the crown.">
+<meta property="og:image" content="https://radiomeltdown.online/STAFF/H4Hpromo.PNG">
+<meta property="og:url" content="https://radiomeltdown.online">
+<link rel="icon" type="image/png" href="/STAFF/H4Hpromo.PNG">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#050505;
+  --panel:#101010;
+  --panel2:#161616;
+  --line:#292929;
+  --red:#d7192d;
+  --red-dark:#850d18;
+  --white:#fff;
+  --gray:#999;
+  --display:'Bebas Neue',Impact,sans-serif;
+  --script:'Permanent Marker',cursive;
+  --body:'Inter',Arial,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --serif:'Playfair Display',serif;
+}
+*{
+  box-sizing:border-box;
+}
+html,
+body{
+  margin:0;
+  padding:0;
+  background:#000;
+  color:#fff;
+  font-family:var(--body);
+  overflow-x:hidden;
+}
+body{
+  min-height:100vh;
+}
+a{
+  color:inherit;
+}
+/* ================= GRAIN ================= */
+.grain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  opacity:.035;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.8) 0px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+/* ================= MENU ================= */
+.menu-wrap{
+  position:fixed;
+  top:15px;
+  right:15px;
+  z-index:1000;
+}
+.menu-toggle{
+  background:var(--red);
+  color:#fff;
+  border:0;
+  padding:11px 16px;
+  border-radius:4px;
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.menu-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:48px;
+  width:220px;
+  background:#111;
+  border:1px solid #333;
+  box-shadow:0 20px 50px rgba(0,0,0,.7);
+}
+.menu-dropdown.show{
+  display:block;
+}
+.menu-item{
+  display:block;
+  width:100%;
+  padding:13px;
+  background:none;
+  border:0;
+  border-bottom:1px solid #222;
+  color:#fff;
+  text-decoration:none;
+  text-align:left;
+  font-family:var(--mono);
+  font-size:12px;
+}
+.menu-item:hover{
+  background:#1d1d1d;
+  color:var(--red);
+}
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  width:100%;
+  height:78vh;
+  min-height:500px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  isolation:isolate;
+}
+.hero-slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  transform:scale(1.04);
+  transition:
+    opacity 1.1s ease,
+    transform 6s ease;
+  z-index:0;
+}
+.hero-slide.active{
+  opacity:1;
+  transform:scale(1.08);
+  z-index:1;
+}
+.hero-scrim{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.98) 0%,
+      rgba(0,0,0,.82) 13%,
+      rgba(0,0,0,.38) 30%,
+      rgba(0,0,0,0) 58%
+    );
+}
+.hero-content{
+  position:relative;
+  z-index:3;
+  padding:
+    0 5%
+    42px;
+  max-width:900px;
+  margin:auto auto 0;
+  width:100%;
+  text-align:left;
+}
+.hero-eyebrow{
+  display:inline-block;
+  background:var(--red);
+  padding:6px 12px 4px;
+  border-radius:3px;
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:12px;
+}
+.hero-title{
+  margin:0;
+  font-family:var(--display);
+  font-size:clamp(58px,9vw,120px);
+  line-height:.86;
+  letter-spacing:1px;
+  text-shadow:
+    0 5px 30px rgba(0,0,0,.8);
+}
+.hero-sub{
+  margin:12px 0 20px;
+  color:var(--gray);
+  font-size:15px;
+  line-height:1.5;
+  max-width:620px;
+}
+.hero-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.hero-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 22px;
+  border-radius:4px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+}
+.hero-btn.primary{
+  background:#fff;
+  color:#000;
+}
+.hero-btn.secondary{
+  background:rgba(30,30,30,.75);
+  border:1px solid #555;
+  color:#fff;
+}
+.hero-btn:hover{
+  transform:translateY(-2px);
+}
+/* ================= HERO DOTS ================= */
+.hero-dots{
+  position:absolute;
+  z-index:4;
+  right:5%;
+  bottom:42px;
+  display:flex;
+  gap:7px;
+}
+.hero-dots button{
+  width:30px;
+  height:4px;
+  padding:0;
+  border:0;
+  background:rgba(255,255,255,.3);
+  cursor:pointer;
+}
+.hero-dots button.active{
+  background:var(--red);
+}
+/* ================= SECTION ================= */
+.section{
+  padding:30px 0 10px;
+  background:#000;
+}
+.section-title{
+  margin:0 0 12px;
+  padding:0 5%;
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:2.5px;
+  color:#ddd;
+}
+.section-title span{
+  color:var(--red);
+}
+.section-caption{
+  margin:0 5% 18px;
+  color:#777;
+  font-size:13px;
+}
+/* ================= WINNERS ================= */
+.winner-track{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding:
+    0 5%
+    18px;
+  scroll-snap-type:x proximity;
+  -webkit-overflow-scrolling:touch;
+}
+.winner-track::-webkit-scrollbar{
+  height:0;
+}
+.winner-card{
+  flex:0 0 190px;
+  height:270px;
+  position:relative;
+  overflow:hidden;
+  border-radius:7px;
+  background:#111;
+  border:1px solid #252525;
+  scroll-snap-align:start;
+  transition:
+    transform .25s ease,
+    border-color .25s ease;
+}
+.winner-card:hover{
+  transform:translateY(-5px);
+  border-color:var(--red);
+}
+.winner-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.winner-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.96),
+      rgba(0,0,0,0) 65%
+    );
+}
+.winner-badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:var(--red);
+  padding:5px 9px 3px;
+  border-radius:3px;
+  font-family:var(--display);
+  font-size:13px;
+  letter-spacing:1px;
+}
+.winner-name{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:13px;
+  font-family:var(--display);
+  font-size:27px;
+  line-height:.95;
+}
+/* ================= EVENT ROW ================= */
+.nf-row{
+  padding:25px 0 8px;
+  background:#000;
+}
+.nf-track{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:
+    0 5%
+    15px;
+  -webkit-overflow-scrolling:touch;
+}
+.nf-track::-webkit-scrollbar{
+  height:0;
+}
+.nf-card{
+  flex:0 0 125px;
+  height:175px;
+  border-radius:6px;
+  background-size:cover;
+  background-position:center;
+  border:1px solid #252525;
+  transition:
+    transform .25s ease,
+    border-color .25s ease;
+}
+.nf-card:hover{
+  transform:scale(1.04);
+  border-color:var(--red);
+}
+/* ================= ACTIONS ================= */
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  padding:
+    35px 5%
+    50px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:150px;
+  padding:14px 25px;
+  border-radius:4px;
+  background:var(--red);
+  color:#fff;
+  text-decoration:none;
+  font-family:var(--display);
+  font-size:19px;
+  letter-spacing:2px;
+  box-shadow:
+    0 0 20px
+    rgba(215,25,45,.3);
+}
+.btn:hover{
+  background:#fff;
+  color:var(--red);
+  transform:translateY(-2px);
+}
+.btn-green{
+  background:#19b956;
+}
+.btn-green:hover{
+  color:#19b956;
+}
+/* ================= ARTICLE ================= */
+.static-article{
+  background:#050505;
+  padding:
+    40px 22px
+    15px;
+  text-align:center;
+  border-top:1px solid #1f1f1f;
+  border-bottom:1px solid #1f1f1f;
+}
+.static-masthead{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:3px;
+  color:#888;
+  margin-bottom:18px;
+}
+.static-masthead span{
+  color:var(--red);
+}
+.cover-tag{
+  display:inline-block;
+  background:var(--red);
+  padding:6px 12px 4px;
+  border-radius:3px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:2px;
+}
+.headline{
+  max-width:650px;
+  margin:22px auto 15px;
+  font-family:var(--serif);
+  font-size:clamp(27px,5vw,42px);
+  line-height:1.15;
+}
+.byline{
+  color:#777;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:1.5px;
+  margin-bottom:25px;
+}
+.static-article p{
+  max-width:650px;
+  margin:0 auto 22px;
+  color:#ddd;
+  font-size:16px;
+  line-height:1.7;
+}
+.pullquote{
+  max-width:600px;
+  margin:25px auto;
+  padding:20px;
+  background:#151515;
+  border-top:3px solid var(--red);
+}
+.pullquote p{
+  margin:0 !important;
+  font-family:var(--serif);
+  font-style:italic;
+}
+/* ================= RADIO ================= */
+.radio-wrap{
+  padding:30px 15px;
+  background:#000;
+  display:flex;
+  justify-content:center;
+}
+.radio-card{
+  width:100%;
+  max-width:450px;
+  background:#050505;
+  border:1px solid #333;
+  border-top:4px solid var(--red);
+  border-radius:12px;
+  padding:20px;
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,.8);
+}
+.radio-card h2{
+  margin:0;
+  text-align:center;
+  font-family:var(--display);
+  font-size:36px;
+}
+.radio-sub{
+  text-align:center;
+  color:#888;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:2px;
+}
+.now-playing{
+  margin:18px 0;
+  padding:14px;
+  background:#111;
+  border:1px solid #333;
+  border-radius:8px;
+}
+.now-title{
+  display:block;
+  font-family:var(--display);
+  font-size:21px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.now-sub{
+  color:#888;
+  font-family:var(--mono);
+  font-size:10px;
+}
+.tune-wrap{
+  text-align:center;
+}
+.tune-btn{
+  width:88px;
+  height:88px;
+  border-radius:50%;
+  border:3px solid #fff;
+  background:#000;
+  color:#fff;
+  font-family:var(--display);
+  cursor:pointer;
+}
+.tune-btn.on{
+  background:var(--red);
+  box-shadow:
+    0 0 30px
+    rgba(215,25,45,.65);
+}
+.volume-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-top:18px;
+}
+.volume-row button{
+  height:34px;
+  padding:0 12px;
+  background:#000;
+  border:1px solid #333;
+  color:#fff;
+  border-radius:5px;
+  font-family:var(--mono);
+  font-size:10px;
+}
+.volume-row input{
+  flex:1;
+}
+/* ================= YOUTUBE ================= */
+.youtube-wrap{
+  padding:
+    25px 15px
+    45px;
+  background:#000;
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
+}
+.yt-card{
+  background:#050505;
+  border:1px solid #333;
+  border-top:4px solid var(--red);
+  border-radius:10px;
+  padding:15px;
+}
+.yt-card h2{
+  margin:0 0 3px;
+  text-align:center;
+  font-family:var(--display);
+  font-size:24px;
+}
+.yt-sub{
+  margin:0 0 13px;
+  text-align:center;
+  color:#888;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:2px;
+}
+.yt-frame{
+  position:relative;
+  width:100%;
+  padding-bottom:56.25%;
+  height:0;
+  overflow:hidden;
+  border-radius:7px;
+}
+.yt-frame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+/* ================= FOOTER ================= */
+.site-footer{
+  padding:
+    35px 15px
+    50px;
+  text-align:center;
+  background:#050505;
+  border-top:1px solid #222;
+}
+.footer-mark{
+  font-family:var(--display);
+  font-size:30px;
+  margin-bottom:15px;
+}
+.site-footer a{
+  display:inline-block;
+  padding:9px 15px;
+  border:1px solid #333;
+  border-radius:4px;
+  color:#888;
+  text-decoration:none;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:1px;
+}
+/* ================= TV / DESKTOP ================= */
+@media(min-width:1200px){
+  .hero{
+    height:82vh;
+    min-height:650px;
+  }
+  .hero-content{
+    padding-bottom:55px;
+  }
+  .hero-title{
+    font-size:clamp(75px,8vw,125px);
+  }
+  .winner-card{
+    flex-basis:230px;
+    height:330px;
+  }
+  .nf-card{
+    flex-basis:150px;
+    height:210px;
+  }
+}
+/* ================= MOBILE ================= */
+@media(max-width:680px){
+  .hero{
+    height:70vh;
+    min-height:460px;
+  }
+  .hero-content{
+    padding:
+      0 20px
+      32px;
+  }
+  .hero-title{
+    font-size:clamp(46px,11vw,70px);
+  }
+  .hero-sub{
+    font-size:14px;
+    line-height:1.5;
+  }
+  .hero-dots{
+    right:20px;
+    bottom:32px;
+  }
+  .winner-card{
+    flex-basis:160px;
+    height:235px;
+  }
+  .winner-name{
+    font-size:24px;
+  }
+  .youtube-wrap{
+    grid-template-columns:1fr;
+  }
+  .actions{
+    padding-bottom:35px;
+  }
+}
+/* ================= REDUCED MOTION ================= */
+@media(prefers-reduced-motion:reduce){
+  .hero-slide{
+    transition:none;
+    animation:none;
+  }
+  .hero-slide.active{
+    transform:none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<!-- ================= MENU ================= -->
+<div class="menu-wrap" id="menuWrap">
+  <button
+    class="menu-toggle"
+    onclick="toggleMenu(event)">
+    ☰ MENU
+  </button>
+  <div
+    class="menu-dropdown"
+    id="menuDropdown">
+    <a
+      class="menu-item"
+      href="https://www.instagram.com/hitforhitbattles/"
+      target="_blank"
+      rel="noopener noreferrer">
+      INSTAGRAM
+    </a>
+    <a class="menu-item" href="/FLOW-CHART/">
+      NEXT BATTLE
+    </a>
+    <a class="menu-item" href="/PROMO/">
+      ARTISTS PROMO
+    </a>
+    <a class="menu-item" href="/INFO/">
+      INFO
+    </a>
+    <a class="menu-item" href="/H4H-RADIO/VOTE/">
+      VOTE
+    </a>
+    <a class="menu-item" href="/H4H-RADIO/AUG6B1/">
+      BATTLE 1
+    </a>
+  </div>
+</div>
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      HIT FOR HIT BATTLES™
+    </div>
+    <h1 class="hero-title">
+      ROAD TO THE CROWN
+    </h1>
+    <p class="hero-sub">
+      The song-for-song battle for the next King and Queen.
+    </p>
+    <div class="hero-actions">
+      <a
+        class="hero-btn primary"
+        href="/H4H-RADIO/VOTE/">
+        VOTE NOW
+      </a>
+      <a
+        class="hero-btn secondary"
+        href="/H4H-RADIO/AUG6B1">
+        BATTLE 1
+      </a>
+    </div>
+  </div>
+  <div
+    class="hero-dots"
+    id="heroDots">
+  </div>
+</section>
+<!-- ================= CURRENT WINNERS ================= -->
+<section class="section">
+  <h2 class="section-title">
+    BATTLE 1 <span>WINNERS</span>
+  </h2>
+  <p class="section-caption">
+    These artists advanced from the first qualifier.
+  </p>
+  <div class="winner-track">
+    <div class="winner-card">
+      <img
+        src="Ivonna.jpg"
+        alt="Ivonna Pearl">
+      <div class="winner-overlay"></div>
+      <div class="winner-badge">
+        ADVANCED
+      </div>
+      <div class="winner-name">
+        IVONNA<br>PEARL
+      </div>
+    </div>
+    <div class="winner-card">
+      <img
+        src="Solidfam.jpg"
+        alt="Solidfam Louie">
+      <div class="winner-overlay"></div>
+      <div class="winner-badge">
+        ADVANCED
+      </div>
+      <div class="winner-name">
+        SOLIDFAM<br>LOUIE
+      </div>
+    </div>
+    <div class="winner-card">
+      <img
+        src="CoCo.jpg"
+        alt="Coco The Queen">
+      <div class="winner-overlay"></div>
+      <div class="winner-badge">
+        ADVANCED
+      </div>
+      <div class="winner-name">
+        COCO THE<br>QUEEN
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================= EVENT PHOTOS ================= -->
+<section class="nf-row">
+  <h2 class="section-title">
+    FROM THE <span>EVENT</span>
+  </h2>
+  <div
+    class="nf-track"
+    id="nfTrack">
+  </div>
+</section>
+<!-- ================= ACTIONS ================= -->
+<div class="actions">
+  <a
+    class="btn"
+    href="/H4H-RADIO/VOTE/">
+    VOTE
+  </a>
+  <a
+    class="btn"
+    href="/FLOW-CHART/">
+    ENTER
+  </a>
+  <a
+    class="btn btn-green"
+    href="https://www.paypal.com/ncp/payment/7WLWBFT93HBLA"
+    target="_blank"
+    rel="noopener noreferrer">
+    DONATE
+  </a>
+  <a
+    class="btn btn-green"
+    href="https://cash.app/$MOREFIRE"
+    target="_blank"
+    rel="noopener noreferrer">
+    CASH APP
+  </a>
+</div>
+<!-- ================= STATIC ARTICLE ================= -->
+<section class="static-article">
+  <div class="static-masthead">
+    STV <span>RADIO</span>MELTDOWN · THE STATIC
+  </div>
+  <span class="cover-tag">
+    COVER STORY
+  </span>
+  <h2 class="headline">
+    HIT FOR HIT: The Battle for the Crown Begins
+  </h2>
+  <div class="byline">
+    BY THE STATIC · HIT FOR HIT BATTLES™
+  </div>
+  <p>
+    The stage is set for HIT FOR HIT, a song-for-song competition where independent artists go head-to-head for recognition, respect and the ultimate crown.
+  </p>
+  <blockquote class="pullquote">
+    <p>
+      "Every battle brings the artists one step closer to the crown."
+    </p>
+  </blockquote>
+  <p>
+    Artists defend their records, challenge their opponents and create moments designed to leave an impression on the crowd.
+  </p>
+  <p>
+    From the qualifiers to the final crowning event, every round determines who continues the journey.
+  </p>
+</section>
+<!-- ================= RADIO ================= -->
+<section class="radio-wrap">
+  <div class="radio-card">
+    <h2>
+      HIT FOR HIT RADIO
+    </h2>
+    <p class="radio-sub">
+      ONLINE MIXTAPE
+    </p>
+    <div class="now-playing">
+      <span
+        class="now-title"
+        id="nowTitle">
+        TRACK LOADING
+      </span>
+      <span
+        class="now-sub"
+        id="nowSub">
+        READY
+      </span>
+    </div>
+    <div class="tune-wrap">
+      <button
+        class="tune-btn"
+        id="tuneBtn"
+        onclick="tuneToggle()">
+        <span id="tuneLabel">
+          PLAY
+        </span>
+      </button>
+    </div>
+    <div class="volume-row">
+      <button
+        id="muteBtn"
+        onclick="toggleMute()">
+        MUTE
+      </button>
+      <input
+        id="volumeSlider"
+        type="range"
+        min="0"
+        max="100"
+        value="100"
+        oninput="setVolume(this.value)">
+    </div>
+  </div>
+</section>
+<audio id="radioAudio"></audio>
+<!-- ================= YOUTUBE ================= -->
+<section class="youtube-wrap">
+  <div class="yt-card">
+    <h2>
+      LIVE
+    </h2>
+    <p class="yt-sub">
+      WATCH THE BROADCAST
+    </p>
+    <div class="yt-frame">
+      <iframe
+        src="https://www.youtube.com/embed/live_stream?channel=V_vJXsWjLZvud8JP"
+        title="H4H Live"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+  <div class="yt-card">
+    <h2>
+      PLAYLIST
+    </h2>
+    <p class="yt-sub">
+      HIT FOR HIT YOUTUBE
+    </p>
+    <div class="yt-frame">
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list=PLa9auhfp7FjQ"
+        title="H4H Playlist"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="footer-mark">
+    © HIT 4 HIT BATTLES™
+  </div>
+  <a
+    href="https://radiomeltdown.com/NewsStory">
+    THE STATIC NEWSLETTER
+  </a>
+</footer>
+<script>
+/* ================= EVENT PHOTOS ================= */
+const PHOTOS = [
+  {src:'H4Hpromo.PNG'},
+  {src:'IvonnaLing.PNG'},
+  {src:'Louiefresh.PNG'},
+  {src:'RebelQueen.PNG'},
+  {src:'3vs3.PNG'},
+  {src:'Louie.jpg'}
+];
+let heroIndex = 0;
+const hero =
+  document.getElementById('hero');
+const heroDots =
+  document.getElementById('heroDots');
+const nfTrack =
+  document.getElementById('nfTrack');
+/* ================= HERO ================= */
+function renderHero(){
+  if(!hero || !heroDots) return;
+  document
+    .querySelectorAll('.hero-slide')
+    .forEach(el=>el.remove());
+  PHOTOS.forEach((photo,index)=>{
+    const slide =
+      document.createElement('div');
+    slide.className =
+      'hero-slide' +
+      (index === heroIndex ? ' active' : '');
+    slide.style.backgroundImage =
+      `url("${photo.src}")`;
+    hero.insertBefore(
+      slide,
+      hero.firstChild
+    );
+  });
+  heroDots.innerHTML =
+    PHOTOS.map((photo,index)=>`
+      <button
+        class="${index === heroIndex ? 'active' : ''}"
+        onclick="jumpHero(${index})"
+        aria-label="Event photo ${index + 1}">
+      </button>
+    `).join('');
+}
+/* ================= EVENT ROW ================= */
+function renderEventRow(){
+  if(!nfTrack) return;
+  nfTrack.innerHTML =
+    PHOTOS.map(photo=>`
+      <div
+        class="nf-card"
+        style="background-image:url('${photo.src}')">
+      </div>
+    `).join('');
+}
+/* ================= HERO NAVIGATION ================= */
+function jumpHero(index){
+  if(index < 0 || index >= PHOTOS.length)
+    return;
+  heroIndex = index;
+  renderHero();
+}
+/* ================= AUTO ROTATION ================= */
+setInterval(()=>{
+  heroIndex =
+    (heroIndex + 1) %
+    PHOTOS.length;
+  renderHero();
+},5500);
+/* ================= INITIALIZE ================= */
+renderHero();
+renderEventRow();
+/* ================= MENU ================= */
+function toggleMenu(event){
+  if(event)
+    event.stopPropagation();
+  document
+    .getElementById('menuDropdown')
+    .classList.toggle('show');
+}
+document.addEventListener(
+  'click',
+  function(event){
+    const wrap =
+      document.getElementById('menuWrap');
+    if(
+      wrap &&
+      !wrap.contains(event.target)
+    ){
+      document
+        .getElementById('menuDropdown')
+        .classList.remove('show');
+    }
+  }
+);
+/* ================= RADIO ================= */
+const GITHUB_OWNER =
+  'fairefaretravels';
+const GITHUB_REPO =
+  'H4H';
+const GITHUB_BRANCH =
+  'main';
+const MIXTAPE_PATH =
+  'STAFF';
+const AUDIO_EXT = [
+  'mp3',
+  'wav',
+  'm4a',
+  'ogg',
+  'aac',
+  'flac'
+];
+let TRACKS = [];
+let QUEUE = [];
+let queueIndex = 0;
+let playing = false;
+function shuffle(array){
+  const copy =
+    array.slice();
+  for(
+    let i = copy.length - 1;
+    i > 0;
+    i--
+  ){
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+    [copy[i],copy[j]] =
+      [copy[j],copy[i]];
+  }
+  return copy;
+}
+async function fetchTracks(){
+  try{
+    const response =
+      await fetch(
+        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${MIXTAPE_PATH}?ref=${GITHUB_BRANCH}`
+      );
+    if(!response.ok)
+      throw new Error('GitHub error');
+    const data =
+      await response.json();
+    return data
+      .filter(file =>
+        file.type === 'file' &&
+        AUDIO_EXT.includes(
+          (file.name.split('.').pop() || '')
+          .toLowerCase()
+        )
+      )
+      .map(file=>({
+        name:file.name,
+        url:file.download_url
+      }));
+  }catch(error){
+    console.error(
+      'Radio loading error:',
+      error
+    );
+    return [];
+  }
+}
+async function radioInit(){
+  TRACKS =
+    await fetchTracks();
+  QUEUE =
+    shuffle(TRACKS);
+  updateRadioUI();
+  const audio =
+    document.getElementById(
+      'radioAudio'
+    );
+  audio.addEventListener(
+    'ended',
+    advanceTrack
+  );
+}
+function updateRadioUI(){
+  const title =
+    document.getElementById(
+      'nowTitle'
+    );
+  const sub =
+    document.getElementById(
+      'nowSub'
+    );
+  if(!TRACKS.length){
+    title.textContent =
+      'NO TRACKS AVAILABLE';
+    sub.textContent =
+      'CHECK BACK SOON';
+  }else{
+    title.textContent =
+      'HIT FOR HIT MIX';
+    sub.textContent =
+      TRACKS.length +
+      ' TRACKS READY';
+  }
+}
+async function playCurrent(){
+  if(!QUEUE.length){
+    QUEUE =
+      shuffle(TRACKS);
+    queueIndex = 0;
+  }
+  if(!QUEUE.length){
+    updateRadioUI();
+    return;
+  }
+  const track =
+    QUEUE[queueIndex];
+  const audio =
+    document.getElementById(
+      'radioAudio'
+    );
+  audio.src =
+    track.url;
+  document.getElementById(
+    'nowTitle'
+  ).textContent =
+    track.name;
+  document.getElementById(
+    'nowSub'
+  ).textContent =
+    'PLAYING NOW';
+  try{
+    await audio.play();
+    playing = true;
+    document
+      .getElementById('tuneBtn')
+      .classList.add('on');
+    document
+      .getElementById('tuneLabel')
+      .textContent =
+      'STOP';
+  }catch(error){
+    console.error(
+      'Playback error:',
+      error
+    );
+  }
+}
+function advanceTrack(){
+  queueIndex++;
+  if(
+    queueIndex >= QUEUE.length
+  ){
+    QUEUE =
+      shuffle(TRACKS);
+    queueIndex = 0;
+  }
+  playCurrent();
+}
+function tuneToggle(){
+  const audio =
+    document.getElementById(
+      'radioAudio'
+    );
+  if(playing){
+    audio.pause();
+    playing = false;
+    document
+      .getElementById('tuneBtn')
+      .classList.remove('on');
+    document
+      .getElementById('tuneLabel')
+      .textContent =
+      'PLAY';
+    return;
+  }
+  playCurrent();
+}
+function setVolume(value){
+  const audio =
+    document.getElementById(
+      'radioAudio'
+    );
+  audio.volume =
+    value / 100;
+}
+function toggleMute(){
+  const audio =
+    document.getElementById(
+      'radioAudio'
+    );
+  audio.muted =
+    !audio.muted;
+  document.getElementById(
+    'muteBtn'
+  ).textContent =
+    audio.muted
+      ? 'UNMUTE'
+      : 'MUTE';
+}
+window.tuneToggle =
+  tuneToggle;
+window.setVolume =
+  setVolume;
+window.toggleMute =
+  toggleMute;
+window.jumpHero =
+  jumpHero;
+radioInit();
+</script>
+</body>
+</html>
