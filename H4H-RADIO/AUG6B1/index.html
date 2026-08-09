@@ -323,29 +323,40 @@
 .artist-card .tag {
   margin-top: 20px;
 }
-//* =========================================
+/* =========================================
    SPOTLIGHT MEDIA
    ========================================= */
-
 .spotlight-visual {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
-
+/* YouTube / Image Media */
 .spotlight-visual img,
-.spotlight-visual video {
+.spotlight-yt {
   position: absolute;
   inset: 0;
   z-index: 0;
-  display: block;
   width: 100%;
   height: 100%;
+}
+.spotlight-visual img {
+  display: block;
   object-fit: cover;
   object-position: center;
 }
-
-/* Dark media overlay */
+/* YouTube Video */
+.spotlight-yt {
+  overflow: hidden;
+  background: #000;
+}
+.spotlight-yt iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+/* Dark cinematic overlay */
 .spotlight-visual::after {
   content: "";
   position: absolute;
@@ -360,8 +371,7 @@
       rgba(0, 0, 0, 0.08) 100%
     );
 }
-
-/* Crowd Pick label */
+/* Top Label */
 .spotlight-visual::before {
   content: "CROWD PICK";
   position: absolute;
@@ -373,11 +383,18 @@
   letter-spacing: 2px;
   color: var(--gold);
 }
-
+/* Bottom Video Label */
 .spotlight-visual-tag {
-  position: relative;
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
   z-index: 3;
-  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--bone);
 }
 /* =========================================
    UP NEXT — NETFLIX STYLE CARD
@@ -768,48 +785,55 @@ footer p {
 
 
 <!-- =========================================
-     ULTIMATE FAN OF THE NIGHT
+     BATTLE 1 — WINNERS & ULTIMATE FAN
      ========================================= -->
 <section class="spotlight">
   <div class="spotlight-visual">
     <div class="spotlight-yt">
       <iframe
         src="https://www.youtube.com/embed/JR1_0mI_GrY?rel=0"
-        title="HIT FOR HIT BATTLES — Battle 1 Winners"
+        title="HIT FOR HIT BATTLES — Battle 1 Winners & Fan Moment"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen>
       </iframe>
     </div>
     <div class="spotlight-visual-tag">
-      ULTIMATE FAN OF THE NIGHT
+      BATTLE 1 • WINNERS &amp; FAN MOMENT
     </div>
   </div>
   <div class="spotlight-copy">
     <div class="section-label">
-      Crowd Moment
+      Battle 1 Crowd Moment
     </div>
     <h2
       class="section-heading"
       style="font-size:clamp(26px,3.5vw,40px);"
     >
-      Some fans don't just watch.
-      <em>They become the moment.</em>
+      The winners made history.
+      <em>The crowd made the moment.</em>
     </h2>
     <p>
-      Battle 1 wasn't just about what happened on stage.
-      The crowd became part of the show — and Ivonna's corner
-      brought an energy that couldn't be ignored.
+      Battle 1 officially opened the Road to the Crown with
+      <strong>Ivonna Pearl</strong>, <strong>CoCo The Queen</strong>,
+      and <strong>Solidfam Louie</strong> each earning a win
+      in their respective battles.
     </p>
     <p>
-      One fan went all the way in, earning the title
-      <strong>Ultimate Fan of the Night</strong> and becoming one
-      of the unforgettable moments from the opening chapter
-      of the Road to the Crown.
+      But the action didn't stop when the artists left the stage.
+      The crowd became part of the show — and one fan brought an
+      energy that couldn't be ignored.
+    </p>
+    <p>
+      That's how the
+      <strong>Ultimate Fan of the Night</strong>
+      was born.
     </p>
     <div class="hero-tags" style="margin-top:22px;">
+      <span>Ivonna Pearl</span>
+      <span>CoCo The Queen</span>
+      <span>Solidfam Louie</span>
       <span>Ultimate Fan</span>
-      <span>Battle 1</span>
       <span>Road to the Crown</span>
     </div>
   </div>
