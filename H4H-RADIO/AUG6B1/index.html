@@ -379,6 +379,21 @@
   z-index: 3;
   margin-top: auto;
 }
+
+  .spotlight-yt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.spotlight-yt iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
 /* =========================================
    UP NEXT — NETFLIX STYLE CARD
    ========================================= */
@@ -785,29 +800,17 @@ footer p {
      ULTIMATE FAN OF THE NIGHT
      ========================================= -->
 
-<section class="spotlight">
-
-  <div class="spotlight-visual">
-
-    <video
-      controls
-      playsinline
-      preload="metadata"
-      poster="/Battle1group.jpg"
-      style="width:100%;height:100%;object-fit:cover;display:block;"
-    >
-      <div class="video-wrapper">
+<div class="spotlight-yt">
 
   <iframe
-    src="https://www.youtube.com/embed/TIVyuadHhGo8PMTf?rel=0"
-    title="Battle 1 Fan Video"
+    src="https://www.youtube.com/embed/TIVyuadHhGo?rel=0"
+    title="HIT FOR HIT BATTLES — Ultimate Fan of the Night"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
   </iframe>
 
 </div>
-
       Your browser does not support the video element.
     </video>
 
