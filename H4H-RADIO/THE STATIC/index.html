@@ -338,5 +338,259 @@
 
 </div>
 
+<!-- H4H RADIO AUDIO -->
+<audio id="radioAudio" preload="auto"></audio>
+
+<script>
+const audio = document.getElementById('radioAudio');
+
+let TRACKS = [];
+let QUEUE = [];
+let queueIndex = 0;
+let playing = false;
+
+
+/* LOAD MUSIC */
+async function fetchTracks() {
+  try {
+    const response = await fetch('../STAFF/tracks.json', {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error('Could not load tracks');
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.error('Radio loading error:', error);
+    return [];
+  }
+}
+
+
+/* SHUFFLE */
+function shuffle(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+
+/* SAVE RADIO STATE */
+function saveRadioState() {
+  if (!QUEUE.length) return;
+
+  localStorage.setItem(
+    'h4h_radio_state',
+    JSON.stringify({
+      url: QUEUE[queueIndex]?.url,
+      name: QUEUE[queueIndex]?.name,
+      time: audio.currentTime,
+      volume: audio.volume,
+      muted: audio.muted,
+      playing: playing,
+      queueIndex: queueIndex,
+      queue: QUEUE
+    })
+  );
+}
+
+
+/* NEXT SONG */
+function advanceTrack() {
+  if (!QUEUE.length) return;
+
+  queueIndex++;
+
+  if (queueIndex >= QUEUE.length) {
+    queueIndex = 0;
+  }
+
+  const track = QUEUE[queueIndex];
+
+  if (!track) return;
+
+  audio.src = track.url;
+  audio.currentTime = 0;
+
+  const title = document.getElementById('nowTitle');
+
+  if (title) {
+    title.textContent = track.name || 'Stream Starting';
+  }
+
+  audio.play()
+    .then(() => {
+      playing = true;
+      saveRadioState();
+    })
+    .catch(() => {
+      playing = false;
+    });
+}
+
+
+/* INITIALIZE RADIO */
+async function radioInit() {
+
+  TRACKS = await fetchTracks();
+
+  const saved = JSON.parse(
+    localStorage.getItem('h4h_radio_state') || 'null'
+  );
+
+
+  /* RESTORE EXISTING RADIO SESSION */
+
+  if (
+    saved &&
+    saved.queue &&
+    saved.queue.length
+  ) {
+
+    QUEUE = saved.queue;
+
+    queueIndex = saved.queueIndex || 0;
+
+    audio.src =
+      saved.url || QUEUE[queueIndex].url;
+
+    audio.volume =
+      saved.volume ?? 1;
+
+    audio.muted =
+      saved.muted ?? false;
+
+
+    audio.addEventListener(
+      'loadedmetadata',
+      () => {
+
+        if (saved.time) {
+          try {
+            audio.currentTime = saved.time;
+          } catch (e) {
+            console.log(
+              'Could not restore playback position'
+            );
+          }
+        }
+
+      },
+      { once: true }
+    );
+
+
+    const title =
+      document.getElementById('nowTitle');
+
+    if (title) {
+      title.textContent =
+        saved.name || 'Stream Starting';
+    }
+
+
+    /* TRY TO RESUME */
+
+    if (saved.playing) {
+
+      audio.play()
+        .then(() => {
+
+          playing = true;
+
+          const tuneBtn =
+            document.getElementById('tuneBtn');
+
+          const tuneLabel =
+            document.getElementById('tuneLabel');
+
+          if (tuneBtn) {
+            tuneBtn.classList.add('on');
+          }
+
+          if (tuneLabel) {
+            tuneLabel.textContent = 'STOP';
+          }
+
+        })
+        .catch(() => {
+
+          /*
+            Browser autoplay protection.
+            User can press Tune In.
+          */
+
+          console.log(
+            'Autoplay blocked — user interaction required.'
+          );
+
+        });
+    }
+
+
+  } else {
+
+    /* NEW RADIO SESSION */
+
+    QUEUE = shuffle(TRACKS);
+
+  }
+
+
+  /* SONG ENDS → NEXT SONG */
+
+  audio.addEventListener(
+    'ended',
+    advanceTrack
+  );
+}
+
+
+/* SAVE EVERY ~2 SECONDS */
+
+let lastSavedSecond = -1;
+
+audio.addEventListener(
+  'timeupdate',
+  () => {
+
+    const second =
+      Math.floor(audio.currentTime);
+
+    if (
+      second % 2 === 0 &&
+      second !== lastSavedSecond
+    ) {
+
+      lastSavedSecond = second;
+
+      saveRadioState();
+    }
+  }
+);
+
+
+/* SAVE BEFORE PAGE CLOSE */
+
+window.addEventListener(
+  'beforeunload',
+  saveRadioState
+);
+
+
+/* START */
+
+radioInit();
+
+</script>
+
 </body>
 </html>
