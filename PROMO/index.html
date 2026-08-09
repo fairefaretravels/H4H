@@ -446,14 +446,19 @@ footer{
     padding:10px 20px;
 }
 
-.footer-contact a:hover{
-    color:#ff0000;
+<style>
+.footer-contact a:hover {
+    color: #ff0000;
 }
+</style>
 
+<script>
 // Save state periodically
 const audio = document.getElementById('radioAudio');
-function saveRadioState(){
-  if(!QUEUE.length) return;
+
+function saveRadioState() {
+  if (!QUEUE.length) return;
+
   localStorage.setItem('h4h_radio_state', JSON.stringify({
     url: QUEUE[queueIndex].url,
     name: QUEUE[queueIndex].name,
@@ -462,42 +467,76 @@ function saveRadioState(){
     muted: audio.muted,
     playing: playing,
     queueIndex: queueIndex,
-    queue: QUEUE // persist the shuffled order too
+    queue: QUEUE
   }));
 }
+
+// Throttle saves to approximately every 2 seconds
 audio.addEventListener('timeupdate', () => {
-  // throttle: only save every ~2s
-  if (Math.floor(audio.currentTime) % 2 === 0) saveRadioState();
+  if (Math.floor(audio.currentTime) % 2 === 0) {
+    saveRadioState();
+  }
 });
+
 window.addEventListener('beforeunload', saveRadioState);
 
-// On load, try to resume instead of starting fresh
-async function radioInit(){
-  TRACKS = await fetchTracks();
-  const saved = JSON.parse(localStorage.getItem('h4h_radio_state') || 'null');
 
-  if(saved && saved.queue && saved.queue.length){
+// On load, try to resume instead of starting fresh
+async function radioInit() {
+  TRACKS = await fetchTracks();
+
+  const saved = JSON.parse(
+    localStorage.getItem('h4h_radio_state') || 'null'
+  );
+
+  if (saved && saved.queue && saved.queue.length) {
+
     QUEUE = saved.queue;
-    queueIndex = saved.queueIndex;
+
+    queueIndex = saved.queueIndex || 0;
+
     audio.src = saved.url;
-    audio.volume = saved.volume;
-    audio.muted = saved.muted;
-    audio.currentTime = saved.time;
-    document.getElementById('nowTitle').textContent = saved.name;
-    if(saved.playing){
-      audio.play().then(()=>{
-        playing = true;
-        document.getElementById('tuneBtn').classList.add('on');
-        document.getElementById('tuneLabel').textContent = 'STOP';
-      }).catch(()=>{ /* autoplay blocked until user interacts */ });
+
+    audio.volume = saved.volume ?? 1;
+
+    audio.muted = saved.muted ?? false;
+
+    audio.currentTime = saved.time || 0;
+
+    document.getElementById('nowTitle').textContent =
+      saved.name || 'Stream Starting';
+
+    if (saved.playing) {
+      audio.play()
+        .then(() => {
+          playing = true;
+
+          document
+            .getElementById('tuneBtn')
+            .classList.add('on');
+
+          document
+            .getElementById('tuneLabel')
+            .textContent = 'STOP';
+        })
+        .catch(() => {
+          // Browser blocked autoplay.
+          // User can press Tune In to start playback.
+        });
+
     }
+
   } else {
     QUEUE = shuffle(TRACKS);
   }
+
   updateRadioUI();
+
   audio.addEventListener('ended', advanceTrack);
-}    
-</style>
+}
+
+radioInit();
+</script>
 
 </body>
 </html>
