@@ -1279,22 +1279,54 @@ ${EMAIL_TO}
 `;
   }
   /* ---------------- EMAIL SUBMIT ---------------- */
+  <script>
+  /* ---------------- RESET QUESTIONNAIRE ---------------- */
+  function resetQuestionnaire() {
+    // Remove saved answers
+    localStorage.removeItem(STORAGE_KEY);
+
+    // Clear all form fields
+    form.reset();
+
+    // Start back at Section 1
+    currentSection = 1;
+
+    // Hide success message
+    successMessage.classList.remove("show");
+
+    // Show first section
+    showSection(1);
+  }
+
+  /* ---------------- EMAIL SUBMIT ---------------- */
   submitBtn.addEventListener("click", () => {
     if (!validateCurrentSection()) return;
+
     const data = collectData();
-    const response =
-      buildResponse(data);
-    const subject =
-      encodeURIComponent(
-        `HIT FOR HIT Questionnaire — ${data.name || "New Response"}`
-      );
-    const body =
-      encodeURIComponent(response);
+    const response = buildResponse(data);
+
+    const subject = encodeURIComponent(
+      `HIT FOR HIT Questionnaire — ${data.name || "New Response"}`
+    );
+
+    const body = encodeURIComponent(response);
+
     const mailto =
       `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+
+    /*
+      Clear the saved questionnaire BEFORE opening
+      the email app. This prevents the completed
+      submission from appearing again when they return.
+    */
+    localStorage.removeItem(STORAGE_KEY);
+    form.reset();
+
     successMessage.classList.add("show");
+
     window.location.href = mailto;
   });
+</script>
   /* ---------------- DOWNLOAD ---------------- */
   downloadBtn.addEventListener("click", () => {
     const data = collectData();
