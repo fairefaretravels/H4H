@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>HIT FOR HIT BATTLES™ — Artist & Business Questionnaire</title>
+  <meta
+    name="description"
+    content="Tell HIT FOR HIT BATTLES what you're building, what isn't working, and what would make you want to compete, partner, sponsor, or book."
+  />
+  <style>
+    :root {
+      --bg: #080808;
+      --card: #111111;
+      --card-2: #171717;
+      --line: #292929;
+      --text: #f5f5f5;
+      --muted: #a5a5a5;
+      --accent: #ff1744;
+      --accent-2: #ff4d6d;
+      --success: #49d17d;
+      --danger: #ff5b5b;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255,23,68,.16), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.5;
+    }
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+    button,
+    label,
+    select {
+      cursor: pointer;
+    }
+    a {
+      color: inherit;
+    }
+    .page {
+      width: min(100%, 900px);
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+    /* ---------------- HERO ---------------- */
+    .hero {
+      padding: 24px 0 22px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      color: #ddd;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px var(--accent);
+    }
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(38px, 10vw, 76px);
+      line-height: .9;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+    h1 span {
+      color: var(--accent);
+    }
+    .hero-copy {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 16px;
+      margin: 0;
+    }
+    .video-wrap {
+      position: relative;
+      margin-top: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #000;
+      box-shadow: var(--shadow);
+    }
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .video-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 15px;
+      background: #0d0d0d;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .video-caption strong {
+      color: #fff;
+    }
+    .video-caption a {
+      color: #ff8097;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    /* ---------------- INTRO ---------------- */
+    .intro-card {
+      margin: 18px 0;
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255,23,68,.08), transparent 55%),
+        var(--card);
+    }
+    .intro-card h2 {
+      margin: 0 0 7px;
+      font-size: 20px;
+    }
+    .intro-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    /* ---------------- PROGRESS ---------------- */
+    .progress-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 10px 0;
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(14px);
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .progress-bar {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #252525;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .25s ease;
+    }
+    /* ---------------- FORM ---------------- */
+    .section {
+      margin-top: 22px;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+    .section.hidden {
+      display: none;
+    }
+    .section-number {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .section h2 {
+      margin: 5px 0 5px;
+      font-size: 25px;
+      line-height: 1.08;
+    }
+    .section-description {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .field {
+      margin-top: 18px;
+    }
+    .field:first-child {
+      margin-top: 0;
+    }
+    .field label.field-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 750;
+    }
+    .required {
+      color: var(--accent);
+    }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid #303030;
+      border-radius: 13px;
+      outline: none;
+      padding: 13px 14px;
+      background: #0c0c0c;
+      color: #fff;
+      transition: border .2s, box-shadow .2s;
+    }
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+    input::placeholder,
+    textarea::placeholder {
+      color: #666;
+    }
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,23,68,.12);
+    }
+    /* ---------------- OPTIONS ---------------- */
+    .options {
+      display: grid;
+      gap: 9px;
+    }
+    .option {
+      position: relative;
+    }
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .option label {
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+      padding: 13px 14px;
+      border: 1px solid #303030;
+      border-radius: 13px;
+      background: #0c0c0c;
+      color: #ddd;
+      transition: .2s ease;
+    }
+    .option label:hover {
+      border-color: #555;
+    }
+    .option input:checked + label {
+      border-color: var(--accent);
+      background: rgba(255,23,68,.09);
+      color: #fff;
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+    .option label::before {
+      content: "";
+      width: 17px;
+      height: 17px;
+      flex: 0 0 17px;
+      margin-right: 11px;
+      border: 1px solid #555;
+      border-radius: 50%;
+      background: #111;
+    }
+    .option input[type="checkbox"] + label::before {
+      border-radius: 5px;
+    }
+    .option input:checked + label::before {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: inset 0 0 0 4px #111;
+    }
+    .helper {
+      margin-top: 7px;
+      color: #777;
+      font-size: 12px;
+    }
+    /* ---------------- CONDITIONAL ---------------- */
+    .conditional {
+      display: none;
+      margin-top: 14px;
+      padding: 15px;
+      border-left: 2px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: rgba(255,23,68,.05);
+    }
+    .conditional.show {
+      display: block;
+    }
+    /* ---------------- SCALE ---------------- */
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+    .scale-option {
+      position: relative;
+    }
+    .scale-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .scale-option label {
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #303030;
+      border-radius: 12px;
+      background: #0c0c0c;
+      font-weight: 800;
+      color: #aaa;
+    }
+    .scale-option input:checked + label {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 7px;
+      color: #666;
+      font-size: 11px;
+    }
+    /* ---------------- NAV ---------------- */
+    .nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .btn {
+      min-height: 52px;
+      border: 0;
+      border-radius: 13px;
+      padding: 0 18px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn:active {
+      transform: scale(.98);
+    }
+    .btn-primary {
+      flex: 1;
+      background: var(--accent);
+      color: white;
+    }
+    .btn-secondary {
+      background: #222;
+      color: #fff;
+      border: 1px solid #333;
+    }
+    .btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+    /* ---------------- SUBMIT ---------------- */
+    .submit-card {
+      margin-top: 22px;
+      padding: 22px;
+      border: 1px solid rgba(255,23,68,.35);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(255,23,68,.13), transparent 35%),
+        var(--card);
+    }
+    .submit-card h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+    .submit-card p {
+      margin: 0 0 17px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .submit-actions {
+      display: grid;
+      gap: 10px;
+    }
+    .success {
+      display: none;
+      margin-top: 16px;
+      padding: 15px;
+      border: 1px solid rgba(73,209,125,.35);
+      border-radius: 13px;
+      background: rgba(73,209,125,.07);
+      color: #c9f7da;
+    }
+    .success.show {
+      display: block;
+    }
+    /* ---------------- FOOTER ---------------- */
+    footer {
+      padding: 35px 0 10px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+    }
+    footer strong {
+      color: #999;
+    }
+    /* ---------------- DESKTOP ---------------- */
+    @media (min-width: 700px) {
+      .page {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      .hero {
+        padding-top: 42px;
+      }
+      .section {
+        padding: 28px;
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .submit-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      HIT FOR HIT BATTLES™
+    </div>
+    <h1>
+      Your Music.<br>
+      <span>Your Battle.</span>
+    </h1>
+    <p class="hero-copy">
+      We're building Hit For Hit around the people actually making music.
+      Tell us what works, what doesn't, what you're missing, and what would
+      make you want to step into the battle.
+    </p>
+    <div class="video-wrap">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PLa9auhfp7FjQ"
+          title="HIT FOR HIT BATTLES YouTube Playlist"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-caption">
+        <strong>WATCH HIT FOR HIT</strong>
+        <a
+          href="https://youtube.com/playlist?list=PLa9auhfp7FjQ&si=15G8zHZkMsYFPPSk"
+          target="_blank"
+          rel="noopener">
+          Open Playlist →
+        </a>
+      </div>
+    </div>
+  </header>
+  <!-- INTRO -->
+  <div class="intro-card">
+    <h2>This isn't a fan survey.</h2>
+    <p>
+      We want the real answer. If something about the music business,
+      artist development, promotion, performance, booking, battles,
+      networking, or technology frustrates you — tell us.
+      Your answers help us build better experiences and better opportunities.
+    </p>
+  </div>
+  <!-- PROGRESS -->
+  <div class="progress-sticky">
+    <div class="progress-meta">
+      <span id="progressText">Section 1 of 7</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+  <form id="questionnaire" novalidate>
+    <!-- SECTION 1 -->
+    <section class="section" data-section="1">
+      <div class="section-number">01 / WHO ARE YOU?</div>
+      <h2>Tell us who we're talking to.</h2>
+      <p class="section-description">
+        This helps us understand where you're coming from.
+      </p>
+      <div class="two-col">
+        <div class="field">
+          <label class="field-label">
+            Name <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            name="name"
+            required
+            placeholder="Your name">
+        </div>
+        <div class="field">
+          <label class="field-label">
+            Artist / Business / Brand Name
+          </label>
+          <input
+            type="text"
+            name="brand"
+            placeholder="What should we call you?">
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          Email <span class="required">*</span>
+        </label>
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label class="field-label">
+          Which best describes you?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="roleArtist" type="radio" name="role" value="Artist">
+            <label for="roleArtist">Artist / Performer</label>
+          </div>
+          <div class="option">
+            <input id="roleProducer" type="radio" name="role" value="Producer">
+            <label for="roleProducer">Producer / Beatmaker</label>
+          </div>
+          <div class="option">
+            <input id="roleDJ" type="radio" name="role" value="DJ">
+            <label for="roleDJ">DJ</label>
+          </div>
+          <div class="option">
+            <input id="roleManager" type="radio" name="role" value="Manager">
+            <label for="roleManager">Manager / Artist Team</label>
+          </div>
+          <div class="option">
+            <input id="roleBrand" type="radio" name="role" value="Music Business">
+            <label for="roleBrand">Music Business / Brand</label>
+          </div>
+          <div class="option">
+            <input id="roleFan" type="radio" name="role" value="Fan / Supporter">
+            <label for="roleFan">Fan / Supporter</label>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 2 -->
+    <section class="section hidden" data-section="2">
+      <div class="section-number">02 / YOUR CURRENT SYSTEM</div>
+      <h2>How are you doing things now?</h2>
+      <p class="section-description">
+        We're interested in what you already use — not just what's missing.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          How do you currently promote your music or brand?
+        </label>
+        <textarea
+          name="promotion"
+          placeholder="Social media, shows, radio, email, word of mouth, ads, etc."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What platform or system do you rely on the most?
+        </label>
+        <input
+          type="text"
+          name="system"
+          placeholder="Instagram, TikTok, DistroKid, Spotify, your CRM, etc.">
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What do you actually LIKE about your current system?
+        </label>
+        <textarea
+          name="systemLove"
+          placeholder="What works well? What saves you time? What would you never want to lose?"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          How satisfied are you with your current music/business setup?
+        </label>
+        <div class="scale">
+          <div class="scale-option">
+            <input id="s1" type="radio" name="satisfaction" value="1">
+            <label for="s1">1</label>
+          </div>
+          <div class="scale-option">
+            <input id="s2" type="radio" name="satisfaction" value="2">
+            <label for="s2">2</label>
+          </div>
+          <div class="scale-option">
+            <input id="s3" type="radio" name="satisfaction" value="3">
+            <label for="s3">3</label>
+          </div>
+          <div class="scale-option">
+            <input id="s4" type="radio" name="satisfaction" value="4">
+            <label for="s4">4</label>
+          </div>
+          <div class="scale-option">
+            <input id="s5" type="radio" name="satisfaction" value="5">
+            <label for="s5">5</label>
+          </div>
+        </div>
+        <div class="scale-labels">
+          <span>Very frustrated</span>
+          <span>Very satisfied</span>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 3 -->
+    <section class="section hidden" data-section="3">
+      <div class="section-number">03 / THE PAIN POINT</div>
+      <h2>What's getting in your way?</h2>
+      <p class="section-description">
+        This is the part we really want you to answer honestly.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          What's your biggest challenge right now?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="painPromo" type="checkbox" name="pain" value="Promotion">
+            <label for="painPromo">Getting people to hear my music</label>
+          </div>
+          <div class="option">
+            <input id="painFans" type="checkbox" name="pain" value="Fan Growth">
+            <label for="painFans">Building a real fanbase</label>
+          </div>
+          <div class="option">
+            <input id="painShows" type="checkbox" name="pain" value="Shows">
+            <label for="painShows">Finding quality performance opportunities</label>
+          </div>
+          <div class="option">
+            <input id="painMoney" type="checkbox" name="pain" value="Money">
+            <label for="painMoney">Making consistent money from music</label>
+          </div>
+          <div class="option">
+            <input id="painNetwork" type="checkbox" name="pain" value="Networking">
+            <label for="painNetwork">Finding the right people to connect with</label>
+          </div>
+          <div class="option">
+            <input id="painTech" type="checkbox" name="pain" value="Technology">
+            <label for="painTech">Technology / tools / systems</label>
+          </div>
+          <div class="option">
+            <input id="painTime" type="checkbox" name="pain" value="Time">
+            <label for="painTime">Not having enough time</label>
+          </div>
+          <div class="option">
+            <input id="painOther" type="checkbox" name="pain" value="Other">
+            <label for="painOther">Something else</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          If you could fix ONE thing about the music business for yourself,
+          what would it be?
+        </label>
+        <textarea
+          name="oneFix"
+          placeholder="Don't overthink it. What's the thing that keeps frustrating you?"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What do you wish existed that doesn't exist right now?
+        </label>
+        <textarea
+          name="wish"
+          placeholder="A service, platform, event, opportunity, connection, tool, etc."></textarea>
+      </div>
+    </section>
+    <!-- SECTION 4 -->
+    <section class="section hidden" data-section="4">
+      <div class="section-number">04 / HIT FOR HIT</div>
+      <h2>Would you step into the battle?</h2>
+      <p class="section-description">
+        Tell us what would make Hit For Hit worth your time.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          Have you heard about HIT FOR HIT BATTLES™?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="heardYes" type="radio" name="heard" value="Yes">
+            <label for="heardYes">Yes</label>
+          </div>
+          <div class="option">
+            <input id="heardNo" type="radio" name="heard" value="No">
+            <label for="heardNo">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          Which role interests you?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="interestArtist" type="checkbox" name="interest" value="Compete">
+            <label for="interestArtist">I want to compete</label>
+          </div>
+          <div class="option">
+            <input id="interestProducer" type="checkbox" name="interest" value="Produce">
+            <label for="interestProducer">I want to produce / provide music</label>
+          </div>
+          <div class="option">
+            <input id="interestDJ" type="checkbox" name="interest" value="DJ">
+            <label for="interestDJ">I want to DJ</label>
+          </div>
+          <div class="option">
+            <input id="interestSponsor" type="checkbox" name="interest" value="Sponsor">
+            <label for="interestSponsor">I want to sponsor</label>
+          </div>
+          <div class="option">
+            <input id="interestPartner" type="checkbox" name="interest" value="Partner">
+            <label for="interestPartner">I want to partner</label>
+          </div>
+          <div class="option">
+            <input id="interestAttend" type="checkbox" name="interest" value="Attend">
+            <label for="interestAttend">I want to attend / support</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What would make you say YES to a Hit For Hit battle?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="yesExposure" type="checkbox" name="yesFactor" value="Exposure">
+            <label for="yesExposure">Real exposure</label>
+          </div>
+          <div class="option">
+            <input id="yesMoney" type="checkbox" name="yesFactor" value="Prize Money">
+            <label for="yesMoney">Prize money</label>
+          </div>
+          <div class="option">
+            <input id="yesContent" type="checkbox" name="yesFactor" value="Content">
+            <label for="yesContent">Professional content / video</label>
+          </div>
+          <div class="option">
+            <input id="yesAudience" type="checkbox" name="yesFactor" value="Audience">
+            <label for="yesAudience">A real audience</label>
+          </div>
+          <div class="option">
+            <input id="yesNetworking" type="checkbox" name="yesFactor" value="Networking">
+            <label for="yesNetworking">Networking / industry connections</label>
+          </div>
+          <div class="option">
+            <input id="yesRadio" type="checkbox" name="yesFactor" value="Radio">
+            <label for="yesRadio">Radio / media exposure</label>
+          </div>
+          <div class="option">
+            <input id="yesCompetition" type="checkbox" name="yesFactor" value="Competition">
+            <label for="yesCompetition">The competition itself</label>
+          </div>
+          <div class="option">
+            <input id="yesOther" type="checkbox" name="yesFactor" value="Other">
+            <label for="yesOther">Something else</label>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 5 -->
+    <section class="section hidden" data-section="5">
+      <div class="section-number">05 / THE EXPERIENCE</div>
+      <h2>What should we build better?</h2>
+      <p class="section-description">
+        We want the battle to feel professional before, during, and after
+        you touch the stage.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          What's the biggest problem you've experienced at music events?
+        </label>
+        <textarea
+          name="eventProblem"
+          placeholder="Late starts, poor sound, bad communication, no promotion, payment issues, weak crowds, etc."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What would make an event feel PROFESSIONAL to you?
+        </label>
+        <textarea
+          name="professional"
+          placeholder="Tell us what separates a serious event from a thrown-together show."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What should every competing artist receive?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="receivePromo" type="checkbox" name="receive" value="Promotion">
+            <label for="receivePromo">Promotion before the event</label>
+          </div>
+          <div class="option">
+            <input id="receiveVideo" type="checkbox" name="receive" value="Video">
+            <label for="receiveVideo">Professional video</label>
+          </div>
+          <div class="option">
+            <input id="receivePhotos" type="checkbox" name="receive" value="Photos">
+            <label for="receivePhotos">Professional photos</label>
+          </div>
+          <div class="option">
+            <input id="receiveRadio" type="checkbox" name="receive" value="Radio">
+            <label for="receiveRadio">Radio / media exposure</label>
+          </div>
+          <div class="option">
+            <input id="receiveInterview" type="checkbox" name="receive" value="Interview">
+            <label for="receiveInterview">Winner / artist interview</label>
+          </div>
+          <div class="option">
+            <input id="receiveNetwork" type="checkbox" name="receive" value="Networking">
+            <label for="receiveNetwork">Industry networking</label>
+          </div>
+          <div class="option">
+            <input id="receiveOther" type="checkbox" name="receive" value="Other">
+            <label for="receiveOther">Something else</label>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 6 -->
+    <section class="section hidden" data-section="6">
+      <div class="section-number">06 / OPPORTUNITY</div>
+      <h2>Where could we work together?</h2>
+      <p class="section-description">
+        Hit For Hit isn't only about the battle. We're building an ecosystem
+        around artists, music, media, brands, and audiences.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          Which opportunities interest you?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="oppBattle" type="checkbox" name="opportunity" value="Battle">
+            <label for="oppBattle">Competing in battles</label>
+          </div>
+          <div class="option">
+            <input id="oppShowcase" type="checkbox" name="opportunity" value="Showcase">
+            <label for="oppShowcase">Performing at showcases</label>
+          </div>
+          <div class="option">
+            <input id="oppRadio" type="checkbox" name="opportunity" value="Radio">
+            <label for="oppRadio">Radio / interviews</label>
+          </div>
+          <div class="option">
+            <input id="oppSponsorship" type="checkbox" name="opportunity" value="Sponsorship">
+            <label for="oppSponsorship">Brand sponsorship</label>
+          </div>
+          <div class="option">
+            <input id="oppContent" type="checkbox" name="opportunity" value="Content">
+            <label for="oppContent">Content creation</label>
+          </div>
+          <div class="option">
+            <input id="oppProduction" type="checkbox" name="opportunity" value="Production">
+            <label for="oppProduction">Production / beat placement</label>
+          </div>
+          <div class="option">
+            <input id="oppBusiness" type="checkbox" name="opportunity" value="Business">
+            <label for="oppBusiness">Business partnership</label>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          If Hit For Hit could introduce you to ONE person or opportunity,
+          what would you want?
+        </label>
+        <textarea
+          name="dreamConnection"
+          placeholder="A label, producer, promoter, venue, sponsor, media outlet, artist, etc."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          Would you be interested in being contacted about upcoming
+          Hit For Hit opportunities?
+        </label>
+        <div class="options">
+          <div class="option">
+            <input id="contactYes" type="radio" name="contact" value="Yes">
+            <label for="contactYes">Yes — contact me</label>
+          </div>
+          <div class="option">
+            <input id="contactMaybe" type="radio" name="contact" value="Maybe">
+            <label for="contactMaybe">Maybe — send me information</label>
+          </div>
+          <div class="option">
+            <input id="contactNo" type="radio" name="contact" value="No">
+            <label for="contactNo">No — survey only</label>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECTION 7 -->
+    <section class="section hidden" data-section="7">
+      <div class="section-number">07 / SAY IT STRAIGHT</div>
+      <h2>Anything we missed?</h2>
+      <p class="section-description">
+        This is your open mic. Give us the answer you think we actually need
+        to hear.
+      </p>
+      <div class="field">
+        <label class="field-label">
+          If you were building Hit For Hit, what would you do differently?
+        </label>
+        <textarea
+          name="buildDifferent"
+          placeholder="Be honest. Compliments are welcome. Criticism is welcome too."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          What's one idea you think could make Hit For Hit huge?
+        </label>
+        <textarea
+          name="bigIdea"
+          placeholder="Your wild idea goes here."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">
+          Anything else?
+        </label>
+        <textarea
+          name="anythingElse"
+          placeholder="Anything we should know?"></textarea>
+      </div>
+    </section>
+    <!-- NAVIGATION -->
+    <div class="nav">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        id="backBtn"
+        disabled>
+        ← Back
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="nextBtn">
+        Continue →
+      </button>
+    </div>
+    <!-- SUBMIT -->
+    <div class="submit-card hidden" id="submitCard">
+      <h2>Ready to send it?</h2>
+      <p>
+        Your answers will be prepared as a response for the Hit For Hit team.
+        Tapping Submit will open your email app with the completed response
+        addressed to <strong>booking@radiomeltdown.online</strong>.
+      </p>
+      <div class="submit-actions">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="submitBtn">
+          SEND TO HIT FOR HIT →
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="downloadBtn">
+          DOWNLOAD RESPONSE
+        </button>
+      </div>
+      <div class="success" id="successMessage">
+        Your response has been prepared. If your email app didn't open,
+        use <strong>Download Response</strong> and send it to
+        <strong>booking@radiomeltdown.online</strong>.
+      </div>
+    </div>
+  </form>
+  <footer>
+    <strong>HIT FOR HIT BATTLES™</strong><br>
+    Powered by STV Radiomeltdown
+  </footer>
+</div>
+<script>
+  const TOTAL_SECTIONS = 7;
+  const EMAIL_TO = "booking@radiomeltdown.online";
+  let currentSection = 1;
+  const form = document.getElementById("questionnaire");
+  const sections = [...document.querySelectorAll(".section[data-section]")];
+  const nextBtn = document.getElementById("nextBtn");
+  const backBtn = document.getElementById("backBtn");
+  const submitCard = document.getElementById("submitCard");
+  const submitBtn = document.getElementById("submitBtn");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const progressFill = document.getElementById("progressFill");
+  const progressText = document.getElementById("progressText");
+  const progressPercent = document.getElementById("progressPercent");
+  const successMessage = document.getElementById("successMessage");
+  /* ---------------- SECTION DISPLAY ---------------- */
+  function showSection(number) {
+    sections.forEach(section => {
+      const sectionNumber = Number(section.dataset.section);
+      section.classList.toggle(
+        "hidden",
+        sectionNumber !== number
+      );
+    });
+    submitCard.classList.toggle(
+      "hidden",
+      number !== TOTAL_SECTIONS
+    );
+    backBtn.disabled = number === 1;
+    nextBtn.textContent =
+      number === TOTAL_SECTIONS
+        ? "Review Complete ✓"
+        : "Continue →";
+    updateProgress();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+  /* ---------------- PROGRESS ---------------- */
+  function updateProgress() {
+    const percent =
+      Math.round((currentSection / TOTAL_SECTIONS) * 100);
+    progressFill.style.width = percent + "%";
+    progressText.textContent =
+      `Section ${currentSection} of ${TOTAL_SECTIONS}`;
+    progressPercent.textContent =
+      percent + "%";
+  }
+  /* ---------------- VALIDATION ---------------- */
+  function validateCurrentSection() {
+    const section =
+      sections.find(
+        s => Number(s.dataset.section) === currentSection
+      );
+    if (!section) return true;
+    const requiredFields =
+      [...section.querySelectorAll("[required]")];
+    for (const field of requiredFields) {
+      if (!field.value.trim()) {
+        field.focus();
+        field.style.borderColor = "var(--danger)";
+        setTimeout(() => {
+          field.style.borderColor = "";
+        }, 1600);
+        return false;
+      }
+      if (
+        field.type === "email" &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)
+      ) {
+        field.focus();
+        alert("Please enter a valid email address.");
+        return false;
+      }
+    }
+    return true;
+  }
+  /* ---------------- NAVIGATION ---------------- */
+  nextBtn.addEventListener("click", () => {
+    if (!validateCurrentSection()) return;
+    if (currentSection < TOTAL_SECTIONS) {
+      currentSection++;
+      showSection(currentSection);
+    } else {
+      submitCard.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  });
+  backBtn.addEventListener("click", () => {
+    if (currentSection > 1) {
+      currentSection--;
+      showSection(currentSection);
+    }
+  });
+  /* ---------------- DATA COLLECTION ---------------- */
+  function getFieldValue(name) {
+    const field =
+      form.querySelector(`[name="${name}"]`);
+    return field ? field.value.trim() : "";
+  }
+  function getRadioValue(name) {
+    const selected =
+      form.querySelector(
+        `input[name="${name}"]:checked`
+      );
+    return selected ? selected.value : "";
+  }
+  function getCheckedValues(name) {
+    return [
+      ...form.querySelectorAll(
+        `input[name="${name}"]:checked`
+      )
+    ].map(input => input.value);
+  }
+  function collectData() {
+    return {
+      submittedAt:
+        new Date().toLocaleString(),
+      name:
+        getFieldValue("name"),
+      brand:
+        getFieldValue("brand"),
+      email:
+        getFieldValue("email"),
+      role:
+        getRadioValue("role"),
+      promotion:
+        getFieldValue("promotion"),
+      system:
+        getFieldValue("system"),
+      systemLove:
+        getFieldValue("systemLove"),
+      satisfaction:
+        getRadioValue("satisfaction"),
+      pain:
+        getCheckedValues("pain"),
+      oneFix:
+        getFieldValue("oneFix"),
+      wish:
+        getFieldValue("wish"),
+      heard:
+        getRadioValue("heard"),
+      interest:
+        getCheckedValues("interest"),
+      yesFactor:
+        getCheckedValues("yesFactor"),
+      eventProblem:
+        getFieldValue("eventProblem"),
+      professional:
+        getFieldValue("professional"),
+      receive:
+        getCheckedValues("receive"),
+      opportunity:
+        getCheckedValues("opportunity"),
+      dreamConnection:
+        getFieldValue("dreamConnection"),
+      contact:
+        getRadioValue("contact"),
+      buildDifferent:
+        getFieldValue("buildDifferent"),
+      bigIdea:
+        getFieldValue("bigIdea"),
+      anythingElse:
+        getFieldValue("anythingElse")
+    };
+  }
+  /* ---------------- RESPONSE TEXT ---------------- */
+  function buildResponse(data) {
+    const line = "----------------------------------------";
+    return `
+HIT FOR HIT BATTLES™
+ARTIST / BUSINESS QUESTIONNAIRE
+${line}
+SUBMITTED
+${data.submittedAt}
+CONTACT
+Name: ${data.name}
+Artist / Business / Brand: ${data.brand || "Not provided"}
+Email: ${data.email}
+Role: ${data.role || "Not provided"}
+${line}
+CURRENT SYSTEM
+How do you currently promote your music or brand?
+${data.promotion || "Not answered"}
+Platform/system relied on most:
+${data.system || "Not answered"}
+What they LIKE about their current system:
+${data.systemLove || "Not answered"}
+Satisfaction:
+${data.satisfaction || "Not answered"} / 5
+${line}
+PAIN POINTS
+Biggest challenges:
+${data.pain.length ? data.pain.join(", ") : "Not answered"}
+One thing they would fix:
+${data.oneFix || "Not answered"}
+What they wish existed:
+${data.wish || "Not answered"}
+${line}
+HIT FOR HIT
+Already heard about Hit For Hit:
+${data.heard || "Not answered"}
+Interested roles:
+${data.interest.length ? data.interest.join(", ") : "Not answered"}
+What would make them say YES:
+${data.yesFactor.length ? data.yesFactor.join(", ") : "Not answered"}
+${line}
+EVENT EXPERIENCE
+Biggest event problem:
+${data.eventProblem || "Not answered"}
+What makes an event feel professional:
+${data.professional || "Not answered"}
+What every competing artist should receive:
+${data.receive.length ? data.receive.join(", ") : "Not answered"}
+${line}
+OPPORTUNITY
+Interested opportunities:
+${data.opportunity.length ? data.opportunity.join(", ") : "Not answered"}
+Dream connection/opportunity:
+${data.dreamConnection || "Not answered"}
+Interested in future contact:
+${data.contact || "Not answered"}
+${line}
+OPEN MIC
+What would they do differently:
+${data.buildDifferent || "Not answered"}
+Idea that could make Hit For Hit huge:
+${data.bigIdea || "Not answered"}
+Anything else:
+${data.anythingElse || "Not answered"}
+${line}
+HIT FOR HIT BATTLES™
+Powered by STV Radiomeltdown
+Reply/contact:
+${EMAIL_TO}
+`;
+  }
+  /* ---------------- EMAIL SUBMIT ---------------- */
+  submitBtn.addEventListener("click", () => {
+    if (!validateCurrentSection()) return;
+    const data = collectData();
+    const response =
+      buildResponse(data);
+    const subject =
+      encodeURIComponent(
+        `HIT FOR HIT Questionnaire — ${data.name || "New Response"}`
+      );
+    const body =
+      encodeURIComponent(response);
+    const mailto =
+      `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+    successMessage.classList.add("show");
+    window.location.href = mailto;
+  });
+  /* ---------------- DOWNLOAD ---------------- */
+  downloadBtn.addEventListener("click", () => {
+    const data = collectData();
+    const response =
+      buildResponse(data);
+    const blob =
+      new Blob(
+        [response],
+        { type: "text/plain;charset=utf-8" }
+      );
+    const url =
+      URL.createObjectURL(blob);
+    const a =
+      document.createElement("a");
+    const safeName =
+      (data.name || "hit-for-hit-response")
+        .replace(/[^a-z0-9]/gi, "-")
+        .toLowerCase();
+    a.href = url;
+    a.download =
+      `hit-for-hit-${safeName}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+  /* ---------------- AUTO SAVE ---------------- */
+  const STORAGE_KEY =
+    "hit_for_hit_questionnaire";
+  function saveProgress() {
+    const formData =
+      new FormData(form);
+    const saved = {};
+    for (const [key, value] of formData.entries()) {
+      if (saved[key]) {
+        if (!Array.isArray(saved[key])) {
+          saved[key] = [saved[key]];
+        }
+        saved[key].push(value);
+      } else {
+        saved[key] = value;
+      }
+    }
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(saved)
+    );
+  }
+  function restoreProgress() {
+    const saved =
+      localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    try {
+      const data =
+        JSON.parse(saved);
+      Object.entries(data).forEach(
+        ([name, value]) => {
+          const values =
+            Array.isArray(value)
+              ? value
+              : [value];
+          values.forEach(item => {
+            const fields =
+              form.querySelectorAll(
+                `[name="${name}"]`
+              );
+            fields.forEach(field => {
+              if (
+                field.type === "checkbox" ||
+                field.type === "radio"
+              ) {
+                if (field.value === item) {
+                  field.checked = true;
+                }
+              } else {
+                field.value = item;
+              }
+            });
+          });
+        }
+      );
+    } catch (error) {
+      console.warn(
+        "Could not restore saved questionnaire.",
+        error
+      );
+    }
+  }
+  form.addEventListener(
+    "input",
+    saveProgress
+  );
+  form.addEventListener(
+    "change",
+    saveProgress
+  );
+  /* ---------------- INITIALIZE ---------------- */
+  restoreProgress();
+  showSection(1);
+</script>
+</body>
+</html>
