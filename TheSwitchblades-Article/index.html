@@ -69,126 +69,155 @@
   }
   .section-gap{padding:5rem 0;}
 
-  /* ---------- hero ---------- */
-  .hero{
-  position:relative;
-  min-height:100svh;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(10,10,11,0.15) 0%,
-      rgba(10,10,11,0.55) 55%,
-      rgba(10,10,11,0.97) 100%
-    ),
-    url("https://github.com/fairefaretravels/H4H/blob/55742785ca855dac4f0467a4e68a5776ae3b5cf2/TheSwitchblades-Article/Swb12.JPG");
-  backgroundw-size:cover;
-  background-position:center 20%;
-  background-repeat:no-repeat;
-  filter:none;
-}
-  .hero::before{
-    content:"";
-    position:absolute; inset:0;
-    background:radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
-  }
-  .hero-inner{
-    position:relative;
-    z-index:2;
-    max-width:1000px;
-    margin:0 auto;
-    padding:0 6vw 4.5rem;
-    width:100%;
-  }
-  .hero-eyebrow{
-    font-family:'UnifrakturMaguntia', cursive;
-    font-size:22px;
-    color:var(--rust-bright);
-    margin-bottom:0.6rem;
-    opacity:0;
-    animation:riseIn 1s ease forwards 0.3s;
-  }
-  .hero h1{
-    font-size:clamp(3.2rem, 11vw, 8.2rem);
-    color:var(--bone);
-    text-shadow:0 4px 30px rgba(0,0,0,0.6);
-    opacity:0;
-    animation:riseIn 1.1s ease forwards 0.5s;
-  }
-  .hero-sub{
-    font-family:'Space Mono', monospace;
-    font-size:14px;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:var(--bone-dim);
-    margin-top:1rem;
-    opacity:0;
-    animation:riseIn 1.1s ease forwards 0.8s;
-  }
-  @keyframes riseIn{
-    from{opacity:0; transform:translateY(18px);}
-    to{opacity:1; transform:translateY(0);}
-  }
+  <!-- =========================
+     HERO PHOTO CAROUSEL
+========================= -->
+<section class="hero" id="hero">
 
-  .hero-controls{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:1.4rem;
-    margin-top:2.4rem;
-    opacity:0;
-    animation:riseIn 1.1s ease forwards 1.1s;
-  }
-  .listen-btn{
-    font-family:'Space Mono', monospace;
-    font-size:13px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--ink);
-    background:var(--rust-bright);
-    border:none;
-    padding:0.95rem 1.7rem;
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    gap:0.6rem;
-    position:relative;
-    transition:transform 0.25s ease, background 0.25s ease;
-  }
-  .listen-btn:hover{background:var(--bone); transform:translateY(-2px);}
-  .listen-btn::after{content:"";width:8px;height:8px;background:var(--ink);border-radius:50%;}
+  <!-- Photo slides -->
+  <div class="hero-slideshow" aria-label="The Switchblades photo gallery">
 
-  .yt-mini{
-    width:220px;
-    height:124px;
-    border:1px solid var(--stitch);
-    flex-shrink:0;
-    filter:grayscale(0.35) contrast(1.05);
-  }
+    <div class="hero-slide active">
+      <img
+        src="https://raw.githubusercontent.com/fairefaretravels/H4H/9ff6070f480f2a5140d4c856e14d4d12b4996719/TheSwitchblades-Article/Lazer1.jpg"
+        alt="The Switchblades"
+      />
+    </div>
 
-  .scroll-cue{
-    position:absolute;
-    bottom:1.6rem;
-    left:50%;
-    transform:translateX(-50%);
-    font-family:'Space Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.3em;
-    text-transform:uppercase;
-    color:var(--silver);
-    z-index:2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:0.5rem;
-  }
-  .scroll-cue span{
-    width:1px; height:26px; background:var(--silver);
-    animation:pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse{0%,100%{opacity:0.2;}50%{opacity:0.9;}}
+    <div class="hero-slide">
+      <img
+        src="https://raw.githubusercontent.com/fairefaretravels/H4H/9ff6070f480f2a5140d4c856e14d4d12b4996719/TheSwitchblades-Article/Mack1.jpg"
+        alt="The Switchblades"
+      />
+    </div>
+
+    <div class="hero-slide">
+      <img
+        src="https://raw.githubusercontent.com/fairefaretravels/H4H/9ff6070f480f2a5140d4c856e14d4d12b4996719/TheSwitchblades-Article/Swb12.JPG"
+        alt="The Switchblades"
+      />
+    </div>
+
+    <div class="hero-slide">
+      <img
+        src="https://raw.githubusercontent.com/fairefaretravels/H4H/9ff6070f480f2a5140d4c856e14d4d12b4996719/TheSwitchblades-Article/Swb3.jpeg"
+        alt="The Switchblades"
+      />
+    </div>
+
+    <div class="hero-slide">
+      <img
+        src="https://raw.githubusercontent.com/fairefaretravels/H4H/9ff6070f480f2a5140d4c856e14d4d12b4996719/TheSwitchblades-Article/Swb4.jpeg"
+        alt="The Switchblades"
+      />
+    </div>
+
+  </div>
+
+
+  <!-- Dark overlay -->
+  <div class="hero-overlay"></div>
+
+
+  <!-- Hero content -->
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow">
+      THE SWITCHBLADES
+    </div>
+
+    <h1>
+      The<br>
+      Switchblades
+    </h1>
+
+    <p class="hero-sub">
+      HIT FOR HIT • ROAD TO THE CROWN
+    </p>
+
+    <div class="hero-controls">
+
+      <a
+        href="#article"
+        class="listen-btn"
+      >
+        Read The Story
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Previous / Next -->
+  <button
+    class="hero-arrow hero-prev"
+    type="button"
+    aria-label="Previous photo"
+  >
+    ‹
+  </button>
+
+  <button
+    class="hero-arrow hero-next"
+    type="button"
+    aria-label="Next photo"
+  >
+    ›
+  </button>
+
+
+  <!-- Photo indicators -->
+  <div
+    class="hero-dots"
+    aria-label="Choose photo"
+  >
+
+    <button
+      class="hero-dot active"
+      type="button"
+      data-slide="0"
+      aria-label="Photo 1"
+    ></button>
+
+    <button
+      class="hero-dot"
+      type="button"
+      data-slide="1"
+      aria-label="Photo 2"
+    ></button>
+
+    <button
+      class="hero-dot"
+      type="button"
+      data-slide="2"
+      aria-label="Photo 3"
+    ></button>
+
+    <button
+      class="hero-dot"
+      type="button"
+      data-slide="3"
+      aria-label="Photo 4"
+    ></button>
+
+    <button
+      class="hero-dot"
+      type="button"
+      data-slide="4"
+      aria-label="Photo 5"
+    ></button>
+
+  </div>
+
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <i></i>
+  </div>
+
+</section>
 
   /* ---------- content ---------- */
   .wrap{max-width:760px; margin:0 auto; padding:0 6vw;}
@@ -451,7 +480,7 @@
   <ul class="catalog">
     <li>Honey</li>
     <li>Distant Lover</li>
-    <li>Sex Slave</li>
+    <li>S*x Slave</li>
     <li>Party in My Room</li>
     <li>Throw It Back</li>
     <li>and more</li>
@@ -477,32 +506,279 @@
   </ul>
 </section>
 
-<!-- COLLABORATORS -->
+<!-- COLLABORATORS + HISTORY -->
 <section class="section-gap wrap reveal" style="padding-top:0;">
+
   <div class="eyebrow">Connections</div>
-  <h2 style="font-size:clamp(1.8rem,5vw,2.8rem); margin-top:0.6rem; color:var(--bone);">Who they built with.</h2>
+
+  <h2 style="font-size:clamp(1.8rem,5vw,2.8rem); margin-top:0.6rem; color:var(--bone);">
+    Who they built with.
+  </h2>
+
+  <p class="section-intro">
+    The Switchblades' story was never just about the records they made.
+    It was built through producers, engineers, artists, showcases, radio,
+    charity events, road trips, and a relentless effort to get the music
+    in front of people.
+  </p>
+
+
+  <!-- PRODUCERS / ENGINEERS -->
   <div class="collab-grid">
+
     <div class="collab">
       <span class="name">Sheefy McFly</span>
       <span class="role">Producer</span>
-      <p>Produced the Switchblades track "Dowhatchuwannado."</p>
+      <p>
+        Produced the Switchblades track
+        <em>"Dowhatchuwannado."</em>
+      </p>
     </div>
+
+
     <div class="collab">
       <span class="name">Nickel Slick</span>
       <span class="role">Producer / Engineer</span>
-      <p>Recorded with the group during the Detroit era.</p>
+      <p>
+        Recorded with the group during the Detroit era,
+        contributing to the sound and recording environment
+        surrounding the Switchblades.
+      </p>
     </div>
+
+
     <div class="collab">
-      <span class="name">Larry, Street Lord Juan Studio</span>
+      <span class="name">Larry — Capital Park Studios</span>
       <span class="role">Engineer</span>
-      <p>The group remembers Larry as connected to Big Sean's early recording history.</p>
+      <p>
+        The group remembers Larry as part of the Detroit recording
+        community and as someone connected to the early recording
+        history surrounding Big Sean.
+      </p>
     </div>
+
+
     <div class="collab">
-      <span class="name">Scootie McB &mdash; McBANGER</span>
-      <span class="role">Compilation / Archive</span>
-      <p>The Switchblades appear in the historical orbit of Scootie McB's Detroit compilation. A 2026 release brought recordings from that era back into public view, including "Distant Lover &mdash; Switchblades."</p>
+      <span class="name">Marquis Reese</span>
+      <span class="role">Producer / Manager</span>
+      <p>
+        The Switchblades worked with producer and manager Marquis Reese,
+        who also produced for Boldy James.
+      </p>
     </div>
+
+
+    <div class="collab">
+      <span class="name">Scootie McB — McBANGER</span>
+      <span class="role">Compilation / Archive</span>
+      <p>
+        The Switchblades appear in the historical orbit of Scootie McB's
+        Detroit compilation work. A 2026 release brought recordings from
+        that era back into public view, including
+        <em>"Distant Lover — Switchblades."</em>
+      </p>
+    </div>
+
   </div>
+
+
+  <!-- LIVE PERFORMANCE -->
+  <div class="story-break">
+
+    <div class="eyebrow">On Stage</div>
+
+    <h3>
+      Before the internet made discovery easy,
+      they went where the people were.
+    </h3>
+
+    <p>
+      The Switchblades built their reputation the old-fashioned way:
+      by performing. They opened for Fuck Chips with special guest
+      Danny Brown, who was part of the <em>Couch Potato</em> project.
+      They also performed alongside Al Luv at a charity event
+      headlined by Sada Baby.
+    </p>
+
+    <p>
+      The group performed at artist showcases organized by well-known
+      Detroit battle rapper Moe Durdee, putting themselves in front of
+      different corners of the city's independent music community.
+    </p>
+
+    <p>
+      Their performances weren't limited to traditional hip-hop venues.
+      The Switchblades also performed at a Miss Liberian Pageant in
+      Detroit, showing just how broad their willingness to perform
+      and connect with audiences had become.
+    </p>
+
+  </div>
+
+
+  <!-- RADIO -->
+  <div class="story-break radio-story">
+
+    <div class="eyebrow">The Switchblades Show</div>
+
+    <h3>
+      They didn't just make music.
+      They created a platform.
+    </h3>
+
+    <p>
+      In 2013, the Switchblades took their personalities and their
+      network to BlogTalkRadio with <em>The Switchblades Show</em>.
+      The podcast became another way for the group to connect with
+      Detroit and beyond while giving other independent artists a
+      place to promote their music.
+    </p>
+
+    <p>
+      One of those connections was the Lawless Knights of Chicago.
+      Founding member Terry Jankins, who has since passed away,
+      eventually became a co-host of the show.
+    </p>
+
+    <p>
+      The show represented something bigger than promotion.
+      It was an early example of the Switchblades creating their own
+      media infrastructure — building an audience while creating
+      opportunities for other artists at the same time.
+    </p>
+
+  </div>
+
+
+  <!-- LA -->
+  <div class="story-break la-story">
+
+    <div class="eyebrow">Detroit → Los Angeles</div>
+
+    <h3>
+      Before playlists, there were 100 CDs in a backpack.
+    </h3>
+
+    <p>
+      The Switchblades made the trip to Los Angeles twice to promote
+      their music. They didn't arrive with a major-label campaign,
+      a massive marketing budget, or a team handing out promotional
+      materials.
+    </p>
+
+    <p>
+      They burned 100 CDs and passed them out everywhere they could.
+      Streets, businesses, people they met, anyone who might listen —
+      the goal was simple: get the music into somebody else's hands.
+    </p>
+
+    <p>
+      That same mentality carried back to Detroit. When they left,
+      they had a couple thousand friends on MySpace. When they
+      returned, that number had grown to more than 10,000.
+    </p>
+
+    <div class="impact-stat">
+
+      <span class="stat-number">10K+</span>
+
+      <span class="stat-label">
+        MySpace connections
+      </span>
+
+      <span class="stat-note">
+        The audience had grown dramatically by the time they returned
+        from their Los Angeles trips.
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- TIMELINE -->
+  <div class="switchblade-timeline">
+
+    <div class="eyebrow">The Network</div>
+
+    <div class="timeline-item">
+
+      <span class="timeline-marker">01</span>
+
+      <div>
+        <strong>Detroit</strong>
+        <p>
+          Recording sessions, producers, engineers, showcases,
+          battle-rap connections and a growing independent music scene.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <span class="timeline-marker">02</span>
+
+      <div>
+        <strong>The Stage</strong>
+        <p>
+          Opening slots, charity events, showcases and performances
+          that put the Switchblades in front of increasingly diverse
+          audiences.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <span class="timeline-marker">03</span>
+
+      <div>
+        <strong>The Switchblades Show</strong>
+        <p>
+          BlogTalkRadio became another outlet for the group to amplify
+          their own music and create space for other artists.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <span class="timeline-marker">04</span>
+
+      <div>
+        <strong>Los Angeles</strong>
+        <p>
+          Two trips, 100 burned CDs and a direct-to-the-people
+          promotional strategy.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="timeline-item">
+
+      <span class="timeline-marker">05</span>
+
+      <div>
+        <strong>10,000+</strong>
+        <p>
+          What started as a couple thousand MySpace friends grew
+          into a network of more than 10,000.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
   <p class="body-copy" style="margin-top:2rem; font-style:italic;">That is what makes the group's story unusual. The music didn't disappear. It kept resurfacing.</p>
 </section>
 
@@ -512,7 +788,7 @@
 <section class="section-gap wrap reveal">
   <div class="eyebrow" style="text-align:center; display:block;">The reunion</div>
   <p class="body-copy" style="text-align:center; max-width:600px; margin:0.8rem auto 0;">Today, Saneca Mack and Liah Lazer are bringing The Switchblades back to the stage. The current live lineup represents two of the group's original members, while Raquel Mohammad remains an essential part of the group's original history and songwriting legacy.</p>
-  <div class="reunion-names">Saneca Mack<span class="reunion-x">&times;</span>Liah Lazer</div>
+  <div class="reunion-names">Mackinthedark<span class="reunion-x">&times;</span>Liah Lazer</div>
   <div class="reunion-note">20 years later. Still classic.</div>
   <p class="body-copy" style="text-align:center; max-width:600px; margin:1.6rem auto 0;">This isn't an attempt to recreate the past. It's an opportunity to reintroduce the music to a new generation while giving the people who remember The Switchblades a chance to experience the songs again &mdash; a celebration of a catalog created when the group was simply trying to make something that sounded like them.</p>
   <p class="body-copy" style="text-align:center; max-width:600px; margin:0.6rem auto 0;">They succeeded. And twenty years later, the music is still speaking.</p>
