@@ -70,19 +70,25 @@
   .section-gap{padding:5rem 0;}
 
   /* ---------- hero ---------- */
-  .hero{
-    position:relative;
-    min-height:100svh;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    background:
-      linear-gradient(180deg, rgba(10,10,11,0.15) 0%, rgba(10,10,11,0.55) 55%, rgba(10,10,11,0.97) 100%),
-      url('https://github.com/fairefaretravels/STV-ONAIR/blob/cc046788d0adf7c221742b7c7f9d9d08b8ae5ad7/TheSwitchblades-Article/Swb1.jpeg?raw=true');
-    background-size:cover;
-    background-position:center 20%;
-    filter:none;
-  }
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10,10,11,0.15) 0%,
+      rgba(10,10,11,0.55) 55%,
+      rgba(10,10,11,0.97) 100%
+    ),
+    url("https://raw.githubusercontent.com/fairefaretravels/H4H/bf81c7dec01af8806e5530d2b427f63e506874a9/TheSwitchblades-Article/Swb1.jpeg");
+  background-size:cover;
+  background-position:center 20%;
+  background-repeat:no-repeat;
+  filter:none;
+}
   .hero::before{
     content:"";
     position:absolute; inset:0;
