@@ -1,1 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="description" content="STV Artists — discover independent artists and creators. Watch, listen, follow, and support. The Switchblades and more, from SanecaTV Radiomeltdown."/>
+<meta name="theme-color" content="#07150e"/>
+<title>STV Artists — Discover Independent Artists</title>
+<link rel="apple-touch-icon" href="../stvlogo1.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
 
+<style>
+:root{
+  --black: #07150e;
+  --dark-2: #0d1f16;
+  --dark-3: #12291e;
+  --white: #f5f6f1;
+  --muted: rgba(245,246,241,.5);
+  --dim: rgba(245,246,241,.2);
+  --border: rgba(63,110,255,.16);
+  --border-strong: rgba(63,110,255,.32);
+  --signal: #3f6eff;
+  --signal-glow: rgba(63,110,255,.5);
+  --gold: #f4d35e;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:"DM Sans",system-ui,sans-serif;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ===== HEADER ===== */
+header.top{
+  position:sticky;
+  top:0;
+  z-index:200;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:14px 24px;
+  background:rgba(8,17,11,.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--white);
+}
+
+.brand img{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+}
+
+.brand-name{
+  font-family:"Bebas Neue",sans-serif;
+  font-size:1.1rem;
+  letter-spacing:.1em;
+}
+
+.brand-name span{color:var(--signal);}
+
+.crumb{
+  font-size:.7rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.top-links{
+  display:flex;
+  gap:.5rem;
+  align-items:center;
+}
+
+.top-links a{
+  font-size:.75rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--muted);
+  padding:.5rem .9rem;
+  border-radius:100px;
+  transition:.2s;
+}
+
+.top-links a:hover{
+  color:var(--white);
+  background:var(--dark-2);
+}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  padding:4.5rem 24px 3rem;
+  text-align:center;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at top, rgba(63,110,255,.16), transparent 60%);
+  pointer-events:none;
+}
+
+.hero-eyebrow{
+  position:relative;
+  font-size:.7rem;
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+}
+
+.hero h1{
+  position:relative;
+  font-family:"Bebas Neue",sans-serif;
+  font-size:clamp(2.6rem, 8vw, 5rem);
+  letter-spacing:.04em;
+  line-height:1;
+  margin:.6rem 0;
+}
+
+.hero-tagline{
+  position:relative;
+  max-width:640px;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:1rem;
+}
+
+.hero-words{
+  position:relative;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem 1rem;
+  justify-content:center;
+  margin-top:1.75rem;
+  font-family:"DM Serif Display",serif;
+  font-style:italic;
+  color:var(--dim);
+  font-size:1.05rem;
+}
+
+.hero-words span:not(:last-child)::after{
+  content:"·";
+  margin-left:1rem;
+  color:var(--border-strong);
+  font-style:normal;
+}
+
+/* ===== FEATURED ARTIST ===== */
+.section{
+  max-width:1100px;
+  margin:0 auto;
+  padding:3.5rem 24px;
+}
+
+.section-label{
+  font-size:.7rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--signal);
+  font-weight:700;
+  margin-bottom:1.25rem;
+}
+
+.featured-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:0;
+  background:var(--dark-2);
+  border:1px solid var(--border-strong);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.featured-media{
+  position:relative;
+  min-height:340px;
+  background:#000 center/cover no-repeat;
+}
+
+.featured-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, rgba(7,21,14,0) 60%, rgba(7,21,14,.85) 100%);
+}
+
+.featured-body{
+  padding:2.5rem 2.25rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:.9rem;
+}
+
+.featured-tag{
+  font-size:.68rem;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:700;
+}
+
+.featured-body h2{
+  font-family:"Bebas Neue",sans-serif;
+  font-size:2.6rem;
+  letter-spacing:.03em;
+  line-height:1;
+}
+
+.featured-meta{
+  font-size:.85rem;
+  color:var(--muted);
+}
+
+.featured-desc{
+  color:rgba(245,246,241,.72);
+  font-size:.95rem;
+  max-width:44ch;
+}
+
+.btn-row{
+  display:flex;
+  gap:.75rem;
+  margin-top:.5rem;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:.85rem 1.6rem;
+  border-radius:4px;
+  font-family:"Bebas Neue",sans-serif;
+  font-size:1rem;
+  letter-spacing:.12em;
+  text-decoration:none;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:transform .15s, border-color .15s;
+}
+
+.btn:hover{transform:translateY(-2px);}
+
+.btn-primary{
+  background:linear-gradient(160deg,#1c3aa8,#3f6eff);
+  color:#fff;
+  box-shadow:0 0 24px rgba(63,110,255,.35);
+}
+
+.btn-primary:hover{border-color:var(--gold);}
+
+.btn-ghost{
+  background:transparent;
+  border-color:var(--border-strong);
+  color:var(--muted);
+}
+
+.btn-ghost:hover{
+  color:var(--white);
+  border-color:var(--white);
+}
+
+/* ===== DIRECTORY GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap:1.1rem;
+}
+
+.artist-card{
+  display:flex;
+  flex-direction:column;
+  background:var(--dark-2);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  text-decoration:none;
+  color:var(--white);
+  transition:border-color .2s, transform .2s;
+}
+
+.artist-card:hover{
+  border-color:var(--border-strong);
+  transform:translateY(-3px);
+}
+
+.artist-card .thumb{
+  height:170px;
+  background:#000 center/cover no-repeat;
+  position:relative;
+}
+
+.artist-card .thumb-label{
+  position:absolute;
+  bottom:.6rem;
+  left:.75rem;
+  font-size:.65rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(7,21,14,.7);
+  padding:.25rem .55rem;
+  border-radius:3px;
+}
+
+.artist-card .info{
+  padding:1rem 1.1rem 1.25rem;
+}
+
+.artist-card .a-name{
+  font-family:"Bebas Neue",sans-serif;
+  font-size:1.35rem;
+  letter-spacing:.04em;
+}
+
+.artist-card .a-meta{
+  font-size:.78rem;
+  color:var(--muted);
+  margin-top:.15rem;
+}
+
+.artist-card .a-latest{
+  font-size:.8rem;
+  color:rgba(245,246,241,.65);
+  margin-top:.6rem;
+  padding-top:.6rem;
+  border-top:1px solid var(--border);
+}
+
+/* PLACEHOLDER SLOTS */
+.artist-card.placeholder{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border-style:dashed;
+  cursor:default;
+  min-height:280px;
+  color:var(--dim);
+}
+
+.artist-card.placeholder:hover{
+  transform:none;
+  border-color:var(--border);
+}
+
+.placeholder .p-icon{
+  font-size:1.6rem;
+  color:var(--border-strong);
+  margin-bottom:.5rem;
+}
+
+.placeholder .p-text{
+  font-size:.8rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* ===== LOOP ===== */
+.loop{
+  background:var(--dark-3);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:3.5rem 24px;
+  margin-top:1rem;
+}
+
+.loop-inner{
+  max-width:1000px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.loop h3{
+  font-family:"Bebas Neue",sans-serif;
+  font-size:1.9rem;
+  letter-spacing:.05em;
+  margin-bottom:.5rem;
+}
+
+.loop p{
+  color:var(--muted);
+  max-width:52ch;
+  margin:0 auto 2rem;
+  font-size:.95rem;
+}
+
+.loop-chain{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  align-items:center;
+}
+
+.loop-node{
+  font-family:"Bebas Neue",sans-serif;
+  font-size:.85rem;
+  letter-spacing:.1em;
+  padding:.6rem 1.1rem;
+  border:1px solid var(--border-strong);
+  border-radius:100px;
+  color:var(--white);
+  background:var(--dark-2);
+}
+
+.loop-arrow{
+  color:var(--border-strong);
+  font-size:1rem;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:2.5rem 24px 3rem;
+  text-align:center;
+  color:var(--dim);
+  font-size:.8rem;
+}
+
+footer a{color:var(--muted);text-decoration:none;}
+footer a:hover{color:var(--white);}
+
+@media(max-width:820px){
+  .featured-card{grid-template-columns:1fr;}
+  .featured-media{min-height:220px;}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="../" class="brand">
+    <img src="../stvlogo1.jpg" alt="SanecaTV"/>
+    <span class="brand-name">SanecaTV <span>ARTISTS</span></span>
+  </a>
+  <div class="top-links">
+    <a href="../">Radio</a>
+    <a href="../watch">Watch</a>
+    <a href="./" style="color:var(--white);">Artists</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">STV Artist Platform</div>
+  <h1>STV ARTISTS</h1>
+  <p class="hero-tagline">Independent artists and creators, given a real home — not just a webpage. Discovered on STV, played on the radio, watched on TV, and supported directly by fans.</p>
+  <div class="hero-words">
+    <span>Discover</span><span>Watch</span><span>Listen</span><span>Follow</span><span>Support</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Featured Artist</div>
+  <div class="featured-card">
+    <div class="featured-media" style="background-image:url('../TheSwitchblades-Article/Swb12.JPG');"></div>
+    <div class="featured-body">
+      <div class="featured-tag">First Loaded Artist</div>
+      <h2>The Switchblades</h2>
+      <div class="featured-meta">Detroit, MI · Ghetto tech / underground · 20+ years running</div>
+      <p class="featured-desc">Detroit-born, independent by design, and built to last. The Switchblades are STV's first fully loaded artist profile — music, video, story, and booking, all in one place.</p>
+      <div class="btn-row">
+        <a href="./the-switchblades/" class="btn btn-primary">View Artist</a>
+        <a href="../TheSwitchblades-Article/" class="btn btn-ghost">Read The Story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">All Artists</div>
+  <div class="grid">
+    <a class="artist-card" href="./the-switchblades/">
+      <div class="thumb" style="background-image:url('../TheSwitchblades-Article/Lazer1.jpg');">
+        <span class="thumb-label">Featured</span>
+      </div>
+      <div class="info">
+        <div class="a-name">The Switchblades</div>
+        <div class="a-meta">Detroit, MI · Ghetto Tech</div>
+        <div class="a-latest">Latest: The 20 Years Later story &amp; playlist</div>
+      </div>
+    </a>
+
+    <div class="artist-card placeholder">
+      <div>
+        <div class="p-icon">+</div>
+        <div class="p-text">More Artists<br/>Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="loop">
+  <div class="loop-inner">
+    <h3>The STV Exposure Loop</h3>
+    <p>STV doesn't just give artists a page — it moves them through the whole network, in front of new listeners, viewers, and fans.</p>
+    <div class="loop-chain">
+      <span class="loop-node">Artist Page</span>
+      <span class="loop-arrow">→</span>
+      <span class="loop-node">Discover</span>
+      <span class="loop-arrow">→</span>
+      <span class="loop-node">Radio</span>
+      <span class="loop-arrow">→</span>
+      <span class="loop-node">Watch</span>
+      <span class="loop-arrow">→</span>
+      <span class="loop-node">Fans</span>
+      <span class="loop-arrow">→</span>
+      <span class="loop-node">Sales / Subscriptions</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  SanecaTV Radiomeltdown — Lithonia, GA · <a href="../">Back to STV</a>
+</footer>
+
+</body>
+</html>
