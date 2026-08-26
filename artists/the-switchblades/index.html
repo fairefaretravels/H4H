@@ -1,1 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="description" content="The Switchblades — Detroit-born, independent by design, built to last. Music, video, story, shop, and booking, on STV Artists."/>
+<meta name="theme-color" content="#0a0a0b"/>
+<title>The Switchblades — STV Artists</title>
+<link rel="apple-touch-icon" href="../../stvlogo1.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Big+Shoulders+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
+<style>
+:root{
+  --ink:#0a0a0b;
+  --ink-2:#141414;
+  --ink-3:#1b1a17;
+  --bone:#e9e3d6;
+  --bone-dim:#c9c2b2;
+  --rust:#9a2c1d;
+  --rust-bright:#c23a26;
+  --ash:#4b4a45;
+  --silver:#918a7a;
+  --stitch:#6b6459;
+  --signal:#3f6eff;
+  --gold:#f4d35e;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--bone);
+  font-family:"DM Sans",system-ui,sans-serif;
+  line-height:1.65;
+}
+
+a{color:inherit;}
+
+/* ===== HEADER ===== */
+header.top{
+  position:sticky;
+  top:0;
+  z-index:300;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:14px 24px;
+  background:rgba(10,10,11,.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--stitch);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  text-decoration:none;
+  color:var(--bone);
+  font-size:.75rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.brand img{width:28px;height:28px;border-radius:50%;}
+.crumb-sep{color:var(--ash);}
+.crumb-current{color:var(--rust-bright);}
+
+.top-links{display:flex;gap:.4rem;}
+
+.top-links a{
+  font-size:.7rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--silver);
+  padding:.5rem .85rem;
+  border-radius:100px;
+  transition:.2s;
+}
+.top-links a:hover{color:var(--bone);background:var(--ink-2);}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  min-height:78vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:0 24px 3rem;
+  background:#000 center 28%/cover no-repeat;
+  background-image:url('../../TheSwitchblades-Article/Lazer1.jpg');
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(10,10,11,.15) 0%, rgba(10,10,11,.55) 55%, rgba(10,10,11,.97) 100%);
+}
+
+.hero-inner{position:relative;max-width:1000px;margin:0 auto;width:100%;text-align:center;}
+
+.hero-eyebrow{
+  font-family:"Space Mono",monospace;
+  font-size:.72rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--rust-bright);
+}
+
+.hero h1{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:900;
+  font-size:clamp(3rem, 10vw, 6.5rem);
+  letter-spacing:.01em;
+  line-height:.95;
+  margin:.4rem 0 .5rem;
+  text-transform:uppercase;
+}
+
+.hero-sub{
+  font-size:.95rem;
+  letter-spacing:.05em;
+  color:var(--bone-dim);
+  text-transform:uppercase;
+}
+
+.quick-nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.6rem;
+  margin-top:2rem;
+}
+
+.quick-nav a{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:700;
+  font-size:.95rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:.7rem 1.35rem;
+  border:1px solid var(--stitch);
+  border-radius:2px;
+  color:var(--bone);
+  background:rgba(20,20,20,.5);
+  transition:.2s;
+}
+
+.quick-nav a:hover{border-color:var(--rust-bright);color:var(--rust-bright);}
+.quick-nav a.primary{background:var(--rust-bright);border-color:var(--rust-bright);color:var(--bone);}
+.quick-nav a.primary:hover{background:var(--rust);}
+
+/* ===== SECTIONS ===== */
+.section{
+  max-width:1080px;
+  margin:0 auto;
+  padding:4.5rem 24px;
+  border-top:1px solid var(--ink-3);
+}
+
+.eyebrow{
+  font-family:"Space Mono",monospace;
+  font-size:.68rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--rust-bright);
+  margin-bottom:.5rem;
+}
+
+.section h2{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:800;
+  font-size:clamp(1.9rem,4vw,2.8rem);
+  text-transform:uppercase;
+  letter-spacing:.01em;
+  margin-bottom:1.5rem;
+}
+
+.section-desc{
+  color:var(--bone-dim);
+  max-width:60ch;
+  margin-bottom:2rem;
+}
+
+/* FEATURED RELEASE */
+.featured-release{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:2rem;
+  align-items:center;
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  padding:1.75rem;
+}
+
+.fr-art{
+  width:100%;
+  aspect-ratio:1/1;
+  background:#000 center/cover no-repeat;
+  background-image:url('../../TheSwitchblades-Article/Swb4.jpeg');
+  border-radius:3px;
+}
+
+.fr-tag{
+  font-family:"Space Mono",monospace;
+  font-size:.68rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+.fr-title{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:800;
+  font-size:2rem;
+  text-transform:uppercase;
+  margin:.35rem 0 .25rem;
+}
+
+.fr-meta{color:var(--silver);font-size:.85rem;margin-bottom:1rem;}
+
+/* MUSIC */
+.track-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:1.1rem;
+}
+
+.track-card{
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  overflow:hidden;
+}
+
+.track-art{
+  width:100%;
+  aspect-ratio:1/1;
+  background:#000 center/cover no-repeat;
+  position:relative;
+}
+
+.track-mood{
+  position:absolute;
+  top:.6rem;
+  left:.6rem;
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--bone);
+  background:rgba(10,10,11,.7);
+  padding:.25rem .55rem;
+  border-radius:2px;
+}
+
+.track-info{padding:.9rem 1rem 1.1rem;}
+
+.track-title{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:700;
+  font-size:1.15rem;
+  text-transform:uppercase;
+  line-height:1.1;
+}
+
+.track-artist{font-size:.78rem;color:var(--silver);margin:.2rem 0 .85rem;}
+
+.track-actions{display:flex;gap:.5rem;}
+
+.pill-btn{
+  flex:1;
+  font-family:"Space Mono",monospace;
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:.55rem .5rem;
+  border-radius:3px;
+  border:1px solid var(--stitch);
+  background:transparent;
+  color:var(--bone-dim);
+  cursor:pointer;
+  transition:.2s;
+  text-align:center;
+}
+
+.pill-btn:hover{border-color:var(--rust-bright);color:var(--bone);}
+.pill-btn.buy{border-color:var(--rust);color:var(--rust-bright);}
+
+/* WATCH */
+.watch-embed{
+  position:relative;
+  width:100%;
+  padding-bottom:56.25%;
+  background:#000;
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:1.5rem;
+}
+
+.watch-embed iframe,
+.watch-embed video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.watch-strip{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+  gap:1rem;
+}
+
+.watch-thumb{
+  position:relative;
+  aspect-ratio:16/9;
+  background:#000 center/cover no-repeat;
+  border-radius:4px;
+  border:1px solid var(--stitch);
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden;
+}
+
+.watch-thumb .label{
+  background:linear-gradient(0deg, rgba(10,10,11,.9), transparent);
+  width:100%;
+  padding:.75rem;
+  font-size:.8rem;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+/* STORY */
+.story-card{
+  display:grid;
+  grid-template-columns:1fr 1.3fr;
+  gap:2rem;
+  align-items:center;
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  overflow:hidden;
+}
+
+.story-media{
+  min-height:260px;
+  background:#000 center/cover no-repeat;
+  background-image:url('../../TheSwitchblades-Article/Swb12.JPG');
+}
+
+.story-body{padding:2rem 2.25rem 2rem 0;}
+.story-body ul{margin:1rem 0 1.5rem 1.1rem;color:var(--bone-dim);font-size:.9rem;}
+.story-body li{margin-bottom:.35rem;}
+
+/* SHOP */
+.shop-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+  gap:1.1rem;
+}
+
+.shop-card{
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  padding:1.5rem 1.25rem;
+  text-align:center;
+}
+
+.shop-icon{font-size:1.8rem;margin-bottom:.75rem;}
+.shop-name{font-family:"Big Shoulders Display",sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;}
+.shop-note{font-size:.75rem;color:var(--silver);margin:.4rem 0 1rem;}
+
+/* SUBSCRIBE */
+.tier-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:1.1rem;
+}
+
+.tier-card{
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  padding:1.75rem 1.4rem;
+}
+
+.tier-card.highlight{border-color:var(--rust-bright);}
+
+.tier-name{
+  font-family:"Big Shoulders Display",sans-serif;
+  font-weight:800;
+  font-size:1.4rem;
+  text-transform:uppercase;
+}
+
+.tier-price{font-family:"Space Mono",monospace;color:var(--gold);margin:.4rem 0 .9rem;font-size:.9rem;}
+.tier-card ul{margin:0 0 1.25rem 1.1rem;color:var(--bone-dim);font-size:.85rem;}
+.tier-card li{margin-bottom:.3rem;}
+
+.status-badge{
+  display:inline-block;
+  font-family:"Space Mono",monospace;
+  font-size:.62rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid var(--gold);
+  border-radius:100px;
+  padding:.25rem .65rem;
+  margin-bottom:.75rem;
+}
+
+/* BOOK */
+.book-block{
+  background:var(--ink-2);
+  border:1px solid var(--stitch);
+  border-radius:4px;
+  padding:2.5rem;
+  text-align:center;
+}
+
+.book-route{
+  font-family:"Space Mono",monospace;
+  font-size:.78rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--rust-bright);
+  margin:1rem 0 1.5rem;
+}
+
+.link-row{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.75rem 1.4rem;
+  border:1px solid var(--stitch);
+  border-radius:100px;
+  font-size:.85rem;
+  text-decoration:none;
+  color:var(--bone);
+  transition:.2s;
+}
+.pill:hover{border-color:var(--rust-bright);color:var(--rust-bright);}
+
+/* TOAST */
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--bone);
+  color:var(--ink);
+  font-size:.8rem;
+  padding:.75rem 1.25rem;
+  border-radius:4px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:999;
+  max-width:88vw;
+  text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+footer{
+  padding:2.5rem 24px 3.5rem;
+  text-align:center;
+  color:var(--ash);
+  font-size:.8rem;
+  border-top:1px solid var(--ink-3);
+}
+footer a{color:var(--silver);text-decoration:none;}
+footer a:hover{color:var(--bone);}
+
+@media(max-width:760px){
+  .featured-release,.story-card{grid-template-columns:1fr;}
+  .story-body{padding:0 2rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="../../" class="brand">
+    <img src="../../stvlogo1.jpg" alt="STV"/>
+    <span>STV Artists</span>
+    <span class="crumb-sep">/</span>
+    <span class="crumb-current">The Switchblades</span>
+  </a>
+  <div class="top-links">
+    <a href="../">All Artists</a>
+    <a href="../../">STV Home</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">STV Artists · First Loaded Artist</div>
+    <h1>The Switchblades</h1>
+    <div class="hero-sub">Detroit-born · Independent by design · Built to last</div>
+    <nav class="quick-nav">
+      <a href="#music" class="primary">Listen</a>
+      <a href="#watch">Watch</a>
+      <a href="#story">Story</a>
+      <a href="#shop">Shop</a>
+      <a href="#subscribe">Subscribe</a>
+      <a href="#book">Book</a>
+    </nav>
+  </div>
+</section>
+
+<!-- FEATURED RELEASE -->
+<section class="section" id="featured">
+  <div class="eyebrow">Featured Release</div>
+  <h2>On Rotation</h2>
+  <div class="featured-release">
+    <div class="fr-art"></div>
+    <div>
+      <div class="fr-tag">Catalog Spotlight</div>
+      <div class="fr-title">The Switchblades — Playlist</div>
+      <div class="fr-meta">Detroit Ghetto Tech · Full catalog streaming now on YouTube</div>
+      <div class="link-row" style="justify-content:flex-start;">
+        <a class="pill" href="https://youtube.com/playlist?list=PLXADFyu2Gdd0&si=2FXOWcpSfc9ega_T" target="_blank" rel="noopener">▶ Play Full Playlist</a>
+        <a class="pill" href="#music">See Tracks</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="section" id="music">
+  <div class="eyebrow">Music</div>
+  <h2>Albums &amp; Singles</h2>
+  <p class="section-desc">The Switchblades' catalog, staged for STV's artist platform. Previews and purchases are demo-only for now — a real storefront and playback engine come with the artist back office.</p>
+  <div class="track-grid">
+    <div class="track-card">
+      <div class="track-art" style="background-image:url('../../TheSwitchblades-Article/Lazer1.jpg');">
+        <span class="track-mood">Signature</span>
+      </div>
+      <div class="track-info">
+        <div class="track-title">Lazer</div>
+        <div class="track-artist">The Switchblades</div>
+        <div class="track-actions">
+          <button class="pill-btn" onclick="demoAction('Audio previews are coming with the STV artist back office.')">▶ Preview</button>
+          <button class="pill-btn buy" onclick="demoAction('Purchases open once the STV storefront goes live.')">Buy</button>
+        </div>
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="track-art" style="background-image:url('../../TheSwitchblades-Article/Mack1.jpg');">
+        <span class="track-mood">Classic</span>
+      </div>
+      <div class="track-info">
+        <div class="track-title">Mack</div>
+        <div class="track-artist">The Switchblades</div>
+        <div class="track-actions">
+          <button class="pill-btn" onclick="demoAction('Audio previews are coming with the STV artist back office.')">▶ Preview</button>
+          <button class="pill-btn buy" onclick="demoAction('Purchases open once the STV storefront goes live.')">Buy</button>
+        </div>
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="track-art" style="background-image:url('../../TheSwitchblades-Article/Swb12.JPG');">
+        <span class="track-mood">Deep Cut</span>
+      </div>
+      <div class="track-info">
+        <div class="track-title">Swb12</div>
+        <div class="track-artist">The Switchblades</div>
+        <div class="track-actions">
+          <button class="pill-btn" onclick="demoAction('Audio previews are coming with the STV artist back office.')">▶ Preview</button>
+          <button class="pill-btn buy" onclick="demoAction('Purchases open once the STV storefront goes live.')">Buy</button>
+        </div>
+      </div>
+    </div>
+    <div class="track-card">
+      <div class="track-art" style="background-image:url('../../TheSwitchblades-Article/Swb4.jpeg');">
+        <span class="track-mood">Reunion</span>
+      </div>
+      <div class="track-info">
+        <div class="track-title">Swb4</div>
+        <div class="track-artist">The Switchblades</div>
+        <div class="track-actions">
+          <button class="pill-btn" onclick="demoAction('Audio previews are coming with the STV artist back office.')">▶ Preview</button>
+          <button class="pill-btn buy" onclick="demoAction('Purchases open once the STV storefront goes live.')">Buy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section class="section" id="watch">
+  <div class="eyebrow">Watch</div>
+  <h2>Videos &amp; Archive</h2>
+  <p class="section-desc">Music videos, archive footage, and the full YouTube catalog.</p>
+  <div class="watch-embed">
+    <iframe src="https://www.youtube.com/embed/videoseries?list=PLXADFyu2Gdd0" title="The Switchblades playlist" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <div class="watch-strip">
+    <div class="watch-thumb" style="background-image:url('../../TheSwitchblades-Article/Lazer1.jpg');">
+      <div class="label">Archive Footage</div>
+    </div>
+    <div class="watch-thumb" style="background-image:url('../../TheSwitchblades-Article/Mack1.jpg');">
+      <div class="label">Detroit Era Photos</div>
+    </div>
+    <a class="watch-thumb" href="../../TheSwitchblades-Article/#hero" style="background-image:url('../../TheSwitchblades-Article/Swb4.jpeg');">
+      <div class="label">Full Playlist &amp; Story →</div>
+    </a>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section" id="story">
+  <div class="eyebrow">Story</div>
+  <h2>20 Years Later, Still Classic</h2>
+  <div class="story-card">
+    <div class="story-media"></div>
+    <div class="story-body">
+      <p class="section-desc" style="margin-bottom:0;">The full editorial history lives in STV's original Switchblades feature — kept exactly as published, and now the story component of this artist profile.</p>
+      <ul>
+        <li>Detroit history &amp; the ghetto tech catalog</li>
+        <li>Venues, collaborators &amp; performance history</li>
+        <li>The Los Angeles promotion run &amp; MySpace-era timeline</li>
+        <li>The reunion — and the Switchbladoku game</li>
+      </ul>
+      <a class="pill" href="../../TheSwitchblades-Article/" style="border-color:var(--rust-bright);color:var(--rust-bright);">Read The Full Story →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="section" id="shop">
+  <div class="eyebrow">Shop</div>
+  <h2>Storefront</h2>
+  <p class="section-desc">The foundation for The Switchblades' store — music, merch, and exclusive releases. This is a UI preview; nothing here processes a real purchase yet.</p>
+  <div class="shop-grid">
+    <div class="shop-card">
+      <div class="shop-icon">💿</div>
+      <div class="shop-name">Digital Catalog</div>
+      <div class="shop-note">Full album &amp; single downloads</div>
+      <span class="status-badge">Store Opening Soon</span>
+    </div>
+    <div class="shop-card">
+      <div class="shop-icon">👕</div>
+      <div class="shop-name">Merch</div>
+      <div class="shop-note">Apparel &amp; collectibles</div>
+      <span class="status-badge">Store Opening Soon</span>
+    </div>
+    <div class="shop-card">
+      <div class="shop-icon">🎟️</div>
+      <div class="shop-name">Exclusive Releases</div>
+      <div class="shop-note">Limited drops for subscribers</div>
+      <span class="status-badge">Store Opening Soon</span>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section class="section" id="subscribe">
+  <div class="eyebrow">Subscribe</div>
+  <h2>Fan Membership</h2>
+  <p class="section-desc">Direct-to-fan tiers for supporting The Switchblades. This is the visual foundation only — subscriptions and payments aren't live yet.</p>
+  <div class="tier-grid">
+    <div class="tier-card">
+      <span class="status-badge">Coming Soon</span>
+      <div class="tier-name">Fan</div>
+      <div class="tier-price">Free</div>
+      <ul>
+        <li>Release updates</li>
+        <li>Show announcements</li>
+      </ul>
+      <button class="pill-btn" style="width:100%;" onclick="demoAction('Fan subscriptions are coming to STV Artists.')">Join</button>
+    </div>
+    <div class="tier-card highlight">
+      <span class="status-badge">Coming Soon</span>
+      <div class="tier-name">Insider</div>
+      <div class="tier-price">Monthly</div>
+      <ul>
+        <li>Everything in Fan</li>
+        <li>Early access to releases</li>
+        <li>Behind-the-scenes content</li>
+      </ul>
+      <button class="pill-btn buy" style="width:100%;" onclick="demoAction('Fan subscriptions are coming to STV Artists.')">Join</button>
+    </div>
+    <div class="tier-card">
+      <span class="status-badge">Coming Soon</span>
+      <div class="tier-name">Crew</div>
+      <div class="tier-price">Monthly</div>
+      <ul>
+        <li>Everything in Insider</li>
+        <li>Merch discounts</li>
+        <li>Direct fan communication</li>
+      </ul>
+      <button class="pill-btn" style="width:100%;" onclick="demoAction('Fan subscriptions are coming to STV Artists.')">Join</button>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="section" id="book">
+  <div class="eyebrow">Book</div>
+  <h2>Book The Switchblades</h2>
+  <div class="book-block">
+    <p style="color:var(--bone-dim);max-width:52ch;margin:0 auto;">Concerts, festivals, cultural events, college events, showcases, private events, and national/international bookings.</p>
+    <div class="book-route">Detroit → Atlanta → Everywhere</div>
+    <div class="link-row">
+      <a class="pill" href="mailto:Booking@radiomeltdown.online">Booking@radiomeltdown.online</a>
+      <a class="pill" href="mailto:Press@radiomeltdown.com">Press@radiomeltdown.com</a>
+      <a class="pill" href="https://switchbladoku.vercel.app/" target="_blank" rel="noopener">Play Switchbladoku →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Part of <a href="../">STV Artists</a> · SanecaTV Radiomeltdown — Lithonia, GA · <a href="../../">Back to STV</a>
+</footer>
+
+<div id="toast"></div>
+<script>
+let toastTimer;
+function demoAction(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+</script>
+
+</body>
+</html>
